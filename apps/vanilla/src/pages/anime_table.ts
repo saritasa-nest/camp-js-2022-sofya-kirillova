@@ -1,12 +1,11 @@
-import { formatDate } from "../global/functions";
+import { formatDate } from "../scripts/functions";
+
 /**
  * 
  * @param anime_promise 
  */
-export const anime_table_output = ((anime_promise: Promise<any>) => {
+export const anime_table_output = ((anime_promise: Promise<IAnimeTable>): void => {
     anime_promise.then((anime_data) => {
-      const table_element = document.createElement('table');
-      table_element.className = 'anime-table'
       let table_HTML = `
       <thead>
       <tr>
@@ -17,7 +16,7 @@ export const anime_table_output = ((anime_promise: Promise<any>) => {
        <td>aired start</td>
       </tr>
      </thead>`
-      anime_data.results.forEach((anime: IAnimeTable) => {
+      anime_data.results.forEach((anime: IAnime) => {
         table_HTML += `
       <tr>
         <td><img class='' src='${anime.image}'></td>
@@ -30,8 +29,11 @@ export const anime_table_output = ((anime_promise: Promise<any>) => {
         <td>${formatDate(anime.aired.start)}</td>
       </tr>`;
       });
-      let a = document.querySelector('.anime-table') || document.body
-      a.innerHTML = table_HTML
+      let table_element = document.querySelector('.anime-table')
+      if (table_element === null){
+        throw new Error('not element')
+      }
+      table_element.innerHTML = table_HTML
     })
   
   
