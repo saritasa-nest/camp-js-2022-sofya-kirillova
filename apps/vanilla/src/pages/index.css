@@ -1,5 +1,70 @@
 @import url("../global/index.css");
+@import url("../global/variables.css");
 
 .title {
   color: var(--heading-color-1);
+}
+
+header {
+  display: flex;
+  justify-content: flex-end;
+  height: 75px;
+  background: var(--heading-color-3);
+  align-items: center;
+  padding-right: 50px;
+}
+
+.anime-main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+  width: 65vw;
+  margin-top: 25px;
+}
+
+.anime-table {
+  gap: 10px;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.anime-table > thead {
+  font-size: 24px;
+}
+
+.anime-table td:nth-child(n+2) {
+  padding: 2px 25px;
+}
+
+.anime-table img {
+  width: 75px;
+}
+
+.pagination button {
+  background: none;
+  border: none;
+}
+
+.name-anime {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-eng {
+  font-size: 14px;
+  color: #a7a7a7;
+}
+
+.current-page {
+  color: var(--heading-color-3);
+  font-size: 26px;
+}
+
+#sort-anime-table {
+  padding: 5px 15px;
+  font-size: 16px;
+  outline: none;
+  margin-left: 0;
+  margin-right: auto;
 }

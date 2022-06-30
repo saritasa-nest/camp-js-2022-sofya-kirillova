@@ -20,9 +20,8 @@ a:hover,
   gap: 16px;
 }
 
-.default-layout {
-  --default-layout-width: 600px;
-
-  margin: 80px auto 0;
-  max-width: var(--default-layout-width);
+button,
+select {
+  font-size: inherit;
+  font-family: inherit;
 }
