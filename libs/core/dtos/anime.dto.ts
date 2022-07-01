@@ -20,9 +20,9 @@ export interface AnimeDto {
   readonly aired: {
 
     /** Start. */
-    start: string | null;
+    readonly start: string | null;
 
     /** End. */
-    end: string | null;
+    readonly end: string | null;
   };
 }

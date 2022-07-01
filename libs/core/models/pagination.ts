@@ -2,7 +2,6 @@ import { Immerable, OmitImmerable } from './immerable';
 
 /** Pagination. */
 export class Pagination<T> extends Immerable {
- 
   /** Total count of items. */
   public readonly count: number;
 
