@@ -1,11 +1,14 @@
+import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+
+import { Anime } from '@js-camp/core/models/anime';
+
 import { formatDate } from '../scripts/functions';
-import { IAnime, IAnimeTable } from '../scripts/interface';
 
 /**
  * Outputs a table with anime.
  * @param animePromise  Anime Data.
  */
-export function animeTableOutput(animePromise: Promise<IAnimeTable>): void {
+export function animeTableOutput(animePromise: Promise<PaginationDto<Anime>>): void {
   animePromise.then(animeData => {
     let TABLE_HTML = `
       <thead>
@@ -17,13 +20,13 @@ export function animeTableOutput(animePromise: Promise<IAnimeTable>): void {
        <td>aired start</td>
       </tr>
      </thead>`;
-    animeData.results.forEach((anime: IAnime) => {
+    animeData.results.forEach((anime: Anime) => {
       TABLE_HTML += `
       <tr>
         <td><img class='' src='${anime.image}'></td>
         <td class="name-anime">
-          <span>${anime.title_eng}</span>
-          <span class="title-eng">${anime.title_jpn}</span>
+          <span>${anime.titleEng}</span>
+          <span class="title-eng">${anime.titleJpn}</span>
         </td>
         <td>${anime.type}</td>
         <td>${anime.status}</td>
