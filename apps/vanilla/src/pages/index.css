@@ -37,6 +37,11 @@ header {
   padding: 2px 25px;
 }
 
+.anime-table th {
+  text-align: left;
+  padding: 2px 25px;
+}
+
 .anime-table img {
   width: 75px;
 }

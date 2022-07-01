@@ -13,11 +13,11 @@ export function animeTableOutput(animePromise: Promise<PaginationDto<Anime>>): v
     let TABLE_HTML = `
       <thead>
       <tr>
-       <td></td>
-       <td>name</td>
-       <td>type</td>
-       <td>status</td>
-       <td>aired start</td>
+       <th></th>
+       <th>name</th>
+       <th>type</th>
+       <th>status</th>
+       <th>aired start</th>
       </tr>
      </thead>`;
     animeData.results.forEach((anime: Anime) => {
