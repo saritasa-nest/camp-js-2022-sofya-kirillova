@@ -1,12 +1,13 @@
-import { formatDate } from "../scripts/functions";
+import { formatDate } from '../scripts/functions';
+import { IAnime, IAnimeTable } from '../scripts/interface';
 
 /**
- * 
- * @param anime_promise 
+ * Outputs a table with anime.
+ * @param animePromise  Anime Data.
  */
-export const anime_table_output = ((anime_promise: Promise<IAnimeTable>): void => {
-    anime_promise.then((anime_data) => {
-      let table_HTML = `
+export function animeTableOutput(animePromise: Promise<IAnimeTable>): void {
+  animePromise.then(animeData => {
+    let TABLE_HTML = `
       <thead>
       <tr>
        <td></td>
@@ -15,9 +16,9 @@ export const anime_table_output = ((anime_promise: Promise<IAnimeTable>): void =
        <td>status</td>
        <td>aired start</td>
       </tr>
-     </thead>`
-      anime_data.results.forEach((anime: IAnime) => {
-        table_HTML += `
+     </thead>`;
+    animeData.results.forEach((anime: IAnime) => {
+      TABLE_HTML += `
       <tr>
         <td><img class='' src='${anime.image}'></td>
         <td class="name-anime">
@@ -28,13 +29,11 @@ export const anime_table_output = ((anime_promise: Promise<IAnimeTable>): void =
         <td>${anime.status}</td>
         <td>${formatDate(anime.aired.start)}</td>
       </tr>`;
-      });
-      let table_element = document.querySelector('.anime-table')
-      if (table_element === null){
-        throw new Error('not element')
-      }
-      table_element.innerHTML = table_HTML
-    })
-  
-  
+    });
+    const TABLE_ELEMENT = document.querySelector('.anime-table');
+    if (TABLE_ELEMENT === null) {
+      throw new Error('not element');
+    }
+    TABLE_ELEMENT.innerHTML = TABLE_HTML;
   });
+}
