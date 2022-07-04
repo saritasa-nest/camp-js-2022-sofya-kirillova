@@ -2,9 +2,11 @@ import { AnimeDto } from '../dtos/anime.dto';
 import { PaginationDto } from '../dtos/pagination.dto';
 import { Anime } from '../models/anime';
 import { Pagination } from '../models/pagination';
+
 import { AnimeMapper } from './anime.mapper';
 
 export namespace PaginationMapper {
+
   /**
    * Maps dto to model.
    * @param dto Pagination dto.
