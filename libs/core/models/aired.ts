@@ -4,10 +4,10 @@ import { Immerable, OmitImmerable } from './immerable';
 export class Aired extends Immerable {
 
   /** Start date, for example, "2014-12-20T17:30:50.416Z". */
-  start: Date;
+  public readonly start: Date;
 
   /** End date, for example, "2014-12-20T17:30:50.416Z". */
-  end: Date;
+  public readonly end: Date;
 
   public constructor(data: PostInitArgsAired) {
     super();

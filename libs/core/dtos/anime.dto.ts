@@ -1,4 +1,4 @@
-import { AiredDto } from "./aired.dto";
+import { AiredDto } from './aired.dto';
 
 /** Anime DTO. */
 export interface AnimeDto {

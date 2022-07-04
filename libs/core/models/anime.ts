@@ -20,7 +20,7 @@ export class Anime extends Immerable {
   public readonly status: string;
 
   /** Aired date of the anime. */
-  public readonly aired: Aired
+  public readonly aired: Aired;
 
   public constructor(data: PostInitArgsAnime) {
     super();
