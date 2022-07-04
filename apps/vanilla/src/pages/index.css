@@ -5,32 +5,25 @@
   color: var(--heading-color-1);
 }
 
-header {
+.header {
   display: flex;
   justify-content: flex-end;
-  height: 75px;
   background: var(--heading-color-3);
   align-items: center;
-  padding-right: 50px;
+  padding: 35px 50px 15px;
 }
 
 .anime-main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: auto;
   width: 65vw;
-  margin-top: 25px;
+  margin: 25px auto 0;
 }
 
 .anime-table {
-  gap: 10px;
   margin-top: 25px;
   width: 100%;
-}
-
-.anime-table > thead {
-  font-size: 24px;
 }
 
 .anime-table td:nth-child(n+2) {
@@ -58,7 +51,7 @@ header {
 
 .title-eng {
   font-size: 14px;
-  color: #a7a7a7;
+  color: var(--name-color-1);
 }
 
 .current-page {
@@ -66,10 +59,14 @@ header {
   font-size: 26px;
 }
 
-#sort-anime-table {
+.sort-anime-table {
   padding: 5px 15px;
   font-size: 16px;
   outline: none;
   margin-left: 0;
   margin-right: auto;
+}
+
+.sort-anime-table:focus {
+  outline: 1px solid var(--heading-color-3);
 }

@@ -11,9 +11,7 @@ export namespace PaginationMapper {
    * @param dto Pagination dto.
    */
   export function fromDto(dto: PaginationDto<AnimeDto>): Pagination<Anime> {
-    const results = dto.results.map(anime => {
-      return AnimeMapper.fromDto(anime);
-    });
+    const results = dto.results.map(anime =>  AnimeMapper.fromDto(anime));
     return new Pagination<Anime>({
       count: dto.count,
       next: dto.next,

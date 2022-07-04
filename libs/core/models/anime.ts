@@ -1,32 +1,26 @@
+import { Aired } from './aired';
 import { Immerable, OmitImmerable } from './immerable';
 
-/** Genre. */
+/** Anime. */
 export class Anime extends Immerable {
 
-  /** Image. */
+  /** Image of the anime. */
   public readonly image: string;
 
-  /** English name. */
-  public readonly titleEng: string | null;
+  /** English name of the anime. */
+  public readonly titleEng: string;
 
-  /** Japanese name. */
-  public readonly titleJpn: string | null;
+  /** Japanese name of the anime. */
+  public readonly titleJpn: string;
 
-  /** Type. */
+  /** Type anime of the anime. */
   public readonly type: string;
 
-  /** Status. */
+  /** Status of the anime. */
   public readonly status: string;
 
-  /** Aired. */
-  public readonly aired: {
-
-    /** Start. */
-    start: string | null;
-
-    /** End. */
-    end: string | null;
-  };
+  /** Aired date of the anime. */
+  public readonly aired: Aired
 
   public constructor(data: PostInitArgsAnime) {
     super();

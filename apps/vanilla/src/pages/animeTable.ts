@@ -1,14 +1,15 @@
-import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import assert from 'assert';
 
 import { Anime } from '@js-camp/core/models/anime';
+import { Pagination } from '@js-camp/core/models/pagination';
 
 import { formatDate } from '../scripts/functions';
 
 /**
  * Outputs a table with anime.
- * @param animePromise  Anime Data.
+ * @param animePromise Anime Data.
  */
-export function animeTableOutput(animePromise: Promise<PaginationDto<Anime>>): void {
+export function renderAnimeTable(animePromise: Promise<Pagination<Anime>>): void {
   animePromise.then(animeData => {
     let TABLE_HTML = `
       <thead>
@@ -20,7 +21,7 @@ export function animeTableOutput(animePromise: Promise<PaginationDto<Anime>>): v
        <th>aired start</th>
       </tr>
      </thead>`;
-    animeData.results.forEach((anime: Anime) => {
+    animeData.results.forEach(anime => {
       TABLE_HTML += `
       <tr>
         <td><img class='' src='${anime.image}'></td>
@@ -34,9 +35,7 @@ export function animeTableOutput(animePromise: Promise<PaginationDto<Anime>>): v
       </tr>`;
     });
     const TABLE_ELEMENT = document.querySelector('.anime-table');
-    if (TABLE_ELEMENT === null) {
-      throw new Error('not element');
-    }
+    assert(TABLE_ELEMENT !== null);
     TABLE_ELEMENT.innerHTML = TABLE_HTML;
   });
 }

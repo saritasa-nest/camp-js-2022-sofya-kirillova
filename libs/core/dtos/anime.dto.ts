@@ -1,28 +1,23 @@
+import { AiredDto } from "./aired.dto";
+
 /** Anime DTO. */
 export interface AnimeDto {
 
-  /** Image. */
+  /** Image of the anime. */
   readonly image: string;
 
-  /** English name. */
-  readonly title_eng: string | null;
+  /** English name of the anime. */
+  readonly title_eng: string;
 
-  /** Japanese name. */
-  readonly title_jpn: string | null;
+  /** Japanese name of the anime. */
+  readonly title_jpn: string;
 
-  /** Type. */
+  /** Type of the anime. */
   readonly type: string;
 
-  /** Status. */
+  /** Status of the anime. */
   readonly status: string;
 
-  /** Aired. */
-  readonly aired: {
-
-    /** Start. */
-    readonly start: string | null;
-
-    /** End. */
-    readonly end: string | null;
-  };
+  /** Aired date of the anime. */
+  readonly aired: AiredDto;
 }
