@@ -1,6 +1,6 @@
-import assert from 'assert';
-
 import { renderAnimeTable } from '../pages/animeTable';
+
+import { isNull } from './functions';
 
 import { getAnime } from './requests';
 
@@ -15,7 +15,7 @@ export function getPagination(position: Element, pageNumber = 25, step = 3, page
   let currentPage = page;
   position.addEventListener('click', event => handlePageButtonClick(event));
   const selectElement = document.querySelector('.sort-anime-table');
-  assert(selectElement !== null);
+  isNull(selectElement !== null);
   let order = 'title_eng';
   selectElement.addEventListener('change', (event: Event) => {
     const target = event.target as HTMLSelectElement;

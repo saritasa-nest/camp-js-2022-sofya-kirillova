@@ -16,7 +16,6 @@ export async function getAnime(size: number,
   pageNumber: number,
   order: string,
   https: string | undefined): Promise<Pagination<Anime>> {
-  console.log(533, process.env.API_KEY)
   const response = await api.get(
     https === null ? https :
       `/anime/anime/?limit=${size}&offset=${(pageNumber - 1) * size}&ordering=${order}%2Cid`,

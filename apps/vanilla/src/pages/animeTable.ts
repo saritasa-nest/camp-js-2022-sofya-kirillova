@@ -1,9 +1,7 @@
-import assert from 'assert';
-
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 
-import { formatDate } from '../scripts/functions';
+import { formatDate, isNull } from '../scripts/functions';
 
 /**
  * Outputs a table with anime.
@@ -11,18 +9,12 @@ import { formatDate } from '../scripts/functions';
  */
 export function renderAnimeTable(animePromise: Promise<Pagination<Anime>>): void {
   animePromise.then(animeData => {
-    let TABLE_HTML = `
-      <thead>
-      <tr>
-       <th></th>
-       <th>name</th>
-       <th>type</th>
-       <th>status</th>
-       <th>aired start</th>
-      </tr>
-     </thead>`;
+    const TABLE_ELEMENT = document.querySelector('.anime-table');
+    isNull(TABLE_ELEMENT !== null);
+    const tableTheadHTML = TABLE_ELEMENT.innerHTML;
+    let tableBodyHTML = ``;
     animeData.results.forEach(anime => {
-      TABLE_HTML += `
+      tableBodyHTML += `
       <tr>
         <td><img class='' src='${anime.image}'></td>
         <td class="name-anime">
@@ -34,8 +26,6 @@ export function renderAnimeTable(animePromise: Promise<Pagination<Anime>>): void
         <td>${formatDate(anime.aired.start)}</td>
       </tr>`;
     });
-    const TABLE_ELEMENT = document.querySelector('.anime-table');
-    assert(TABLE_ELEMENT !== null);
-    TABLE_ELEMENT.innerHTML = TABLE_HTML;
+    TABLE_ELEMENT.innerHTML = tableTheadHTML + tableBodyHTML;
   });
 }
