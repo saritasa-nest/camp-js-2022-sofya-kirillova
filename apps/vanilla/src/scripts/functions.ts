@@ -1,7 +1,6 @@
 /**
  * The function formats date to 'dd.mm.yyyy' or 'no date'.
  * @param dateReceived Date.
- * @returns Formats date to 'dd.mm.yyyy' or 'no date.
  */
 export function formatDate(dateReceived: Date): string {
   const date = new Date(dateReceived);

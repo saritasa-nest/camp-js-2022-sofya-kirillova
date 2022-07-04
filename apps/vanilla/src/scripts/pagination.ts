@@ -27,8 +27,8 @@ export function getPagination(position: Element, pageNumber = 25, step = 3, page
    * Requests the anime table and calls the rendering.
    * @param apiAddress Request address.
    */
-  function resetPagination(apiAddress: string | undefined = undefined): void {
-    const animePromise = getAnime(pageNumber, currentPage, order, apiAddress);
+  function resetPagination(apiAddress = ''): void {
+    const animePromise = getAnime(pageNumber, currentPage, order, apiAddress ?? undefined);
     renderAnimeTable(animePromise);
     animePromise.then(animeData => {
       const countPage = Math.ceil(animeData.count / pageNumber);
@@ -43,15 +43,15 @@ export function getPagination(position: Element, pageNumber = 25, step = 3, page
   function handlePageButtonClick(event: Event): void {
     scrollTo(0, 0);
     const target = event.target as HTMLButtonElement;
-    if (target.value === 'next_page') {
+    if (target.id === 'next_page') {
       currentPage++;
 
-    } else if (target.value === 'previous_page') {
+    } else if (target.id === 'previous_page') {
       currentPage--;
     } else {
       currentPage = Number(target.innerHTML);
-      resetPagination();
     }
+    resetPagination();
   }
 
   resetPagination();
@@ -72,8 +72,9 @@ function renderPagination(previous: string | null,
   step: number,
   position: Element): void {
   let divHTML = ``;
-  if (currentPage < step + 3) {
-    for (let i = 1; i < step * 2 + 3; i++) {
+  const NUMBER_ADDITIONAL_PAGES = 3;
+  if (currentPage < step + NUMBER_ADDITIONAL_PAGES) {
+    for (let i = 1; i < step * step + NUMBER_ADDITIONAL_PAGES; i++) {
       divHTML += `
             <button type="button">${i}</button>`;
     }
@@ -82,8 +83,8 @@ function renderPagination(previous: string | null,
             <button type="button">${countPages}</button>
             <button type="button" id='next_page' value='${next}'>&#9658;</button>`;
     position.innerHTML = divHTML;
-  } else if (countPages - currentPage < step + 3) {
-    const countViewNumberPage = step * 2;
+  } else if (countPages - currentPage < step + NUMBER_ADDITIONAL_PAGES) {
+    const countViewNumberPage = step * step;
     divHTML += `
             <button type="button" id='previous_page' value='${previous}'>&#9668;</button>
             <button type="button">1</button>

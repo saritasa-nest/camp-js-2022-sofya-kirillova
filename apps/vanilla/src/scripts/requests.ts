@@ -10,7 +10,6 @@ import { api } from './API';
  * @param pageNumber Current page.
  * @param order Selected sorting type.
  * @param https API.
- * @returns Anime data.
  */
 export async function getAnime(size: number,
   pageNumber: number,
