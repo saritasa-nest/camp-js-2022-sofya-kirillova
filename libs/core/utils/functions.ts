@@ -13,7 +13,7 @@ export function formatDate(dateReceived: Date): string {
 }
 
 /**
- * Function for checking for element.
+ * The function checks for the presence of an element.
  * @param value Check the value.
  */
 export function assertNonNull<T>(value: T | undefined | null): asserts value is NonNullable<T> {
