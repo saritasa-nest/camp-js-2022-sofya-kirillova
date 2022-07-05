@@ -7,8 +7,10 @@ import { formatDate } from '@js-camp/core/utils/functions';
  * @param animeData Anime Data.
  */
 export function renderAnimeTable(animeData: Pagination<Anime>): void {
-  const TABLE_ELEMENT = document.createElement('table');
-  TABLE_ELEMENT.className = 'anime-table';
+  const TABLE_ELEMENT = document.querySelector('.anime-table');
+  if (TABLE_ELEMENT === null) {
+    throw new Error('not element');
+  }
   const tableTheadHTML = `
   <thead>
     <tr>
@@ -34,9 +36,4 @@ export function renderAnimeTable(animeData: Pagination<Anime>): void {
       </tr>`;
   });
   TABLE_ELEMENT.innerHTML = tableTheadHTML + tableBodyHTML;
-  const DIV_ELEMENT = document.querySelector('.anime-main');
-  if (DIV_ELEMENT === null) {
-    throw new Error('not element');
-  }
-  DIV_ELEMENT?.append(TABLE_ELEMENT);
 }

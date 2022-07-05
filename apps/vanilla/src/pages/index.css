@@ -39,12 +39,6 @@
   width: 75px;
 }
 
-.pagination {
-  width: 65vw;
-  margin: auto;
-  text-align: center;
-}
-
 .pagination button {
   background: none;
   border: none;
