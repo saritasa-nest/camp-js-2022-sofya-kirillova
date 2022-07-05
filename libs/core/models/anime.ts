@@ -22,7 +22,7 @@ export class Anime extends Immerable {
   /** Aired date of the anime. */
   public readonly aired: Aired;
 
-  public constructor(data: PostInitArgsAnime) {
+  public constructor(data: InitArgsAnime) {
     super();
     this.image = data.image;
     this.titleEng = data.titleEng;
@@ -33,4 +33,4 @@ export class Anime extends Immerable {
   }
 }
 
-type PostInitArgsAnime = OmitImmerable<Anime>;
+type InitArgsAnime = OmitImmerable<Anime>;

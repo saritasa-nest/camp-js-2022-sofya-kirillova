@@ -9,11 +9,11 @@ export class Aired extends Immerable {
   /** End date, for example, "2014-12-20T17:30:50.416Z". */
   public readonly end: Date;
 
-  public constructor(data: PostInitArgsAired) {
+  public constructor(data: InitArgsAired) {
     super();
     this.start = data.start;
     this.end = data.end;
   }
 }
 
-type PostInitArgsAired = OmitImmerable<Aired>;
+type InitArgsAired = OmitImmerable<Aired>;
