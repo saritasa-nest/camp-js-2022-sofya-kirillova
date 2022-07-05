@@ -9,7 +9,7 @@ import { getAnime } from './requests';
  * @param stepPage Pages before and after current.
  * @param page Current page.
  */
-export function getPagination(positionPagination: Element, pageSize = 25, stepPage = 3, page = 1): void {
+export function getPagination(positionPagination: HTMLDivElement, pageSize = 25, stepPage = 3, page = 1): void {
   let currentPagePagination = page;
   positionPagination.addEventListener('click', event => handlePageButtonClick(event));
   const selectElement = document.querySelector<HTMLSelectElement>('.sort-anime-table');
@@ -29,7 +29,7 @@ export function getPagination(positionPagination: Element, pageSize = 25, stepPa
    */
   function resetPagination(apiAddress = ''): void {
     const animePromise = getAnime({ pageSize, currentPage: currentPagePagination, order }, apiAddress ?? undefined);
-    renderAnimeTable(animePromise);
+    animePromise.then(animeData => renderAnimeTable(animeData));
     animePromise.then(animeData => {
       const countPage = Math.ceil(animeData.count / pageSize);
       const requestAddress = {

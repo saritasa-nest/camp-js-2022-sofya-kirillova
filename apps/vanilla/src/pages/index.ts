@@ -1,7 +1,7 @@
 import { getPagination } from '../scripts/pagination';
 
 const COUNT_ANIME_PAGE = 30;
-const paginationDiv = document.querySelector('.pagination');
+const paginationDiv: HTMLDivElement | null = document.querySelector('.pagination');
 if (paginationDiv === null) {
   throw new Error('not element');
 }

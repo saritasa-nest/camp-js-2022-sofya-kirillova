@@ -4,18 +4,24 @@ import { formatDate } from '@js-camp/core/utils/functions';
 
 /**
  * Outputs a table with anime.
- * @param animePromise Anime Data.
+ * @param animeData Anime Data.
  */
-export function renderAnimeTable(animePromise: Promise<Pagination<Anime>>): void {
-  animePromise.then(animeData => {
-    const TABLE_ELEMENT = document.querySelector('.anime-table');
-    if (TABLE_ELEMENT === null) {
-      throw new Error('not element');
-    }
-    const tableTheadHTML = TABLE_ELEMENT.innerHTML;
-    let tableBodyHTML = ``;
-    animeData.results.forEach(anime => {
-      tableBodyHTML += `
+export function renderAnimeTable(animeData: Pagination<Anime>): void {
+  const TABLE_ELEMENT = document.createElement('table');
+  TABLE_ELEMENT.className = 'anime-table';
+  const tableTheadHTML = `
+  <thead>
+    <tr>
+      <th></th>
+      <th>name</th>
+      <th>type</th>
+      <th>status</th>
+      <th>aired start</th>
+    </tr>
+  </thead>`;
+  let tableBodyHTML = ``;
+  animeData.results.forEach(anime => {
+    tableBodyHTML += `
       <tr>
         <td><img class='' src='${anime.image}'></td>
         <td class="name-anime">
@@ -26,7 +32,11 @@ export function renderAnimeTable(animePromise: Promise<Pagination<Anime>>): void
         <td>${anime.status}</td>
         <td>${formatDate(anime.aired.start)}</td>
       </tr>`;
-    });
-    TABLE_ELEMENT.innerHTML = tableTheadHTML + tableBodyHTML;
   });
+  TABLE_ELEMENT.innerHTML = tableTheadHTML + tableBodyHTML;
+  const DIV_ELEMENT = document.querySelector('.anime-main');
+  if (DIV_ELEMENT === null) {
+    throw new Error('not element');
+  }
+  DIV_ELEMENT?.append(TABLE_ELEMENT);
 }
