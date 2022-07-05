@@ -25,7 +25,7 @@ export function renderAnimeTable(animeData: Pagination<Anime>): void {
   animeData.results.forEach(anime => {
     tableBodyHTML += `
       <tr>
-        <td><img class='' src='${anime.image}'></td>
+        <td><img alt='anime image' src='${anime.image}'></td>
         <td class="name-anime">
           <span>${anime.titleEng}</span>
           <span class="title-eng">${anime.titleJpn}</span>
