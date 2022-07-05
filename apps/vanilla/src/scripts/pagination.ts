@@ -1,21 +1,21 @@
 import { renderAnimeTable } from '../pages/animeTable';
 
-import { isNull } from './functions';
-
 import { getAnime } from './requests';
 
 /**
  * Implementation of pagination.
- * @param position Where is the pagination located.
- * @param pageNumber Number of results to return per page.
- * @param step Pages before and after current.
+ * @param positionPagination Where is the pagination located.
+ * @param pageSize Number of results to return per page.
+ * @param stepPage Pages before and after current.
  * @param page Current page.
  */
-export function getPagination(position: Element, pageNumber = 25, step = 3, page = 1): void {
-  let currentPage = page;
-  position.addEventListener('click', event => handlePageButtonClick(event));
-  const selectElement = document.querySelector('.sort-anime-table');
-  isNull(selectElement !== null);
+export function getPagination(positionPagination: Element, pageSize = 25, stepPage = 3, page = 1): void {
+  let currentPagePagination = page;
+  positionPagination.addEventListener('click', event => handlePageButtonClick(event));
+  const selectElement = document.querySelector<HTMLSelectElement>('.sort-anime-table');
+  if (selectElement === null) {
+    throw new Error('not element');
+  }
   let order = 'title_eng';
   selectElement.addEventListener('change', (event: Event) => {
     const target = event.target as HTMLSelectElement;
@@ -28,11 +28,21 @@ export function getPagination(position: Element, pageNumber = 25, step = 3, page
    * @param apiAddress Request address.
    */
   function resetPagination(apiAddress = ''): void {
-    const animePromise = getAnime(pageNumber, currentPage, order, apiAddress ?? undefined);
+    const animePromise = getAnime({ pageSize, currentPage: currentPagePagination, order }, apiAddress ?? undefined);
     renderAnimeTable(animePromise);
     animePromise.then(animeData => {
-      const countPage = Math.ceil(animeData.count / pageNumber);
-      renderPagination(animeData.previous, animeData.next, countPage, currentPage, step, position);
+      const countPage = Math.ceil(animeData.count / pageSize);
+      const requestAddress = {
+        previous: animeData.previous,
+        next: animeData.next,
+      };
+      const paginationConfig = {
+        countPages: countPage,
+        currentPage: currentPagePagination,
+        step: stepPage,
+        position: positionPagination,
+      };
+      renderPagination(requestAddress, paginationConfig);
     });
   }
 
@@ -44,12 +54,12 @@ export function getPagination(position: Element, pageNumber = 25, step = 3, page
     scrollTo(0, 0);
     const target = event.target as HTMLButtonElement;
     if (target.id === 'next_page') {
-      currentPage++;
+      currentPagePagination++;
 
     } else if (target.id === 'previous_page') {
-      currentPage--;
+      currentPagePagination--;
     } else {
-      currentPage = Number(target.innerHTML);
+      currentPagePagination = Number(target.innerHTML);
     }
     resetPagination();
   }
@@ -58,60 +68,61 @@ export function getPagination(position: Element, pageNumber = 25, step = 3, page
 }
 
 /**
- * @param previous The request address of the previous page.
- * @param next The request address of the next page.
- * @param countPages Count pages.
- * @param currentPage Current page.
- * @param step Pages before and after current.
- * @param position Where is the pagination located.
+ * Render pagination on the page.
+ * @param requestAddress The request address of the previous and next page.
+ * @param paginationConfig Pagination Config: count pages, current page, pages before and after current, pagination located.
  */
-function renderPagination(previous: string | null,
-  next: string | null,
-  countPages: number,
-  currentPage: number,
-  step: number,
-  position: Element): void {
+function renderPagination(requestAddress: {
+  previous: string;
+  next: string;
+},
+paginationConfig: {
+  countPages: number;
+  currentPage: number;
+  step: number;
+  position: Element;
+}): void {
   let divHTML = ``;
   const NUMBER_ADDITIONAL_PAGES = 3;
-  if (currentPage < step + NUMBER_ADDITIONAL_PAGES) {
-    for (let i = 1; i < step * step + NUMBER_ADDITIONAL_PAGES; i++) {
+  if (paginationConfig.currentPage < paginationConfig.step + NUMBER_ADDITIONAL_PAGES) {
+    for (let i = 1; i < paginationConfig.step * paginationConfig.step + NUMBER_ADDITIONAL_PAGES; i++) {
       divHTML += `
             <button type="button">${i}</button>`;
     }
     divHTML += `
             <span>...</span>
-            <button type="button">${countPages}</button>
-            <button type="button" id='next_page' value='${next}'>&#9658;</button>`;
-    position.innerHTML = divHTML;
-  } else if (countPages - currentPage < step + NUMBER_ADDITIONAL_PAGES) {
-    const countViewNumberPage = step * step;
+            <button type="button">${paginationConfig.countPages}</button>
+            <button type="button" id='next_page' value='${requestAddress.next}'>&#9658;</button>`;
+    paginationConfig.position.innerHTML = divHTML;
+  } else if (paginationConfig.countPages - paginationConfig.currentPage < paginationConfig.step + NUMBER_ADDITIONAL_PAGES) {
+    const countViewNumberPage = paginationConfig.step * paginationConfig.step;
     divHTML += `
-            <button type="button" id='previous_page' value='${previous}'>&#9668;</button>
+            <button type="button" id='previous_page' value='${requestAddress.previous}'>&#9668;</button>
             <button type="button">1</button>
             <span>...</span>`;
     for (let i = 0; i <= countViewNumberPage; i++) {
-      const numberPage = countPages + i - countViewNumberPage;
+      const numberPage = paginationConfig.countPages + i - countViewNumberPage;
       divHTML += `
             <button type="button">${numberPage}</button>`;
     }
-    position.innerHTML = divHTML;
+    paginationConfig.position.innerHTML = divHTML;
   } else {
     divHTML += `
-            <button type="button" id='previous_page' value='${previous}'>&#9668;</button>
+            <button type="button" id='previous_page' value='${requestAddress.previous}'>&#9668;</button>
             <button type="button">1</button>
             <span>...</span>`;
-    for (let i = -step; i <= step; i++) {
-      const numberPage = currentPage + i;
+    for (let i = -paginationConfig.step; i <= paginationConfig.step; i++) {
+      const numberPage = paginationConfig.currentPage + i;
       divHTML += `
             <button type="button">${numberPage}</button>`;
     }
     divHTML += `
             <span>...</span>
-            <button type="button">${countPages}</button>
-            <button type="button" id='next_page' value='${next}'>&#9658;</button>`;
-    position.innerHTML = divHTML;
+            <button type="button">${paginationConfig.countPages}</button>
+            <button type="button" id='next_page' value='${requestAddress.next}'>&#9658;</button>`;
+    paginationConfig.position.innerHTML = divHTML;
   }
-  highlightCurrentPage(position, currentPage);
+  highlightCurrentPage(paginationConfig.position, paginationConfig.currentPage);
 }
 
 /**

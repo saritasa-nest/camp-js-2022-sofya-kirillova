@@ -1,7 +1,6 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
-
-import { formatDate, isNull } from '../scripts/functions';
+import { formatDate } from '@js-camp/core/utils/functions';
 
 /**
  * Outputs a table with anime.
@@ -10,7 +9,9 @@ import { formatDate, isNull } from '../scripts/functions';
 export function renderAnimeTable(animePromise: Promise<Pagination<Anime>>): void {
   animePromise.then(animeData => {
     const TABLE_ELEMENT = document.querySelector('.anime-table');
-    isNull(TABLE_ELEMENT !== null);
+    if (TABLE_ELEMENT === null) {
+      throw new Error('not element');
+    }
     const tableTheadHTML = TABLE_ELEMENT.innerHTML;
     let tableBodyHTML = ``;
     animeData.results.forEach(anime => {

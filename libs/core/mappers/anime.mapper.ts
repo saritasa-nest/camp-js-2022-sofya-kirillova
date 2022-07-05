@@ -4,7 +4,7 @@ import { Anime } from '../models/anime';
 import { AiredMapper } from './aired.mapper';
 
 export namespace AnimeMapper {
-  
+
   /**
    * Maps dto to model.
    * @param dto Anime dto.
