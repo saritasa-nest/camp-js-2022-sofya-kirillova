@@ -1,3 +1,5 @@
+import { assertNonNull } from '@js-camp/core/utils/functions';
+
 import { renderAnimeTable } from '../pages/animeTable';
 
 import { getAnime } from './requests';
@@ -13,9 +15,7 @@ export function getPagination(positionPagination: HTMLDivElement, pageSize = 25,
   let currentPagePagination = page;
   positionPagination.addEventListener('click', event => handlePageButtonClick(event));
   const selectElement = document.querySelector<HTMLSelectElement>('.sort-anime-table');
-  if (selectElement === null) {
-    throw new Error('not element');
-  }
+  assertNonNull(selectElement);
   let order = 'title_eng';
   selectElement.addEventListener('change', (event: Event) => {
     const target = event.target as HTMLSelectElement;
