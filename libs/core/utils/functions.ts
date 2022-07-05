@@ -12,13 +12,3 @@ export function formatDate(dateReceived: Date): string {
   return date.toLocaleString('ru', options);
 }
 
-// /**
-//  * Function for verifying invariants.
-//  * @param condition Check the condition.
-//  * @param msg Output a message.
-//  */
-// export function isNull(condition: any, msg?: string): void {
-//   if (condition === null) {
-//     throw new Error(msg ?? 'no element');
-//   }
-// }
