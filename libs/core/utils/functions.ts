@@ -11,4 +11,3 @@ export function formatDate(dateReceived: Date): string {
   };
   return date.toLocaleString('ru', options);
 }
-
