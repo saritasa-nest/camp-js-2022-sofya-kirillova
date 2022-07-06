@@ -82,45 +82,45 @@ function renderPagination(requestAddress: {
   next: string;
 },
 paginationOptions: IRenderPaginationOptions): void {
-  let divHTML = ``;
+  let divContent = ``;
   const NUMBER_ADDITIONAL_PAGES = 3;
   if (paginationOptions.currentPage < paginationOptions.step + NUMBER_ADDITIONAL_PAGES) {
     for (let i = 1; i < paginationOptions.step * paginationOptions.step + NUMBER_ADDITIONAL_PAGES; i++) {
-      divHTML += `
+      divContent += `
             <button type="button">${i}</button>`;
     }
-    divHTML += `
+    divContent += `
             <span>...</span>
             <button type="button">${paginationOptions.countPages}</button>
             <button type="button" id='next_page' value='${requestAddress.next}'>&#9658;</button>`;
-    paginationOptions.position.innerHTML = divHTML;
+    paginationOptions.position.innerHTML = divContent;
   } else if (paginationOptions.countPages - paginationOptions.currentPage < paginationOptions.step + NUMBER_ADDITIONAL_PAGES) {
     const countViewNumberPage = paginationOptions.step * paginationOptions.step;
-    divHTML += `
+    divContent += `
             <button type="button" id='previous_page' value='${requestAddress.previous}'>&#9668;</button>
             <button type="button">1</button>
             <span>...</span>`;
     for (let i = 0; i <= countViewNumberPage; i++) {
       const numberPage = paginationOptions.countPages + i - countViewNumberPage;
-      divHTML += `
+      divContent += `
             <button type="button">${numberPage}</button>`;
     }
-    paginationOptions.position.innerHTML = divHTML;
+    paginationOptions.position.innerHTML = divContent;
   } else {
-    divHTML += `
+    divContent += `
             <button type="button" id='previous_page' value='${requestAddress.previous}'>&#9668;</button>
             <button type="button">1</button>
             <span>...</span>`;
     for (let i = -paginationOptions.step; i <= paginationOptions.step; i++) {
       const numberPage = paginationOptions.currentPage + i;
-      divHTML += `
+      divContent += `
             <button type="button">${numberPage}</button>`;
     }
-    divHTML += `
+    divContent += `
             <span>...</span>
             <button type="button">${paginationOptions.countPages}</button>
             <button type="button" id='next_page' value='${requestAddress.next}'>&#9658;</button>`;
-    paginationOptions.position.innerHTML = divHTML;
+    paginationOptions.position.innerHTML = divContent;
   }
   highlightCurrentPage(paginationOptions.position, paginationOptions.currentPage);
 }

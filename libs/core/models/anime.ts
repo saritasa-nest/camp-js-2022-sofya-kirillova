@@ -8,10 +8,10 @@ export class Anime extends Immerable {
   public readonly image: string;
 
   /** English name of the anime. */
-  public readonly titleEng: string;
+  public readonly titleEnglish: string;
 
   /** Japanese name of the anime. */
-  public readonly titleJpn: string;
+  public readonly titleJapanese: string;
 
   /** Type anime of the anime. */
   public readonly type: string;
@@ -25,8 +25,8 @@ export class Anime extends Immerable {
   public constructor(data: InitArgsAnime) {
     super();
     this.image = data.image;
-    this.titleEng = data.titleEng;
-    this.titleJpn = data.titleJpn;
+    this.titleEnglish = data.titleEnglish;
+    this.titleJapanese = data.titleJapanese;
     this.type = data.type;
     this.status = data.status;
     this.aired = data.aired;

@@ -2,7 +2,7 @@
 export interface IGetPaginationOptions {
 
   /** Pagination located. */
-  position: HTMLDivElement;
+  position: Element;
 
   /** The number of results returned per page. */
   pageSize: number;

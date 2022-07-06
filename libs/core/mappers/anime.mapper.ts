@@ -10,14 +10,13 @@ export namespace AnimeMapper {
    * @param dto Anime dto.
    */
   export function fromDto(dto: AnimeDto): Anime {
-    const aired = AiredMapper.fromDto(dto.aired);
     return new Anime({
       image: dto.image,
-      titleEng: dto.title_eng,
-      titleJpn: dto.title_jpn,
+      titleEnglish: dto.title_eng,
+      titleJapanese: dto.title_jpn,
       type: dto.type,
       status: dto.status,
-      aired,
+      aired: AiredMapper.fromDto(dto.aired)
     });
   }
 }

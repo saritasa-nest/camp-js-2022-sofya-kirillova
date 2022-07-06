@@ -4,12 +4,12 @@ import { assertNonNull, formatDate } from '@js-camp/core/utils/functions';
 
 /**
  * Outputs a table with anime.
- * @param animeData Anime Data.
+ * @param animeData Anime data.
  */
 export function renderAnimeTable(animeData: Pagination<Anime>): void {
   const TABLE_ELEMENT = document.querySelector('.anime-table');
   assertNonNull(TABLE_ELEMENT);
-  const tableTheadHTML = `
+  const tableHeadContent = `
   <thead>
     <tr>
       <th></th>
@@ -19,19 +19,19 @@ export function renderAnimeTable(animeData: Pagination<Anime>): void {
       <th>aired start</th>
     </tr>
   </thead>`;
-  const tableBodyHTML = animeData.results.reduce((body, current) => {
-    const TR_HTML = `
+  const tableBodyContent = animeData.results.reduce((body, current) => {
+    const TR_CONTENT = `
       <tr>
         <td><img alt='anime image' src='${current.image}'></td>
         <td class="name-anime">
-          <span>${current.titleEng}</span>
-          <span class="title-eng">${current.titleJpn}</span>
+          <span>${current.titleEnglish}</span>
+          <span class="title-eng">${current.titleJapanese}</span>
         </td>
         <td>${current.type}</td>
         <td>${current.status}</td>
         <td>${formatDate(current.aired.start)}</td>
       </tr>`;
-    return body + TR_HTML;
+    return body + TR_CONTENT;
   }, ``);
-  TABLE_ELEMENT.innerHTML = tableTheadHTML + tableBodyHTML;
+  TABLE_ELEMENT.innerHTML = tableHeadContent + tableBodyContent;
 }

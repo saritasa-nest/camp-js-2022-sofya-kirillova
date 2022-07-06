@@ -13,7 +13,7 @@
   padding: 35px 50px 15px;
 }
 
-.anime-main {
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -26,13 +26,8 @@
   width: 100%;
 }
 
-.anime-table td:nth-child(n+2) {
-  padding: 2px 25px;
-}
-
 .anime-table th {
   text-align: left;
-  padding: 2px 25px;
 }
 
 .anime-table img {
@@ -50,7 +45,7 @@
 }
 
 .title-eng {
-  font-size: 14px;
+  font-size: 1em;
   color: var(--name-color-1);
 }
 
