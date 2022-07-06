@@ -38,8 +38,8 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
     animePromise.then(animeData => {
       const countPage = Math.ceil(animeData.count / paginationOptions.pageSize);
       const requestAddress = {
-        previous: animeData.previous,
-        next: animeData.next,
+        previous: animeData.urlPreviousPage,
+        next: animeData.urlNextPage,
       };
       const renderPaginationOptions = {
         countPages: countPage,

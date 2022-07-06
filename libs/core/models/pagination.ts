@@ -6,10 +6,10 @@ export class Pagination<T> extends Immerable {
   public readonly count: number;
 
   /** Next page of items. */
-  public readonly next: string;
+  public readonly urlNextPage: string;
 
   /** Previous page of items. */
-  public readonly previous: string;
+  public readonly urlPreviousPage: string;
 
   /** Array of items requested. */
   public readonly results: readonly T[];
@@ -17,8 +17,8 @@ export class Pagination<T> extends Immerable {
   public constructor(data: InitArgsPagination<T>) {
     super();
     this.count = data.count;
-    this.next = data.next;
-    this.previous = data.previous;
+    this.urlNextPage = data.urlNextPage;
+    this.urlPreviousPage = data.urlPreviousPage;
     this.results = data.results;
   }
 }
