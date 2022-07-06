@@ -41,5 +41,3 @@ Thumbs.db
 .angular
 .env
 vite.config.ts
-
-/apps/vanilla/vite-env.d.ts
