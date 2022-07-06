@@ -23,31 +23,24 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
     resetPagination();
   });
 
-  /**
-   * Requests the anime table and calls the rendering.
-   * @param apiAddress Request address.
-   */
-  function resetPagination(apiAddress = ''): void {
+  /** Requests the anime table and calls the rendering. */
+  function resetPagination(): void {
     const paginationConfig = {
       pageSize: paginationOptions.pageSize,
       currentPage,
       order,
     };
-    const animePromise = getAnime(paginationConfig, apiAddress ?? undefined);
+    const animePromise = getAnime(paginationConfig);
     animePromise.then(animeData => renderAnimeTable(animeData));
     animePromise.then(animeData => {
       const countPage = Math.ceil(animeData.count / paginationOptions.pageSize);
-      const requestAddress = {
-        previous: animeData.urlPreviousPage,
-        next: animeData.urlNextPage,
-      };
       const renderPaginationOptions = {
         countPages: countPage,
         currentPage,
         step: paginationOptions.step,
         position: paginationOptions.position,
       };
-      renderPagination(requestAddress, renderPaginationOptions);
+      renderPagination(renderPaginationOptions);
     });
   }
 
@@ -56,19 +49,22 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
    * @param event The pressed button.
    */
   function handlePageButtonClick(event: Event): void {
-    scrollTo(0, 0);
-    const target = event.target as HTMLButtonElement;
-    if (target.id === 'next_page') {
+    if (!(event.target instanceof HTMLButtonElement)) {
+      return;
+    }
+
+    // scrollTo(0, 0);
+    const { target } = event;
+    if (target.value === 'next_page') {
       currentPage++;
 
-    } else if (target.id === 'previous_page') {
+    } else if (target.value === 'previous_page') {
       currentPage--;
     } else {
       currentPage = Number(target.innerHTML);
     }
     resetPagination();
   }
-
   resetPagination();
 }
 
@@ -77,51 +73,37 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
  * @param requestAddress The request address of the previous and next page.
  * @param paginationOptions Pagination options: count pages, current page, pages before and after current, pagination located.
  */
-function renderPagination(requestAddress: {
-  previous: string;
-  next: string;
-},
-paginationOptions: IRenderPaginationOptions): void {
+function renderPagination(paginationOptions: IRenderPaginationOptions): void {
+  const span = `<span>...</span>`;
   let divContent = ``;
-  const NUMBER_ADDITIONAL_PAGES = 3;
-  if (paginationOptions.currentPage < paginationOptions.step + NUMBER_ADDITIONAL_PAGES) {
-    for (let i = 1; i < paginationOptions.step * paginationOptions.step + NUMBER_ADDITIONAL_PAGES; i++) {
-      divContent += `
-            <button type="button">${i}</button>`;
+  const REPORT_START = 1;
+  const numberDisplayedPages = paginationOptions.step * 2;
+  if (paginationOptions.currentPage !== REPORT_START) {
+    divContent += addButton('&#9668;', 'previous_page');
+  }
+  if (paginationOptions.currentPage < numberDisplayedPages) {
+    for (let i = 1; i <= numberDisplayedPages; i++) {
+      divContent += addButton(i);
     }
-    divContent += `
-            <span>...</span>
-            <button type="button">${paginationOptions.countPages}</button>
-            <button type="button" id='next_page' value='${requestAddress.next}'>&#9658;</button>`;
-    paginationOptions.position.innerHTML = divContent;
-  } else if (paginationOptions.countPages - paginationOptions.currentPage < paginationOptions.step + NUMBER_ADDITIONAL_PAGES) {
-    const countViewNumberPage = paginationOptions.step * paginationOptions.step;
-    divContent += `
-            <button type="button" id='previous_page' value='${requestAddress.previous}'>&#9668;</button>
-            <button type="button">1</button>
-            <span>...</span>`;
-    for (let i = 0; i <= countViewNumberPage; i++) {
-      const numberPage = paginationOptions.countPages + i - countViewNumberPage;
-      divContent += `
-            <button type="button">${numberPage}</button>`;
+    divContent += span + addButton(paginationOptions.countPages);
+  } else if (paginationOptions.countPages - paginationOptions.currentPage < numberDisplayedPages - 1) {
+    divContent += addButton(REPORT_START) + span;
+    for (let i = 1; i <= numberDisplayedPages; i++) {
+      const numberPage = paginationOptions.countPages + i - numberDisplayedPages;
+      divContent += addButton(numberPage);
     }
-    paginationOptions.position.innerHTML = divContent;
   } else {
-    divContent += `
-            <button type="button" id='previous_page' value='${requestAddress.previous}'>&#9668;</button>
-            <button type="button">1</button>
-            <span>...</span>`;
+    divContent += addButton(REPORT_START) + span;
     for (let i = -paginationOptions.step; i <= paginationOptions.step; i++) {
       const numberPage = paginationOptions.currentPage + i;
-      divContent += `
-            <button type="button">${numberPage}</button>`;
+      divContent += addButton(numberPage);
     }
-    divContent += `
-            <span>...</span>
-            <button type="button">${paginationOptions.countPages}</button>
-            <button type="button" id='next_page' value='${requestAddress.next}'>&#9658;</button>`;
-    paginationOptions.position.innerHTML = divContent;
+    divContent += span + addButton(paginationOptions.countPages);
   }
+  if (paginationOptions.currentPage !== paginationOptions.countPages) {
+    divContent += addButton('&#9658;', 'next_page');
+  }
+  paginationOptions.position.innerHTML = divContent;
   highlightCurrentPage(paginationOptions.position, paginationOptions.currentPage);
 }
 
@@ -137,4 +119,14 @@ function highlightCurrentPage(position: Element, currentPage: number): void {
       elem.className = 'current-page';
     }
   }
+}
+
+/**
+ * Return a string with a button in the form of HTML.
+ * @param innerHTML Content of the button tag.
+ * @param value Value of the button tag.
+ */
+function addButton(innerHTML: string | number, value = innerHTML): string {
+  const button = `<button type="button" value=${value}>${innerHTML}</button>`;
+  return button;
 }

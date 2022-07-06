@@ -1,7 +1,7 @@
 /** Getting parameters for pagination. */
 export interface IGetPaginationOptions {
 
-  /** Pagination located. */
+  /** The block where the pagination is located. */
   position: Element;
 
   /** The number of results returned per page. */
@@ -26,7 +26,7 @@ export interface IRenderPaginationOptions {
   /** Pages before and after the current page. */
   step: number;
 
-  /** Pagination located. */
+  /** The block where the pagination is located.. */
   position: Element;
 }
 
