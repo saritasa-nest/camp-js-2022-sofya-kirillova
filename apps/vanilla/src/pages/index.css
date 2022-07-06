@@ -8,7 +8,7 @@
 .header {
   display: flex;
   justify-content: flex-end;
-  background: var(--heading-color-3);
+  background-color: var(--heading-color-3);
   align-items: center;
   padding: 35px 50px 15px;
 }
@@ -35,7 +35,7 @@
 }
 
 .pagination button {
-  background: none;
+  background-color: inherit;
   border: none;
 }
 
@@ -45,18 +45,18 @@
 }
 
 .title-eng {
-  font-size: 1em;
+  font-size: 0.7em;
   color: var(--name-color-1);
 }
 
 .current-page {
   color: var(--heading-color-3);
-  font-size: 26px;
+  font-size: 1.1em;
 }
 
 .sort-anime-table {
   padding: 5px 15px;
-  font-size: 16px;
+  font-size: 0.8em;
   outline: none;
   margin-left: 0;
   margin-right: auto;

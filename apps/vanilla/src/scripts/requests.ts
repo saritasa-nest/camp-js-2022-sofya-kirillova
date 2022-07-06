@@ -10,7 +10,6 @@ import { IPaginationConfig } from './interfaces';
 /**
  * Sends a request to the database.
  * @param paginationConfig Pagination Config: number of results to return per page, current page, selected sorting type.
- * @param url Request address.
  */
 export async function getAnime(paginationConfig: IPaginationConfig): Promise<Pagination<Anime>> {
   const offset = (paginationConfig.currentPage - 1) * paginationConfig.pageSize;

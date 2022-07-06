@@ -8,8 +8,7 @@ import { getAnime } from './requests';
 
 /**
  * Implementation of pagination.
- * @param paginationOptions Pagination options:
- * Number of results to return per page, current page, pages before and after current, pagination located.
+ * @param paginationOptions The base parameters for the implementation of pagination.
  */
 export function getPagination(paginationOptions: IGetPaginationOptions): void {
   let { currentPage } = paginationOptions;
@@ -36,9 +35,9 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
       const countPage = Math.ceil(animeData.count / paginationOptions.pageSize);
       const renderPaginationOptions = {
         countPages: countPage,
-        currentPage,
         step: paginationOptions.step,
         position: paginationOptions.position,
+        currentPage,
       };
       renderPagination(renderPaginationOptions);
     });
@@ -53,7 +52,7 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
       return;
     }
 
-    // scrollTo(0, 0);
+    scrollTo(0, 0);
     const { target } = event;
     if (target.value === 'next_page') {
       currentPage++;
@@ -70,7 +69,6 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
 
 /**
  * Render pagination on the page.
- * @param requestAddress The request address of the previous and next page.
  * @param paginationOptions Pagination options: count pages, current page, pages before and after current, pagination located.
  */
 function renderPagination(paginationOptions: IRenderPaginationOptions): void {

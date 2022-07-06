@@ -1,16 +1,17 @@
 /** Parameters for pagination. */
 interface IBasePagination {
+
   /** Current page. */
   currentPage: number;
 
   /** Pages before and after the current page. */
   step: number;
 
-  /** The block where the pagination is located.. */
+  /** The block where the pagination is located. */
   position: Element;
 }
 
-/** Getting parameters for pagination. */
+/** The base parameters for the implementation of pagination. */
 export interface IGetPaginationOptions extends IBasePagination {
 
   /** The number of results returned per page. */
@@ -24,7 +25,7 @@ export interface IRenderPaginationOptions extends IBasePagination {
   countPages: number;
 }
 
-/** Configuration of pagination for Sending a request to the database. */
+/** Parameters for getting anime from the database. */
 export interface IPaginationConfig {
 
   /** The number of results returned per page. */
