@@ -1,25 +1,5 @@
-/** Getting parameters for pagination. */
-export interface IGetPaginationOptions {
-
-  /** The block where the pagination is located. */
-  position: Element;
-
-  /** The number of results returned per page. */
-  pageSize: number;
-
-  /** Current page. */
-  currentPage: number;
-
-  /** Pages before and after the current page. */
-  step: number;
-}
-
-/** Parameters for pagination visualization. */
-export interface IRenderPaginationOptions {
-
-  /** Total number of pages in pagination. */
-  countPages: number;
-
+/** Parameters for pagination. */
+interface IBasePagination {
   /** Current page. */
   currentPage: number;
 
@@ -28,6 +8,20 @@ export interface IRenderPaginationOptions {
 
   /** The block where the pagination is located.. */
   position: Element;
+}
+
+/** Getting parameters for pagination. */
+export interface IGetPaginationOptions extends IBasePagination {
+
+  /** The number of results returned per page. */
+  pageSize: number;
+}
+
+/** Parameters for pagination visualization. */
+export interface IRenderPaginationOptions extends IBasePagination {
+
+  /** Total number of pages in pagination. */
+  countPages: number;
 }
 
 /** Configuration of pagination for Sending a request to the database. */

@@ -12,7 +12,7 @@ export function renderAnimeTable(animeData: Pagination<Anime>): void {
   const tableHeadContent = `
   <thead>
     <tr>
-      <th></th>
+      <th class="visually-hidden">image</th>
       <th>name</th>
       <th>type</th>
       <th>status</th>
