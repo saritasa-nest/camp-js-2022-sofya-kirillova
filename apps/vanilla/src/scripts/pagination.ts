@@ -11,7 +11,7 @@ import { getAnime } from './requests';
  * @param paginationOptions The base parameters for the implementation of pagination.
  */
 export function getPagination(paginationOptions: IGetPaginationOptions): void {
-  let { startPage } = paginationOptions;
+  let currentPage = paginationOptions.startPage;
   paginationOptions.container.addEventListener('click', event => handlePageButtonClick(event));
   const selectElement = document.querySelector<HTMLSelectElement>('.anime__sort');
   assertNonNull(selectElement);
@@ -26,7 +26,7 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
   function resetPagination(): void {
     const paginationConfig = {
       pageSize: paginationOptions.pageSize,
-      currentPage: startPage,
+      currentPage,
       order,
     };
     const animePromise = getAnime(paginationConfig);
@@ -37,7 +37,7 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
         countPages: countPage,
         maxStepsSelectedPage: paginationOptions.maxStepsSelectedPage,
         container: paginationOptions.container,
-        startPage,
+        startPage: currentPage,
       };
       renderPagination(renderPaginationOptions);
     });
@@ -55,12 +55,12 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
     scrollTo(0, 0);
     const { target } = event;
     if (target.value === 'next_page') {
-      startPage++;
+      currentPage++;
 
     } else if (target.value === 'previous_page') {
-      startPage--;
+      currentPage--;
     } else {
-      startPage = Number(target.innerHTML);
+      currentPage = Number(target.innerHTML);
     }
     resetPagination();
   }
