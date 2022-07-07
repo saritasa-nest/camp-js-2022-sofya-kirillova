@@ -1,9 +1,8 @@
 /**
  * The function formats date to 'dd.mm.yyyy' or 'no date'.
- * @param dateReceived Date.
+ * @param date Date.
  */
-export function formatDate(dateReceived: Date): string {
-  const date = new Date(dateReceived);
+export function formatDate(date: Date): string {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: '2-digit',

@@ -9,8 +9,8 @@ export namespace AiredMapper {
    */
   export function fromDto(dto: AiredDto): Aired {
     return new Aired({
-      start: dto.start,
-      end: dto.end,
+      start: new Date(dto.start),
+      end: new Date(dto.end),
     });
   }
 }

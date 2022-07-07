@@ -7,20 +7,10 @@ import { assertNonNull, formatDate } from '@js-camp/core/utils/functions';
  * @param animeData Anime data.
  */
 export function renderAnimeTable(animeData: Pagination<Anime>): void {
-  const TABLE_ELEMENT = document.querySelector('.anime-table');
-  assertNonNull(TABLE_ELEMENT);
-  const tableHeadContent = `
-  <thead>
-    <tr>
-      <th class="visually-hidden">image</th>
-      <th>name</th>
-      <th>type</th>
-      <th>status</th>
-      <th>aired start</th>
-    </tr>
-  </thead>`;
+  const tbodyElement = document.querySelector('.anime-tbody');
+  assertNonNull(tbodyElement);
   const tableBodyContent = animeData.results.reduce((body, current) => {
-    const TR_CONTENT = `
+    const trContent = `
       <tr>
         <td><img alt='anime image' src='${current.image}'></td>
         <td class="name-anime">
@@ -31,7 +21,7 @@ export function renderAnimeTable(animeData: Pagination<Anime>): void {
         <td>${current.status}</td>
         <td>${formatDate(current.aired.start)}</td>
       </tr>`;
-    return body + TR_CONTENT;
+    return body + trContent;
   }, ``);
-  TABLE_ELEMENT.innerHTML = tableHeadContent + tableBodyContent;
+  tbodyElement.innerHTML = tableBodyContent;
 }

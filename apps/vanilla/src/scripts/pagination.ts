@@ -12,7 +12,7 @@ import { getAnime } from './requests';
  */
 export function getPagination(paginationOptions: IGetPaginationOptions): void {
   let { currentPage } = paginationOptions;
-  paginationOptions.position.addEventListener('click', event => handlePageButtonClick(event));
+  paginationOptions.container.addEventListener('click', event => handlePageButtonClick(event));
   const selectElement = document.querySelector<HTMLSelectElement>('.sort-anime-table');
   assertNonNull(selectElement);
   let order = 'title_eng';
@@ -36,7 +36,7 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
       const renderPaginationOptions = {
         countPages: countPage,
         step: paginationOptions.step,
-        position: paginationOptions.position,
+        container: paginationOptions.container,
         currentPage,
       };
       renderPagination(renderPaginationOptions);
@@ -74,9 +74,9 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
 function renderPagination(paginationOptions: IRenderPaginationOptions): void {
   const span = `<span>...</span>`;
   let divContent = ``;
-  const REPORT_START = 1;
+  const reportStart = 1;
   const numberDisplayedPages = paginationOptions.step * 2;
-  if (paginationOptions.currentPage !== REPORT_START) {
+  if (paginationOptions.currentPage !== reportStart) {
     divContent += addButton('&#9668;', 'previous_page');
   }
   if (paginationOptions.currentPage < numberDisplayedPages) {
@@ -85,13 +85,13 @@ function renderPagination(paginationOptions: IRenderPaginationOptions): void {
     }
     divContent += span + addButton(paginationOptions.countPages);
   } else if (paginationOptions.countPages - paginationOptions.currentPage < numberDisplayedPages - 1) {
-    divContent += addButton(REPORT_START) + span;
+    divContent += addButton(reportStart) + span;
     for (let i = 1; i <= numberDisplayedPages; i++) {
       const numberPage = paginationOptions.countPages + i - numberDisplayedPages;
       divContent += addButton(numberPage);
     }
   } else {
-    divContent += addButton(REPORT_START) + span;
+    divContent += addButton(reportStart) + span;
     for (let i = -paginationOptions.step; i <= paginationOptions.step; i++) {
       const numberPage = paginationOptions.currentPage + i;
       divContent += addButton(numberPage);
@@ -101,17 +101,17 @@ function renderPagination(paginationOptions: IRenderPaginationOptions): void {
   if (paginationOptions.currentPage !== paginationOptions.countPages) {
     divContent += addButton('&#9658;', 'next_page');
   }
-  paginationOptions.position.innerHTML = divContent;
-  highlightCurrentPage(paginationOptions.position, paginationOptions.currentPage);
+  paginationOptions.container.innerHTML = divContent;
+  highlightCurrentPage(paginationOptions.container, paginationOptions.currentPage);
 }
 
 /**
  * Highlights the selected page.
- * @param position Where is the pagination located.
+ * @param container Where is the pagination located.
  * @param currentPage Current page.
  */
-function highlightCurrentPage(position: Element, currentPage: number): void {
-  const buttonPagination = Array.from(position.children);
+function highlightCurrentPage(container: Element, currentPage: number): void {
+  const buttonPagination = Array.from(container.children);
   for (const elem of buttonPagination) {
     if (Number(elem.innerHTML) === Number(currentPage)) {
       elem.className = 'current-page';
