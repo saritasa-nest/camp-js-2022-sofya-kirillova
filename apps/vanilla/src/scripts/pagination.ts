@@ -11,9 +11,9 @@ import { getAnime } from './requests';
  * @param paginationOptions The base parameters for the implementation of pagination.
  */
 export function getPagination(paginationOptions: IGetPaginationOptions): void {
-  let { currentPage } = paginationOptions;
+  let { startPage } = paginationOptions;
   paginationOptions.container.addEventListener('click', event => handlePageButtonClick(event));
-  const selectElement = document.querySelector<HTMLSelectElement>('.sort-anime-table');
+  const selectElement = document.querySelector<HTMLSelectElement>('.anime__sort');
   assertNonNull(selectElement);
   let order = 'title_eng';
   selectElement.addEventListener('change', (event: Event) => {
@@ -26,7 +26,7 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
   function resetPagination(): void {
     const paginationConfig = {
       pageSize: paginationOptions.pageSize,
-      currentPage,
+      currentPage: startPage,
       order,
     };
     const animePromise = getAnime(paginationConfig);
@@ -35,9 +35,9 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
       const countPage = Math.ceil(animeData.count / paginationOptions.pageSize);
       const renderPaginationOptions = {
         countPages: countPage,
-        step: paginationOptions.step,
+        maxStepsSelectedPage: paginationOptions.maxStepsSelectedPage,
         container: paginationOptions.container,
-        currentPage,
+        startPage,
       };
       renderPagination(renderPaginationOptions);
     });
@@ -55,12 +55,12 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
     scrollTo(0, 0);
     const { target } = event;
     if (target.value === 'next_page') {
-      currentPage++;
+      startPage++;
 
     } else if (target.value === 'previous_page') {
-      currentPage--;
+      startPage--;
     } else {
-      currentPage = Number(target.innerHTML);
+      startPage = Number(target.innerHTML);
     }
     resetPagination();
   }
@@ -75,16 +75,16 @@ function renderPagination(paginationOptions: IRenderPaginationOptions): void {
   const span = `<span>...</span>`;
   let divContent = ``;
   const reportStart = 1;
-  const numberDisplayedPages = paginationOptions.step * 2;
-  if (paginationOptions.currentPage !== reportStart) {
+  const numberDisplayedPages = paginationOptions.maxStepsSelectedPage * 2;
+  if (paginationOptions.startPage !== reportStart) {
     divContent += addButton('&#9668;', 'previous_page');
   }
-  if (paginationOptions.currentPage < numberDisplayedPages) {
+  if (paginationOptions.startPage < numberDisplayedPages) {
     for (let i = 1; i <= numberDisplayedPages; i++) {
       divContent += addButton(i);
     }
     divContent += span + addButton(paginationOptions.countPages);
-  } else if (paginationOptions.countPages - paginationOptions.currentPage < numberDisplayedPages - 1) {
+  } else if (paginationOptions.countPages - paginationOptions.startPage < numberDisplayedPages - 1) {
     divContent += addButton(reportStart) + span;
     for (let i = 1; i <= numberDisplayedPages; i++) {
       const numberPage = paginationOptions.countPages + i - numberDisplayedPages;
@@ -92,29 +92,29 @@ function renderPagination(paginationOptions: IRenderPaginationOptions): void {
     }
   } else {
     divContent += addButton(reportStart) + span;
-    for (let i = -paginationOptions.step; i <= paginationOptions.step; i++) {
-      const numberPage = paginationOptions.currentPage + i;
+    for (let i = -paginationOptions.maxStepsSelectedPage; i <= paginationOptions.maxStepsSelectedPage; i++) {
+      const numberPage = paginationOptions.startPage + i;
       divContent += addButton(numberPage);
     }
     divContent += span + addButton(paginationOptions.countPages);
   }
-  if (paginationOptions.currentPage !== paginationOptions.countPages) {
+  if (paginationOptions.startPage !== paginationOptions.countPages) {
     divContent += addButton('&#9658;', 'next_page');
   }
   paginationOptions.container.innerHTML = divContent;
-  highlightCurrentPage(paginationOptions.container, paginationOptions.currentPage);
+  highlightstartPage(paginationOptions.container, paginationOptions.startPage);
 }
 
 /**
  * Highlights the selected page.
  * @param container Where is the pagination located.
- * @param currentPage Current page.
+ * @param startPage Current page.
  */
-function highlightCurrentPage(container: Element, currentPage: number): void {
+function highlightstartPage(container: Element, startPage: number): void {
   const buttonPagination = Array.from(container.children);
   for (const elem of buttonPagination) {
-    if (Number(elem.innerHTML) === Number(currentPage)) {
-      elem.className = 'current-page';
+    if (Number(elem.innerHTML) === Number(startPage)) {
+      elem.className = 'pagination__page--current';
     }
   }
 }

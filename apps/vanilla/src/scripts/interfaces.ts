@@ -1,11 +1,11 @@
 /** Parameters for pagination. */
 interface IBasePagination {
 
-  /** Current page. */
-  readonly currentPage: number;
+  /** The page from which the pagination begins. */
+  readonly startPage: number;
 
-  /** Pages before and after the current page. */
-  readonly step: number;
+  /** Maximum number of steps to the selected page. */
+  readonly maxStepsSelectedPage: number;
 
   /** The block where the pagination is located. */
   readonly container: Element;
