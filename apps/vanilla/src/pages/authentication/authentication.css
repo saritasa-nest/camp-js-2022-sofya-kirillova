@@ -1,0 +1,29 @@
+@import url("../../global/index.css");
+
+.registration,
+.authorization {
+  display: grid;
+  justify-content: center;
+  row-gap: 10px;
+  margin-top: 25px;
+}
+
+.registration-form,
+.authorization-form {
+  display: grid;
+  grid-template-columns: max-content 250px;
+  row-gap: 25px;
+
+}
+
+.registration-label,
+.authorization-label {
+  padding-right: 10px;
+}
+
+.registration-button {
+  grid-column: 1 / -1;
+  justify-self: end;
+  width: 150px;
+  /* background-color: var(--heading-color-3); */
+}
