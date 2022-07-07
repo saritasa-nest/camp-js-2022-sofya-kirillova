@@ -32,15 +32,19 @@ function addSelect(): void {
       title: 'status',
     },
   ];
+
   const divElement = document.querySelector('.anime');
   assertNonNull(divElement);
+
   const select = document.createElement('select');
   select.className = 'anime__sort';
+
   const selectContent = selectOptions.reduce((body, current) => {
     const optionContent = `
       <option value="${current.value}">${current.title}</option>`;
     return body + optionContent;
   }, ``);
+
   select.innerHTML = selectContent;
   divElement.prepend(select);
 }

@@ -3,10 +3,10 @@ import { Immerable, OmitImmerable } from './immerable';
 /** Aired. */
 export class Aired extends Immerable {
 
-  /** Start date, for example, "2014-12-20T17:30:50.416Z". */
+  /** Start date of airing. */
   public readonly start: Date;
 
-  /** End date, for example, "2014-12-20T17:30:50.416Z". */
+  /** End date of airing. */
   public readonly end: Date;
 
   public constructor(data: InitArgsAired) {

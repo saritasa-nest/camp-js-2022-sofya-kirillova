@@ -15,7 +15,7 @@ interface IPaginationConfig {
   /** Current page. */
   readonly currentPage: number;
 
-  /** Anime sorting mode. */
+  /** Sorting mode. */
   readonly order: string;
 }
 

@@ -23,24 +23,24 @@ export function getPagination(paginationOptions: IGetPaginationOptions): void {
   });
 
   /** Requests the anime table and calls the rendering. */
-  function resetPagination(): void {
+  async function resetPagination(): Promise<void> {
     const paginationConfig = {
       pageSize: paginationOptions.pageSize,
       currentPage,
       order,
     };
-    const animePromise = getAnime(paginationConfig);
-    animePromise.then(animeData => renderAnimeTable(animeData));
-    animePromise.then(animeData => {
-      const countPage = Math.ceil(animeData.count / paginationOptions.pageSize);
-      const renderPaginationOptions = {
-        countPages: countPage,
-        maxStepsSelectedPage: paginationOptions.maxStepsSelectedPage,
-        container: paginationOptions.container,
-        startPage: currentPage,
-      };
-      renderPagination(renderPaginationOptions);
-    });
+
+    const animeData = await getAnime(paginationConfig);
+    renderAnimeTable(animeData);
+
+    const countPage = Math.ceil(animeData.count / paginationOptions.pageSize);
+    const renderPaginationOptions = {
+      countPages: countPage,
+      maxStepsSelectedPage: paginationOptions.maxStepsSelectedPage,
+      container: paginationOptions.container,
+      startPage: currentPage,
+    };
+    renderPagination(renderPaginationOptions);
   }
 
   /**
@@ -76,6 +76,7 @@ function renderPagination(paginationOptions: IRenderPaginationOptions): void {
   let divContent = ``;
   const reportStart = 1;
   const numberDisplayedPages = paginationOptions.maxStepsSelectedPage * 2;
+
   if (paginationOptions.startPage !== reportStart) {
     divContent += addButton('&#9668;', 'previous_page');
   }
@@ -101,8 +102,9 @@ function renderPagination(paginationOptions: IRenderPaginationOptions): void {
   if (paginationOptions.startPage !== paginationOptions.countPages) {
     divContent += addButton('&#9658;', 'next_page');
   }
+
   paginationOptions.container.innerHTML = divContent;
-  highlightstartPage(paginationOptions.container, paginationOptions.startPage);
+  highlightCurrentPage(paginationOptions.container, paginationOptions.startPage);
 }
 
 /**
@@ -110,7 +112,7 @@ function renderPagination(paginationOptions: IRenderPaginationOptions): void {
  * @param container Where is the pagination located.
  * @param startPage Current page.
  */
-function highlightstartPage(container: Element, startPage: number): void {
+function highlightCurrentPage(container: Element, startPage: number): void {
   const buttonPagination = Array.from(container.children);
   for (const elem of buttonPagination) {
     if (Number(elem.innerHTML) === Number(startPage)) {

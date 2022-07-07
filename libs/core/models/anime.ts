@@ -1,6 +1,23 @@
 import { Aired } from './aired';
 import { Immerable, OmitImmerable } from './immerable';
 
+/** Available anime statuses. */
+enum Status {
+  Airing = 'AIRING',
+  Finished = 'FINISHED',
+  NotYetAired = 'NOT_YET_AIRED',
+}
+
+/** Available anime types. */
+enum Type {
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'MOVIE',
+  Special = 'SPECIAL',
+  Ona = 'ONA',
+  Music = 'MUSIC',
+}
+
 /** Anime. */
 export class Anime extends Immerable {
 
@@ -14,10 +31,10 @@ export class Anime extends Immerable {
   public readonly titleJapanese: string;
 
   /** Type anime of the anime. */
-  public readonly type: string;
+  public readonly type: Type;
 
   /** Status of the anime. */
-  public readonly status: string;
+  public readonly status: Status;
 
   /** Aired date of the anime. */
   public readonly aired: Aired;
