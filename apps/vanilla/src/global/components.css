@@ -5,13 +5,14 @@ a,
 
   color: var(--link-color);
   text-decoration: none;
-  border-bottom: 1px solid var(--link-color);
 }
 
 a:hover,
 :link:hover,
 .link:hover {
-  --link-color: var(--primary-light-color);
+  --link-color: var(--primary-color);
+
+  border-bottom: 1px solid var(--link-color);
 }
 
 .links {
@@ -20,9 +21,8 @@ a:hover,
   gap: 16px;
 }
 
-.default-layout {
-  --default-layout-width: 600px;
-
-  margin: 80px auto 0;
-  max-width: var(--default-layout-width);
+button,
+select {
+  font-size: inherit;
+  font-family: inherit;
 }

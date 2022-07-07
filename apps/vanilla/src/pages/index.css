@@ -1,5 +1,77 @@
 @import url("../global/index.css");
+@import url("../global/variables.css");
 
 .title {
   color: var(--heading-color-1);
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--heading-color-3);
+  align-items: center;
+  padding: 35px 50px 15px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65vw;
+  margin: 25px auto 0;
+}
+
+.anime-table {
+  margin-top: 25px;
+  width: 100%;
+}
+
+.anime-table th {
+  text-align: left;
+}
+
+.anime-table img {
+  width: 75px;
+}
+
+.pagination button {
+  background-color: inherit;
+  border: none;
+}
+
+.name-anime {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-eng {
+  font-size: 0.7em;
+  color: var(--name-color-1);
+}
+
+.current-page {
+  color: var(--heading-color-3);
+  font-size: 1.1em;
+}
+
+.sort-anime-table {
+  padding: 5px 15px;
+  font-size: 0.8em;
+  outline: none;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.sort-anime-table:focus {
+  outline: 1px solid var(--heading-color-3);
+}
+
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
