@@ -4,6 +4,7 @@ import { renderAnimeTable } from '../pages/animeTable';
 import { renderPagination } from '../pages/pagination';
 
 import { getAnime } from './requests';
+import { SortingOptions } from './unions';
 
 /** Implements output and re-rendering of the anime table and pagination. */
 export class MainPage {
@@ -15,7 +16,7 @@ export class MainPage {
   public readonly container: Element;
 
   /** Sorting mode. */
-  public order: string;
+  public order: SortingOptions;
 
   /** The number of results returned per page. */
   public readonly pageSize: number;
@@ -37,8 +38,11 @@ export class MainPage {
     const selectElement = document.querySelector<HTMLSelectElement>('.anime__sort');
     assertNonNull(selectElement);
     selectElement.addEventListener('change', (event: Event) => {
-      const target = event.target as HTMLSelectElement;
-      this.order = target.value;
+      if (!(event.target instanceof HTMLSelectElement)) {
+        return;
+      }
+      const target = event.target;
+      this.order = target.value  as SortingOptions;
       this.redrawMainPage();
     });
     this.redrawMainPage();
