@@ -7,7 +7,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 import { api } from './API';
 
 /** Parameters for getting anime from the database. */
-interface IPaginationConfig {
+interface PaginationConfig {
 
   /** The number of results returned per page. */
   readonly pageSize: number;
@@ -23,7 +23,7 @@ interface IPaginationConfig {
  * Sends a request to the database.
  * @param paginationConfig Parameters for getting anime from the database.
  */
-export async function getAnime(paginationConfig: IPaginationConfig): Promise<Pagination<Anime>> {
+export async function getAnime(paginationConfig: PaginationConfig): Promise<Pagination<Anime>> {
   const offset = (paginationConfig.currentPage - 1) * paginationConfig.pageSize;
   const url = new URLSearchParams(`limit=${paginationConfig.pageSize}&offset=${offset}&ordering=${paginationConfig.order},id`);
   const response = await api.get<PaginationDto<AnimeDto>>(

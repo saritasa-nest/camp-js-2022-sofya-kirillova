@@ -1,24 +1,30 @@
 import { assertNonNull } from '@js-camp/core/utils/functions';
 
-import { getPagination } from '../scripts/pagination';
+import { MainPage } from '../scripts/mainPage';
 
+/** Available attributes for the option. */
+interface OptionAttributes{
+
+  /** Option value. */
+  value: string;
+
+  /** Option title. */
+  title: string;
+}
 addSelect();
 
 const pageSize = 30;
-const numberPage = 1;
+const firstPageNumber = 1;
 const maxStepsSelectedPage = 3;
 const paginationDiv = document.querySelector('.pagination');
 assertNonNull(paginationDiv);
-getPagination({
-  container: paginationDiv,
-  pageSize,
-  startPage: numberPage,
-  maxStepsSelectedPage,
-});
+
+const pagination = new MainPage(firstPageNumber, paginationDiv, pageSize, maxStepsSelectedPage);
+pagination.addEventHandlers();
 
 /** Create and add select to the page. */
 function addSelect(): void {
-  const selectOptions = [
+  const selectOptions: OptionAttributes[] = [
     {
       value: 'title_eng',
       title: 'eng_title',
