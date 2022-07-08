@@ -8,22 +8,28 @@
   margin-top: 25px;
 }
 
-.registration-form,
-.authorization-form {
+.registration__form,
+.authorization__form {
   display: grid;
   grid-template-columns: max-content 250px;
   row-gap: 25px;
-
 }
 
-.registration-label,
-.authorization-label {
+.registration__label,
+.authorization__label {
   padding-right: 10px;
 }
 
-.registration-button {
+.registration__button {
   grid-column: 1 / -1;
   justify-self: end;
   width: 150px;
-  /* background-color: var(--heading-color-3); */
+}
+
+.registration__error {
+  color: #f00;
+}
+
+.di {
+  display: none;
 }

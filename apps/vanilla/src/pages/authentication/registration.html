@@ -10,24 +10,22 @@
 
 <body>
   <div class="registration">
-  <h2>Registration</h2>
- <form  action="/target/" method="POST" name="registration" class="registration-form">
-    <label class="registration-label item-d" for="last_name">Surname</label>
-    <input name="last-name" type="text" id="last_name">
-    <label class="registration-label" for="first_name">Name</label>
-    <input name="first-name" type="text" id="first_name">
-    <label class="registration-label" for="avatar">Avatar</label>
-    <input name="avatar" type="file" id="avatar" accept="image/*">
-    <label class="registration-label" for="email">E-mail</label>
-    <input name="email" type="email" id="email">
-    <label class="registration-label" for="password">Password</label>
-    <input name="password" type="password" id="name">
-    <label class="registration-label" for="repeat_password">Re-type password</label>
-    <input name="repeat-password" type="repeat_password" id="name">
-    <button class="registration-button" type="button">submit</button>
-  </form>
+    <h2>Registration</h2>
+    <form class="registration__form">
+      <label class="registration__label item-d" for="last_name">Surname</label>
+      <input name="last-name" type="text" id="last_name">
+      <label class="registration__label" for="first_name">Name</label>
+      <input name="first-name" type="text" id="first_name">
+      <label class="registration__label" for="email">E-mail</label>
+      <input name="email" type="email" id="email">
+      <label class="registration__label" for="password">Password</label>
+      <input name="password" type="password" id="name">
+      <label class="registration__label" for="repeat_password">Re-type password</label>
+      <input name="repeat-password" type="password" id="name">
+      <h5 class="registration__error di">Please fill in all fields</h5>
+      <button class="registration__button" type="button">submit</button>
+    </form>
   </div>
- 
   <script type="module" src="./registration.ts"></script>
 </body>
 
