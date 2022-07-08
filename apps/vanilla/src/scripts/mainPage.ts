@@ -41,8 +41,8 @@ export class MainPage {
       if (!(event.target instanceof HTMLSelectElement)) {
         return;
       }
-      const target = event.target;
-      this.order = target.value  as SortingOptions;
+      const { target } = event;
+      this.order = target.value as SortingOptions;
       this.redrawMainPage();
     });
     this.redrawMainPage();
