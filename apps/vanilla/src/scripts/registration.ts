@@ -1,17 +1,15 @@
-
 export function checkFields() {
 
-  
-  const formElem = document.querySelector('.registration-form')!
-  console.log(formElem)
+  const formElem = document.querySelector('.registration-form')!;
   if (!(formElem instanceof HTMLFormElement)) {
-    throw new Error('not')
+    throw new Error('not');
   }
-  const formData = new FormData(formElem)
-
-  formData.append('key', 'value');
-
-  for (let entry of formData.entries()) {
-    console.log(entry, 5454);
+  const formData = new FormData(formElem);
+  for (let input of formData.entries()) {
+    if (input[1] instanceof File){
+      console.log(input[1])
+    } else if (input[1] === null){
+      console.log(7687)
+    }
   }
 }
