@@ -39,5 +39,4 @@ testem.log
 Thumbs.db
 
 .angular
-
-camp-js-2022-sofya-kirillova/apps/vanilla/src/vite-env.d.ts
+.env
