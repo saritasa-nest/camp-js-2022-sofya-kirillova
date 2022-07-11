@@ -6,18 +6,27 @@ export function checkFields() {
   if (!(formElement instanceof HTMLFormElement)) {
     throw new Error('not');
   }
+
   const formData = new FormData(formElement);
   for (let input of formData.entries()) {
     if (input[1] === '') {
-      displayTheError()
+      displayTheError('Please fill in all fields')
       return
     }
+  }
+
+  const password = formData.get('password')
+  const repeatPassword = formData.get('repeat-password')
+  if (password !== repeatPassword){
+    displayTheError('Passwords mismatch')
+    return    
   }
   request(formData)
 }
 
-function displayTheError() {
+export function displayTheError(message: string) {
   const h5Element = document.querySelector('.registration__error')!;
+  h5Element.innerHTML = message
   h5Element.classList.remove('di')
 }
 

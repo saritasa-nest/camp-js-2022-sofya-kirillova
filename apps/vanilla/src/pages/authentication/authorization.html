@@ -9,11 +9,18 @@
 </head>
 
 <body>
-  <form class="authorization">
-    <p><label class="authorization-label" for="email">E-mail</label><input type="email" id="email"></p>
-    <p><label class="authorization-label" for="password">Password</label><input type="password" id="name"></p>
-  </form>
-  <script type="module" src="./index.ts"></script>
+  <div class="authorization">
+    <h2>Authorization</h2>
+    <form class="authorization__form">
+      <label class="authorization__label" for="email">E-mail</label>
+      <input name="email" type="email" id="email">
+      <label class="authorization__label" for="password">Password</label>
+      <input name="password" type="password" id="name">
+      <h5 class="authorization__error di">Error</h5>
+      <button class="authorization__button" type="button">submit</button>
+    </form>
+  </div>
+  <script type="module" src="./authorization.ts"></script>
 </body>
 
 </html>
