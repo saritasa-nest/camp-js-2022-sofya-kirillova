@@ -1,12 +1,13 @@
+import { SortDTO } from '@js-camp/core/dtos/sort.dto';
 import { assertNonNull } from '@js-camp/core/utils/functions';
 
 import { renderAnimeTable } from '../pages/animeTable';
 import { renderPagination } from '../pages/pagination';
 
-import { getAnime } from './requests';
-import { SortDTO } from '../../../../libs/core/dtos/sort.dto';
 
-/** Render anime table and pagination */
+import { getAnime } from './requests';
+
+/** Render anime table and pagination. */
 export class MainPage {
 
   /** Selected page in the pagination. */

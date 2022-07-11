@@ -1,7 +1,7 @@
+import { SortDTO } from '@js-camp/core/dtos/sort.dto';
 import { assertNonNull } from '@js-camp/core/utils/functions';
 
 import { MainPage } from '../scripts/mainPage';
-import { SortDTO } from '../../../../libs/core/dtos/sort.dto';
 
 /** Available attributes for the option. */
 interface OptionAttributes{
