@@ -4,9 +4,9 @@ import { renderAnimeTable } from '../pages/animeTable';
 import { renderPagination } from '../pages/pagination';
 
 import { getAnime } from './requests';
-import { OptionsDTO } from './unions';
+import { SortDTO } from '../../../../libs/core/dtos/sort.dto';
 
-/** Implements output and re-rendering of the anime table and pagination. */
+/** Render anime table and pagination */
 export class MainPage {
 
   /** Selected page in the pagination. */
@@ -16,7 +16,7 @@ export class MainPage {
   public readonly container: Element;
 
   /** Sorting mode. */
-  public order: OptionsDTO;
+  public order: SortDTO;
 
   /** The number of results returned per page. */
   public readonly pageSize: number;
@@ -42,7 +42,7 @@ export class MainPage {
         return;
       }
       const { target } = event;
-      this.order = target.value as OptionsDTO;
+      this.order = target.value as SortDTO;
       this.redrawMainPage();
     });
     this.redrawMainPage();

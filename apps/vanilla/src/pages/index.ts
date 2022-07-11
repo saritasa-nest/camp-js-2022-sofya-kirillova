@@ -1,13 +1,13 @@
 import { assertNonNull } from '@js-camp/core/utils/functions';
 
 import { MainPage } from '../scripts/mainPage';
-import { OptionsDTO } from '../scripts/unions';
+import { SortDTO } from '../../../../libs/core/dtos/sort.dto';
 
 /** Available attributes for the option. */
 interface OptionAttributes{
 
   /** Option value. */
-  readonly value: OptionsDTO;
+  readonly value: SortDTO;
 
   /** Option title. */
   readonly title: string;
