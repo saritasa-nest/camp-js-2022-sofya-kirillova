@@ -1,16 +1,16 @@
 import { assertNonNull } from '@js-camp/core/utils/functions';
 
 import { MainPage } from '../scripts/mainPage';
-import { SortingOptions } from '../scripts/unions';
+import { OptionsDTO } from '../scripts/unions';
 
 /** Available attributes for the option. */
 interface OptionAttributes{
 
   /** Option value. */
-  value: SortingOptions;
+  readonly value: OptionsDTO;
 
   /** Option title. */
-  title: string;
+  readonly title: string;
 }
 addSelect();
 

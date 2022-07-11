@@ -2,7 +2,7 @@ import { PaginationParameters } from '../scripts/interfaces';
 
 /**
  * Render pagination on the page.
- * @param paginationOptions Pagination options: count pages, current page, pages before and after current, pagination located.
+ * @param paginationOptions Parameters for pagination.
  */
 export function renderPagination(paginationOptions: PaginationParameters): void {
   const span = `<span>...</span>`;
@@ -57,7 +57,7 @@ function addButton(innerHTML: string | number, value = innerHTML): string {
 function highlightCurrentPage(container: Element, startPage: number): void {
   const buttonPagination = Array.from(container.children);
   for (const elem of buttonPagination) {
-    if (Number(elem.innerHTML) === Number(startPage)) {
+    if (Number(elem.innerHTML) === startPage) {
       elem.className = 'pagination__page--current';
     }
   }

@@ -4,7 +4,7 @@ import { renderAnimeTable } from '../pages/animeTable';
 import { renderPagination } from '../pages/pagination';
 
 import { getAnime } from './requests';
-import { SortingOptions } from './unions';
+import { OptionsDTO } from './unions';
 
 /** Implements output and re-rendering of the anime table and pagination. */
 export class MainPage {
@@ -16,7 +16,7 @@ export class MainPage {
   public readonly container: Element;
 
   /** Sorting mode. */
-  public order: SortingOptions;
+  public order: OptionsDTO;
 
   /** The number of results returned per page. */
   public readonly pageSize: number;
@@ -42,7 +42,7 @@ export class MainPage {
         return;
       }
       const { target } = event;
-      this.order = target.value as SortingOptions;
+      this.order = target.value as OptionsDTO;
       this.redrawMainPage();
     });
     this.redrawMainPage();
