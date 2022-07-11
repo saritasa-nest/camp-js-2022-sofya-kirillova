@@ -26,14 +26,11 @@ export class FieldError extends Immerable {
 
   };
 
-  /** Code of error */
-  readonly code?: string;
+  /** Code of error. */
+  public readonly code?: string;
 
   /** General information about the error. */
   public readonly detail: string;
-
-
-
 
   public constructor(data: InitArgsError) {
     super();

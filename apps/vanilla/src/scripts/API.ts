@@ -1,10 +1,12 @@
 import axios from 'axios';
 
+import { API_KEY } from './constants';
+
 /** Preconfigured axios instance. */
 export const api =
   axios.create({
-    baseURL: 'https://api.camp-js.saritasa.rocks/api/v1',
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
-      'Api-Key': '3df19916-03c9-47de-ab5c-5619376c2cef',
+      [API_KEY]: import.meta.env.VITE_API_KEY,
     },
   });

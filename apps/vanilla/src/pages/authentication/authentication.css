@@ -1,5 +1,13 @@
 @import url("../../global/index.css");
 
+.header {
+  display: flex;
+  justify-content: start;
+  background-color: var(--heading-color-3);
+  align-items: center;
+  padding: 25px 15px 15px 25px;
+}
+
 .registration,
 .authorization {
   display: grid;

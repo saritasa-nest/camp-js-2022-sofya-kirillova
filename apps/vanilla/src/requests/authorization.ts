@@ -1,34 +1,26 @@
-import { FieldError } from "@js-camp/core/models/fieldError";
-import { api } from "../scripts/API";
-import { displayTheError } from "../pages/authentication/authorization";
+import { FieldError } from '@js-camp/core/models/fieldError';
 
-/** Parameters for getting anime from the database. */
-interface AuthorizationConfig {
-  readonly email: string;
-  readonly password: string;
-}
+import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
+import { assertNonNull, displayTheError } from '@js-camp/core/utils/functions';
 
-interface Token {
-  readonly access: string;
-  readonly refresh : string;
-}
+import { api } from '../scripts/API';
+
 /**
- * Sends a request to the database.
- * @param paginationConfig Parameters for getting anime from the database.
+ * Sends an authorization request.
+ * @param formData Sends a request for user authorization.
  */
-export async function login(registrationConfig: AuthorizationConfig) {
-  await api.post(`/auth/login/`, {
-    email: registrationConfig.email,
-    password: registrationConfig.password
-  }).then(res => {
-    const token = res.data as Token
-    localStorage.setItem('access', token.access)
-    localStorage.setItem('refresh', token.refresh)
-    window.location.replace("/");
+export async function authentication(formData: FormData): Promise<void> {
+  await api.post(`/auth/login/`, formData).then(res => {
+    const token = TokenMapper.fromDto(res.data);
+    localStorage.setItem('access', token.access);
+    localStorage.setItem('refresh', token.refresh);
+    window.location.replace('/');
 
-  }).catch(res => {
-      const error = res.response.data as FieldError
-      displayTheError(error.detail)
+  })
+    .catch(res => {
+      const error = res.response.data as FieldError;
+      const h5Element = document.querySelector('.authorization__error');
+      assertNonNull(h5Element);
+      displayTheError(error.detail, h5Element);
   });
-  // return PaginationMapper.fromDto(data);
 }

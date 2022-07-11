@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./index.css" />
-    <title>Vite App</title>
-  </head>
-  <body>
-    <header class="header">
-      <div class="authentication">
-        <a href="./authentication/authorization.html">login</a>
-        <a href="./authentication/registration.html">register</a>
-      </div>
-    </header>
-    <script type="module" src="./index.ts"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./index.css" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <header class="header">
+  </header>
+  <script type="module" src="./index.ts"></script>
+  <template id="unauthorized">
+    <a href="./authentication/authorization.html">login</a>
+    <a href="./authentication/registration.html">register</a>
+  </template>
+  <template id="authorized">
+    <p>Welcome user</p>
+  </template>
+</body>
+
+
 </html>

@@ -6,6 +6,7 @@ export interface FieldErrorDto {
 
     /** Errors in checking the "email" field. */
     readonly email?: [string];
+
     /** Errors in checking the "first name" field. */
     readonly first_name?: [string];
 
@@ -20,10 +21,11 @@ export interface FieldErrorDto {
 
     /** Errors not related to the field. */
     readonly non_field_errors?: [string];
-  },
+  };
+
   /** General information about the error. */
   readonly detail: string;
 
-  /** Code of error */
+  /** Code of error. */
   readonly code?: string;
 }
