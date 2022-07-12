@@ -1,3 +1,4 @@
+//delete in index
 import { SortDTO } from '@js-camp/core/dtos/sort.dto';
 
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
@@ -71,9 +72,18 @@ export class MainPage {
       container: this.container,
       startPage: this.currentPage,
     };
-    renderPagination(paginationParameters);
+    renderPagination(paginationParameters, this.setCurrentPage);
   }
 
+  public setCurrentPage(page: number): void {
+    this.currentPage = page;
+    this.redrawMainPage();
+  }
+
+  public setSortOrder(page: number): void {
+    this.currentPage = page;
+    this.redrawMainPage();
+  }
   /**
    * Page rendering on click.
    * @param event The pressed button.

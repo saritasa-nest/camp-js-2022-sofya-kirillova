@@ -2,15 +2,16 @@ import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { formatDate } from '@js-camp/core/utils/formatDate';
+import { getAnimeList } from '../requests/animeList';
 
 /**
  * Outputs a table with anime.
  * @param animeData Anime data.
  */
-export function renderAnimeTable(animeData: Pagination<Anime>): void {
+export function renderAnimeTable(animeData: readonly Anime[]): void {
   const animeContainer = document.querySelector('.anime__tbody');
   assertNonNull(animeContainer);
-  const allAnimeContent = animeData.results.reduce((body, current) => {
+  const allAnimeContent = animeData.reduce((body, current) => {
     const animeContent = `
       <tr>
         <td><img class='anime__image' alt='anime image' src='${current.image}'></td>
