@@ -1,15 +1,14 @@
-import { Aired } from './aired';
 import { Immerable, OmitImmerable } from './immerable';
 
 /** Available anime statuses. */
-enum Status {
+export enum Status {
   Airing = 'AIRING',
   Finished = 'FINISHED',
   NotYetAired = 'NOT_YET_AIRED',
 }
 
 /** Available anime types. */
-enum Type {
+export enum Type {
   Tv = 'TV',
   Ova = 'OVA',
   Movie = 'MOVIE',
@@ -36,8 +35,12 @@ export class Anime extends Immerable {
   /** Status of the anime. */
   public readonly status: Status;
 
-  /** Aired date of the anime. */
-  public readonly aired: Aired;
+  /** Start date of airing. */
+  public readonly airingStart: Date;
+
+  /** End date of airing. */
+  public readonly airingFinish: Date;
+
 
   public constructor(data: InitArgsAnime) {
     super();
@@ -46,7 +49,8 @@ export class Anime extends Immerable {
     this.titleJapanese = data.titleJapanese;
     this.type = data.type;
     this.status = data.status;
-    this.aired = data.aired;
+    this.airingStart = data.airingStart;
+    this.airingFinish = data.airingFinish;
   }
 }
 

@@ -13,3 +13,16 @@ export interface PaginationParameters {
   /** Total number of pages in pagination. */
   readonly pagesCount: number;
 }
+
+/** Parameters for button. */
+export interface ButtonParameters {
+
+   /** Content of the button tag. */
+  readonly content: string | number;
+
+  /** Class of the button tag. */
+  readonly className?: string;
+
+  /** Value of the button tag. */
+  readonly value?: string;
+}

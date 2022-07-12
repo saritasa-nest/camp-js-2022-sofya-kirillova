@@ -5,7 +5,7 @@ import { Pagination } from '../models/pagination';
 
 import { AnimeMapper } from './anime.mapper';
 
-export namespace PaginationMapper {
+export namespace AnimeListMapper {
 
   /**
    * Maps dto to model.

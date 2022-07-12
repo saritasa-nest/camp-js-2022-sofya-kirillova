@@ -1,4 +1,4 @@
-import { AiredDto } from './aired.dto';
+import { Status, Type } from "../models/anime";
 
 /** Anime DTO. */
 export interface AnimeDto {
@@ -13,11 +13,18 @@ export interface AnimeDto {
   readonly title_jpn: string;
 
   /** Type of the anime. */
-  readonly type: string;
+  readonly type: Type;
 
   /** Status of the anime. */
-  readonly status: string;
+  readonly status: Status;
 
   /** Aired date of the anime. */
-  readonly aired: AiredDto;
+  readonly aired: {
+
+    /** Aired start, for example, "2014-12-20T17:30:50.416Z". */
+    readonly start: string;
+
+    /** Aired end, for example, "2014-12-20T17:30:50.416Z". */
+    readonly end: string;
+  }
 }

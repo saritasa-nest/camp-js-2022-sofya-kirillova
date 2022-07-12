@@ -1,5 +1,5 @@
 import { SortDTO } from '@js-camp/core/dtos/sort.dto';
-import { assertNonNull } from '@js-camp/core/utils/functions';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { MainPage } from '../scripts/mainPage';
 
@@ -21,7 +21,7 @@ const paginationDiv = document.querySelector('.pagination');
 assertNonNull(paginationDiv);
 
 const pagination = new MainPage(firstPageNumber, paginationDiv, pageSize, maxStepsSelectedPage);
-pagination.addEventHandlers();
+pagination.paginatorInitialization();
 
 /** Create and add select to the page. */
 function addSelect(): void {

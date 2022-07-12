@@ -1,11 +1,11 @@
 import { SortDTO } from '@js-camp/core/dtos/sort.dto';
-import { assertNonNull } from '@js-camp/core/utils/functions';
 
-import { renderAnimeTable } from '../pages/animeTable';
-import { renderPagination } from '../pages/pagination';
+import { renderAnimeTable } from './animeTable';
+import { renderPagination } from './pagination';
 
 
-import { getAnime } from './requests';
+import { getAnimeList } from '../requests/animeList';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 /** Render anime table and pagination. */
 export class MainPage {
@@ -33,12 +33,18 @@ export class MainPage {
     this.maxStepsSelectedPage = maxStepsSelectedPage;
   }
 
-  /** Adds event handlers to elements. */
-  public addEventHandlers(): void {
+  /** Initialize the pagination */
+  public paginatorInitialization(): void {
     this.container.addEventListener('click', event => this.handlePageButtonClick(event));
-    const selectElement = document.querySelector<HTMLSelectElement>('.anime__sort');
-    assertNonNull(selectElement);
-    selectElement.addEventListener('change', (event: Event) => {
+    this.addListenersToSorting()
+    this.redrawMainPage();
+  }
+
+  /** Adds event handlers to elements */
+  private addListenersToSorting(): void{
+    const sortContainer = document.querySelector<HTMLSelectElement>('.anime__sort');
+    assertNonNull(sortContainer);
+    sortContainer.addEventListener('change', (event: Event) => {
       if (!(event.target instanceof HTMLSelectElement)) {
         return;
       }
@@ -46,7 +52,6 @@ export class MainPage {
       this.order = target.value as SortDTO;
       this.redrawMainPage();
     });
-    this.redrawMainPage();
   }
 
   /** Request anime from the database and cause redrawing of the anime table and pagination. */
@@ -57,7 +62,7 @@ export class MainPage {
       order: this.order,
     };
 
-    const animeData = await getAnime(paginationConfig);
+    const animeData = await getAnimeList(paginationConfig);
     renderAnimeTable(animeData);
 
     const paginationParameters = {
@@ -83,10 +88,10 @@ export class MainPage {
       this.currentPage++;
     } else if (target.value === 'previous_page') {
       this.currentPage--;
-    } else if (isNaN(Number(target.innerHTML))) {
-      throw new Error('Page number is not a number.');
+    } else if (target.hasAttribute('date-page-number') === false || isNaN(Number(target.getAttribute('date-page-number')))) {
+      throw new Error('Page number not found.');
     } else {
-      this.currentPage = Number(target.innerHTML);
+      this.currentPage = Number(target.getAttribute('date-page-number'));
     }
     this.redrawMainPage();
   }

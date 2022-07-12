@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { API_KEY } from './constants';
+import { API_KEY } from '../scripts/constants';
 
 /** Preconfigured axios instance. */
 export const api =

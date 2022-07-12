@@ -1,16 +1,17 @@
 import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { assertNonNull, formatDate } from '@js-camp/core/utils/functions';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
+import { formatDate } from '@js-camp/core/utils/formatDate';
 
 /**
  * Outputs a table with anime.
  * @param animeData Anime data.
  */
 export function renderAnimeTable(animeData: Pagination<Anime>): void {
-  const tbodyElement = document.querySelector('.anime__tbody');
-  assertNonNull(tbodyElement);
-  const tableBodyContent = animeData.results.reduce((body, current) => {
-    const trContent = `
+  const animeContainer = document.querySelector('.anime__tbody');
+  assertNonNull(animeContainer);
+  const allAnimeContent = animeData.results.reduce((body, current) => {
+    const animeContent = `
       <tr>
         <td><img class='anime__image' alt='anime image' src='${current.image}'></td>
         <td class="anime__name">
@@ -19,9 +20,9 @@ export function renderAnimeTable(animeData: Pagination<Anime>): void {
         </td>
         <td>${current.type}</td>
         <td>${current.status}</td>
-        <td>${formatDate(current.aired.start)}</td>
+        <td>${formatDate(current.airingStart)}</td>
       </tr>`;
-    return body + trContent;
+    return body + animeContent;
   }, ``);
-  tbodyElement.innerHTML = tableBodyContent;
+  animeContainer.innerHTML = allAnimeContent;
 }
