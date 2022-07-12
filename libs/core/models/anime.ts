@@ -41,7 +41,6 @@ export class Anime extends Immerable {
   /** End date of airing. */
   public readonly airingFinish: Date;
 
-
   public constructor(data: InitArgsAnime) {
     super();
     this.image = data.image;

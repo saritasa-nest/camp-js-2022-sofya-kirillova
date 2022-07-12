@@ -1,4 +1,4 @@
-import { Status, Type } from "../models/anime";
+import { Status, Type } from '../models/anime';
 
 /** Anime DTO. */
 export interface AnimeDto {
@@ -26,5 +26,5 @@ export interface AnimeDto {
 
     /** Aired end, for example, "2014-12-20T17:30:50.416Z". */
     readonly end: string;
-  }
+  };
 }

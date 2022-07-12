@@ -26,11 +26,11 @@ interface PaginationConfig {
  */
 export async function getAnimeList(paginationConfig: PaginationConfig): Promise<Pagination<Anime>> {
   const offset = (paginationConfig.currentPage - 1) * paginationConfig.pageSize;
-  
+
   const url = new URLSearchParams();
-  url.append('limit', String(paginationConfig.pageSize))
-  url.append('offset', String(offset))
-  url.append('ordering', paginationConfig.order + ',id')
+  url.append('limit', String(paginationConfig.pageSize));
+  url.append('offset', String(offset));
+  url.append('ordering', `${paginationConfig.order},id`);
 
   const response = await api.get<PaginationDto<AnimeDto>>(
     `/anime/anime/?${url}`,

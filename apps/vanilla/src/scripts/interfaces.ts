@@ -17,7 +17,7 @@ export interface PaginationParameters {
 /** Parameters for button. */
 export interface ButtonParameters {
 
-   /** Content of the button tag. */
+  /** Content of the button tag. */
   readonly content: string | number;
 
   /** Class of the button tag. */

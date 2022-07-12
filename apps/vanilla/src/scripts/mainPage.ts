@@ -1,11 +1,11 @@
 import { SortDTO } from '@js-camp/core/dtos/sort.dto';
 
-import { renderAnimeTable } from './animeTable';
-import { renderPagination } from './pagination';
-
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { getAnimeList } from '../requests/animeList';
-import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
+
+import { renderAnimeTable } from './animeTable';
+import { renderPagination } from './pagination';
 
 /** Render anime table and pagination. */
 export class MainPage {
@@ -33,15 +33,15 @@ export class MainPage {
     this.maxStepsSelectedPage = maxStepsSelectedPage;
   }
 
-  /** Initialize the pagination */
+  /** Initialize the pagination. */
   public paginatorInitialization(): void {
     this.container.addEventListener('click', event => this.handlePageButtonClick(event));
-    this.addListenersToSorting()
+    this.addListenersToSorting();
     this.redrawMainPage();
   }
 
-  /** Adds event handlers to elements */
-  private addListenersToSorting(): void{
+  /** Adds event handlers to elements. */
+  private addListenersToSorting(): void {
     const sortContainer = document.querySelector<HTMLSelectElement>('.anime__sort');
     assertNonNull(sortContainer);
     sortContainer.addEventListener('change', (event: Event) => {

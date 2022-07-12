@@ -1,8 +1,6 @@
 import { AnimeDto } from '../dtos/anime.dto';
 import { Anime } from '../models/anime';
 
-import { AiredMapper } from './aired.mapper';
-
 export namespace AnimeMapper {
 
   /**
