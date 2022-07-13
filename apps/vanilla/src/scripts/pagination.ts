@@ -1,42 +1,49 @@
 import { ButtonParameters } from './interfaces';
 
-export class Pagination{
+/** Pagination. */
+export class Pagination {
+
+  /** The block where the pagination is located. */
   public paginationContainer: Element;
+
+  /** The page from which the pagination begins. */
   public startPage: number;
+
+  /** Total number of pages in pagination. */
   public pagesCount: number;
-  public changeCurrentPage: Function
-  public constructor(paginationContainer: Element, startPage: number, pagesCount: number, changeCurrentPage: Function) {
+
+  /** Send the current page number. */
+  public sendCurrentPage: Function;
+
+  public constructor(paginationContainer: Element, startPage: number, pagesCount: number, sendCurrentPage: Function) {
     this.paginationContainer = paginationContainer;
     this.startPage = startPage;
     this.pagesCount = pagesCount;
-    this.changeCurrentPage = changeCurrentPage;
+    this.sendCurrentPage = sendCurrentPage;
   }
-  /**
- * Render pagination on the page.
- * @param paginationOptions Parameters for pagination.
- */
+
+  /** Render pagination on the page. */
   public renderPagination(): void {
     const rangePlaceholder = document.createElement('span');
-    rangePlaceholder.textContent = '...'
-    const maxStepsSelectedPage = 3
-    // let paginationContent = ``;
+    rangePlaceholder.textContent = '...';
+    const maxStepsSelectedPage = 3;
     const reportStart = 1;
     const numberOfDisplayedPages = maxStepsSelectedPage * 2;
-    this.paginationContainer.innerHTML = ''
+    this.paginationContainer.innerHTML = '';
 
     if (this.startPage !== reportStart) {
-      this.paginationContainer.append(this.createButton({ content: '&#9668;', value: 'previous_page' }))
+      this.paginationContainer.append(this.createButton({ content: '&#9668;', value: 'previous_page' }));
     }
     if (this.startPage < numberOfDisplayedPages) {
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
         this.paginationContainer.append(this.createButton({ content: i }));
       }
-      this.paginationContainer.append(rangePlaceholder)
+      this.paginationContainer.append(rangePlaceholder);
       this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
 
     } else if (this.pagesCount - this.startPage < numberOfDisplayedPages - 1) {
       this.paginationContainer.append(this.createButton({ content: reportStart }));
-      this.paginationContainer.append(rangePlaceholder)
+      this.paginationContainer.append(rangePlaceholder);
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
         const numberPage = this.pagesCount + i - numberOfDisplayedPages;
         this.paginationContainer.append(this.createButton({ content: numberPage }));
@@ -44,12 +51,12 @@ export class Pagination{
 
     } else {
       this.paginationContainer.append(this.createButton({ content: reportStart }));
-      this.paginationContainer.append(rangePlaceholder)
+      this.paginationContainer.append(rangePlaceholder);
       for (let i = -maxStepsSelectedPage; i <= maxStepsSelectedPage; i++) {
         const numberPage = this.startPage + i;
         this.paginationContainer.append(this.createButton({ content: numberPage }));
       }
-      this.paginationContainer.append(rangePlaceholder.cloneNode(true))
+      this.paginationContainer.append(rangePlaceholder.cloneNode(true));
       this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
     }
     if (this.startPage !== this.pagesCount) {
@@ -57,42 +64,43 @@ export class Pagination{
     }
 
   }
+
   /**
- * Return a string with a button in the form of HTML.
- * @param parameters Parameters for button.
- */
+   * Create a button according to the parameters.
+   * @param parameters Parameters for button.
+   */
   private createButton(parameters: ButtonParameters): HTMLButtonElement {
-    const value = parameters.value || parameters.content
-    const buttonElement = document.createElement('button')
-    buttonElement.innerHTML = String(parameters.content)
-    buttonElement.addEventListener('click', event => addListenersToPagination(event, this.startPage, this.changeCurrentPage))
-    buttonElement.value = String(value)
-    if (parameters.content === this.startPage){
-      buttonElement.className = 'pagination__page--current'
+    const value = parameters.value ?? parameters.content;
+    const buttonElement = document.createElement('button');
+    buttonElement.innerHTML = String(parameters.content);
+    buttonElement.addEventListener('click', event => this.addListenersToPagination(event));
+    buttonElement.value = String(value);
+    if (parameters.content === this.startPage) {
+      buttonElement.className = 'pagination__page--current';
     }
     return buttonElement;
   }
 
-}
-
   /**
-     * Page rendering on click.
-     * @param event The pressed button.
-     */
-  function addListenersToPagination(event: Event, currentPage: number,changeCurrentPage: Function): void {
+   * Add a click event to the button.
+   * @param event The pressed button.
+   */
+  private addListenersToPagination(event: Event): void {
     if (!(event.target instanceof HTMLButtonElement)) {
       return;
     }
     scrollTo(0, 0);
     const selectedPageContainer = event.target;
     if (selectedPageContainer.value === 'next_page') {
-      currentPage++;
+      this.startPage++;
     } else if (selectedPageContainer.value === 'previous_page') {
-      currentPage--;
+      this.startPage--;
     } else if (isNaN(Number(selectedPageContainer.value))) {
       throw new Error('Page number not found.');
     } else {
-      currentPage = Number(selectedPageContainer.value);
+      this.startPage = Number(selectedPageContainer.value);
     }
-    changeCurrentPage(currentPage);
+    this.sendCurrentPage(this.startPage);
   }
+
+}

@@ -1,60 +1,72 @@
-import { SortDTO } from "@js-camp/core/dtos/sort.dto";
+import { AnimeSort } from '@js-camp/core/models/animeSort';
 
+/**
+ * Initialize sorting.
+ * @param sortContainer The block where the sort is located.
+ * @param sortOrder Sort order.
+ * @param sendSortOrder Send the sort order.
+ */
 export function sortInitialization(
-  sortContainer: Element,
-  changeSortOrder: Function
+  sortContainer: HTMLSelectElement,
+  sortOrder: AnimeSort,
+  sendSortOrder: Function,
 ): void {
-  addSelect(sortContainer);
-  addListenersToSort(sortContainer, changeSortOrder)
+  addSelect(sortContainer, sortOrder);
+  addListenersToSort(sortContainer, sendSortOrder);
 }
 
-/** Create and add select to the page. */
-function addSelect(sortContainer: Element): void {
+/**
+ * Create and add select to the page.
+ * @param sortContainer The block where the sort is located.
+ * @param order Sort order.
+ */
+function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
+
   const selectOptions: OptionAttributes[] = [
     {
-      value: 'title_eng',
-      title: 'eng_title',
+      value: 'titleEng',
+      showTitle: 'english title',
     },
     {
-      value: 'aired__startswith',
-      title: 'aired start',
+      value: 'airedStart',
+      showTitle: 'aired start',
     },
     {
       value: 'status',
-      title: 'status',
+      showTitle: 'status',
     },
   ];
 
-
   const selectContent = selectOptions.reduce((body, current) => {
     const optionContent = `
-      <option value="${current.value}">${current.title}</option>`;
+      <option value="${current.value}">${current.showTitle}</option>`;
     return body + optionContent;
   }, ``);
 
   sortContainer.innerHTML = selectContent;
+  sortContainer.value = order;
+
 }
 
+/**
+ * Add a change event to the select.
+ * @param sortContainer The block where the sort is located.
+ * @param sendSortOrder Send the sort order.
+ */
+function addListenersToSort(sortContainer: HTMLSelectElement, sendSortOrder: Function): void {
+  sortContainer.addEventListener('change', () => {
 
-function addListenersToSort(sortContainer: Element, changeSortOrder: Function) {
-  sortContainer.addEventListener('change', (event: Event) => {
-    if (!(event.target instanceof HTMLSelectElement)) {
-      return;
-    }
-    const { target } = event;
-    const order = target.value as SortDTO;
-    changeSortOrder(order);
-  }, { once: true, }
-  );
+    const order = sortContainer.value as AnimeSort;
+    sendSortOrder(order);
+  }, { once: true });
 }
 
-
-/** Available attributes for the option. */ //mapper
+/** Available attributes for the option. */
 interface OptionAttributes {
 
   /** Option value. */
-  readonly value: SortDTO;
+  readonly value: AnimeSort;
 
   /** Option title. */
-  readonly title: string;
+  readonly showTitle: string;
 }

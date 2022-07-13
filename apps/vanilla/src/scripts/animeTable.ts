@@ -1,8 +1,6 @@
 import { Anime } from '@js-camp/core/models/anime';
-import { Pagination } from '@js-camp/core/models/pagination';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { formatDate } from '@js-camp/core/utils/formatDate';
-import { getAnimeList } from '../requests/animeList';
 
 /**
  * Outputs a table with anime.
