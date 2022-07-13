@@ -7,11 +7,13 @@ import { AnimeSort } from '@js-camp/core/models/animeSort';
  * @param sendSortOrder Send the sort order.
  */
 export function sortInitialization(
-  sortContainer: HTMLSelectElement,
+  formContainer: Element,
   sortOrder: AnimeSort,
   sendSortOrder: Function,
 ): void {
-  addSelect(sortContainer, sortOrder);
+  const sortContainer = document.createElement('select')
+  formContainer.replaceWith(sortContainer);
+  createOptions(sortContainer, sortOrder);
   addListenersToSort(sortContainer, sendSortOrder);
 }
 
@@ -20,7 +22,7 @@ export function sortInitialization(
  * @param sortContainer The block where the sort is located.
  * @param order Sort order.
  */
-function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
+function createOptions(sortContainer: HTMLSelectElement, order: AnimeSort): void {
 
   const selectOptions: OptionAttributes[] = [
     {
@@ -55,10 +57,9 @@ function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
  */
 function addListenersToSort(sortContainer: HTMLSelectElement, sendSortOrder: Function): void {
   sortContainer.addEventListener('change', () => {
-
     const order = sortContainer.value as AnimeSort;
     sendSortOrder(order);
-  }, { once: true });
+  });
 }
 
 /** Available attributes for the option. */

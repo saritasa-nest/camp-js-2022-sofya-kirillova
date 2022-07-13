@@ -1,3 +1,4 @@
+import { Type } from '@js-camp/core/models/anime';
 import { AnimeSort } from '@js-camp/core/models/animeSort';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
@@ -5,28 +6,31 @@ import { getAnimeList } from '../requests/animeList';
 import { renderAnimeTable } from '../scripts/animeTable';
 import { Pagination } from '../scripts/pagination';
 import { sortInitialization } from '../scripts/sort';
+import { initializationTypeFilter } from '../scripts/typeFilter';
 
 const paginationContainer = document.querySelector('.anime__pagination');
 const sortContainer = document.querySelector('.anime__sort');
+const typeFilterContainer = document.querySelector('.anime__filter');
 const pageSize = 30;
 let currentPage = 1;
 let sortOrder: AnimeSort = 'titleEng';
+let typeFilter: Type | undefined = Type.Movie
+
+
 
 /**  Render sorting, anime table and pagination. */
 async function renderAnime(): Promise<void> {
-  // console.log(234)
   assertNonNull(paginationContainer);
-  if (!(sortContainer instanceof HTMLSelectElement)) {
-    return;
-  }
+  assertNonNull(sortContainer);
+  assertNonNull(typeFilterContainer);
 
-  const paginationConfig = { pageSize, currentPage, order: sortOrder };
+  const paginationConfig = { pageSize, currentPage, order: sortOrder, type: typeFilter};
   const animeData = await getAnimeList(paginationConfig);
   const pagesCount = Math.ceil(animeData.count / pageSize);
   const pagination = new Pagination(paginationContainer, currentPage, pagesCount, setCurrentPage);
-
   pagination.renderPagination();
   sortInitialization(sortContainer, sortOrder, setSortOrder);
+  initializationTypeFilter(typeFilterContainer, String(typeFilter), setTypeFilter)
   renderAnimeTable(animeData.results);
 }
 
@@ -48,4 +52,12 @@ function setSortOrder(order: AnimeSort): void {
   renderAnime();
 }
 
+/** //Update
+ * Set the anime sorting order.
+ * @param type Anime sorting order.
+ */
+ function setTypeFilter(type: Type | undefined): void {
+  typeFilter = type;
+  renderAnime();
+}
 renderAnime();
