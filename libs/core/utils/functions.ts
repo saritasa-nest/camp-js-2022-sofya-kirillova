@@ -5,7 +5,7 @@
  */
 export function displayTheError(message: string, container: Element): void {
   container.innerHTML = message;
-  container.classList.remove('di');
+  container.classList.remove('display-none');
 }
 
 /**

@@ -6,10 +6,10 @@ import { api } from '../scripts/API';
 
 /**
  * Sends a request for user registration.
- * @param formData Parameters for user registration.
+ * @param userData Parameters for user registration.
  */
-export async function register(formData: FormData): Promise<void> {
-  await api.post(`/auth/register/`, formData).then(res => {
+export async function register(userData: FormData): Promise<void> {
+  await api.post(`/auth/register/`, userData).then(res => {
     const token = TokenMapper.fromDto(res.data);
     localStorage.setItem('access', token.access);
     localStorage.setItem('refresh', token.refresh);

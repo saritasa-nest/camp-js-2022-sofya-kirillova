@@ -7,10 +7,10 @@ import { api } from '../scripts/API';
 
 /**
  * Sends an authorization request.
- * @param formData Sends a request for user authorization.
+ * @param userData Sends a request for user authorization.
  */
-export async function authentication(formData: FormData): Promise<void> {
-  await api.post(`/auth/login/`, formData).then(res => {
+export async function authentication(userData: FormData): Promise<void> {
+  await api.post(`/auth/login/`, userData).then(res => {
     const token = TokenMapper.fromDto(res.data);
     localStorage.setItem('access', token.access);
     localStorage.setItem('refresh', token.refresh);
