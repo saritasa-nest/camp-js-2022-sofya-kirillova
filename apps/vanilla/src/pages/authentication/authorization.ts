@@ -7,10 +7,10 @@ const button = document.querySelector('.authorization__button');
 assertNonNull(button);
 const formContainer = document.querySelector('.authorization__form');
 
-button.addEventListener('click', request);
+button.addEventListener('click', requestAuthentication);
 
 /** Sends the authentication request. */
-function request(): void {
+function requestAuthentication(): void {
   if (!(formContainer instanceof HTMLFormElement)) {
     throw new Error('not form');
   }

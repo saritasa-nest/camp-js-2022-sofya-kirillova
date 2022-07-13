@@ -4,13 +4,12 @@ import { verifyToken } from '../requests/verifyToken';
 
 /** Render the site header. */
 async function renderHeader(): Promise<void> {
-  const isVerifyToken = await verifyToken();
+  const isTokenValid = await verifyToken();
   const header = document.querySelector('.header');
   assertNonNull(header);
   let template;
-  if (isVerifyToken === true) {
+  if (isTokenValid === true) {
     template = document.querySelector('#authorized');
-
   } else {
     template = document.querySelector('#unauthorized');
   }

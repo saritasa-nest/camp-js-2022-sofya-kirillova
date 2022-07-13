@@ -29,14 +29,14 @@ export function checkFields(): void {
     displayTheError('Passwords mismatch', errorContainer);
     return;
   }
-  request(formData);
+  requestRegistration(formData);
 }
 
 /**
  * Sends the registration request.
  * @param formData Form field data.
  */
-function request(formData: FormData): void {
+function requestRegistration(formData: FormData): void {
   const avatarUser = 'https://s3.us-west-2.amazonaws.com/camp-js-backend-files-dev/user_avatars' +
   '%2Ff33c09a7-a15e-4b7c-b47f-650bfe19faff%2Fprofile.jpg';
 
