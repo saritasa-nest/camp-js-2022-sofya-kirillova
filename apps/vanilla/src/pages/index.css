@@ -53,3 +53,11 @@
   color: var(--heading-color-3);
   font-size: 1.1em;
 }
+
+.anime__forms {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  column-gap: 10px;
+  align-items: center;
+}

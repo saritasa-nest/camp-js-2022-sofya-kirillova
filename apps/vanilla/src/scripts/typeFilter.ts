@@ -1,29 +1,30 @@
 import { Type } from "@js-camp/core/models/anime";
+import { assertNonNull } from "@js-camp/core/utils/assertNonNull";
 
 /**
  * Initialize filtering by type.
- * @param sortContainer The block where the sort is located.
- * @param sortOrder Sort order.
- * @param sendSortOrder Send the sort order.
+ * @param filterContainer The block where the filter is located.
+ * @param valueFilter Filter value.
+ * @param sendValue Send the filter value.
  */
 export function initializationTypeFilter(
-  typeContainer: Element,
-  type: string,
-  sendType: Function,
+  filterContainer: Element,
+  valueFilter: string,
+  sendValue: Function,
 ): void {
-  addInputRadio(typeContainer, type);
-  addListenersToSort(typeContainer, sendType);
+  addInputRadio(filterContainer, valueFilter);
+  addListenersToSort(filterContainer, sendValue);
 }
 
 /**
- * Create and add select to the page.
- * @param sortContainer The block where the sort is located.
- * @param order Sort order.
+ * Create and add inputs to the page.
+ * @param filterContainer The block where the filter is located.
+ * @param valueFilter Filter value.
  */
-function addInputRadio(typeContainer: Element, type: string): void {
-  const filterContentArray = [
+function addInputRadio(filterContainer: Element, valueFilter: string): void {
+  const typeContent: FilterOptions[] = [
     {
-      value: undefined,
+      value: null,
       showTitle: 'All',
     },
     {
@@ -53,47 +54,43 @@ function addInputRadio(typeContainer: Element, type: string): void {
   ];
 
 
-  const filterContent = filterContentArray.reduce((body, current) => {
-    // console.log(current.value, type)
-    // console.log(String(current.value), type)
-    // if(String(current.value) === type ){
-    //   console.log(87)
-    // }else{
-    //   console.log(8777)
-    // }
-    // checked="false" checked=${String(current.value) === type ? true: false} 
-
+  const filterContent = typeContent.reduce((body, current) => {
     const optionContent = `
       <label>
-        <input type="radio" name="type" ${String(current.value) === type ? 'checked': ''} value="${current.value}">
+        <input type="radio" name="type" ${String(current.value) === valueFilter ? 'checked' : ''} value="${current.value}">
          ${current.showTitle}
       </label>`;
 
     return body + optionContent;
   }, ``);
-  typeContainer.innerHTML = filterContent;
+  filterContainer.innerHTML = filterContent;
 
 }
 
 /**
- * Add a change event to the select.
- * @param sortContainer The block where the sort is located.
- * @param sendSortOrder Send the sort order.
+ * Add a change event to the filter.
+ * @param filterContainer The block where the filter is located.
+ * @param sendValue Send the filter value.
  */
-function addListenersToSort(sendType: Function): void {
-  const typeContainer = document.querySelector('input[name="type"]')
-  typeContainer.addEventListener('click', () => {
-
-    const order = sortContainer.value as AnimeSort;
-    sendSortOrder(order);
+function addListenersToSort(filterContainer: Element, sendValue: Function): void {
+  filterContainer.addEventListener('change', () => {
+    const typeContainer = document.querySelector<HTMLInputElement>('input[name="type"]:checked')
+    assertNonNull(typeContainer);
+    let type: Type | null = Type.Movie
+    if (Object.values(Type).includes(typeContainer.value as any)) {
+      type = typeContainer.value as Type
+    } else {
+      type = null;
+    }
+    sendValue(type);
   }, { once: true });
 }
 
-/** Available attributes for the option. */
-interface OptionAttributes {
+/** Available attributes for the filter fields. */
+interface FilterOptions {
 
   /** Option value. */
-  readonly value: AnimeSort;
+  readonly value: Type | null;
 
   /** Option title. */
   readonly showTitle: string;

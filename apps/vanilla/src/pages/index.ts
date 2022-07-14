@@ -14,7 +14,7 @@ const typeFilterContainer = document.querySelector('.anime__filter');
 const pageSize = 30;
 let currentPage = 1;
 let sortOrder: AnimeSort = 'titleEng';
-let typeFilter: Type | undefined = Type.Movie
+let typeFilterValue: Type | null = Type.Movie
 
 
 
@@ -24,13 +24,13 @@ async function renderAnime(): Promise<void> {
   assertNonNull(sortContainer);
   assertNonNull(typeFilterContainer);
 
-  const paginationConfig = { pageSize, currentPage, order: sortOrder, type: typeFilter};
+  const paginationConfig = { pageSize, currentPage, order: sortOrder, type: typeFilterValue};
   const animeData = await getAnimeList(paginationConfig);
   const pagesCount = Math.ceil(animeData.count / pageSize);
   const pagination = new Pagination(paginationContainer, currentPage, pagesCount, setCurrentPage);
   pagination.renderPagination();
   sortInitialization(sortContainer, sortOrder, setSortOrder);
-  initializationTypeFilter(typeFilterContainer, String(typeFilter), setTypeFilter)
+  initializationTypeFilter(typeFilterContainer, String(typeFilterValue), setTypeFilter)
   renderAnimeTable(animeData.results);
 }
 
@@ -56,8 +56,8 @@ function setSortOrder(order: AnimeSort): void {
  * Set the anime sorting order.
  * @param type Anime sorting order.
  */
- function setTypeFilter(type: Type | undefined): void {
-  typeFilter = type;
+ function setTypeFilter(type: Type | null): void {
+  typeFilterValue = type;
   renderAnime();
 }
 renderAnime();

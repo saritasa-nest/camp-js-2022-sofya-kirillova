@@ -22,7 +22,7 @@ interface PaginationConfig {
   readonly order: AnimeSort;
 
   /** The value of type filtering. */ 
-  readonly type?: Type;
+  readonly type: Type | null;
 }
 
 /**
@@ -37,7 +37,7 @@ export async function getAnimeList(paginationConfig: PaginationConfig): Promise<
   url.append('limit', String(paginationConfig.pageSize));
   url.append('offset', String(offset));
   url.append('ordering', `${order},id`);
-  if (paginationConfig.type !== undefined){
+  if (paginationConfig.type !== null){
     url.append('type', `${paginationConfig.type}`);
 
   }
