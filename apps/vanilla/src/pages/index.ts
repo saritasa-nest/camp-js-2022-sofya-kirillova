@@ -4,7 +4,7 @@ import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { getAnimeList } from '../requests/animeList';
 import { renderAnimeTable } from '../scripts/animeTable';
 import { Pagination } from '../scripts/pagination';
-import { initializationSort } from '../scripts/sort';
+import { initializeSort } from '../scripts/sort';
 
 const paginationContainer = document.querySelector('.anime__pagination');
 const sortContainer = document.querySelector('.anime__sort');
@@ -25,7 +25,7 @@ async function renderAnime(): Promise<void> {
   const pagination = new Pagination(paginationContainer, currentPage, pagesCount, setCurrentPage);
 
   pagination.renderPagination();
-  initializationSort(sortContainer, sortOrder, setSortOrder);
+  initializeSort(sortContainer, sortOrder, setSortOrder);
   renderAnimeTable(animeData.results);
 }
 
