@@ -21,7 +21,7 @@ interface PaginationConfig {
   /** Sorting mode. */
   readonly order: AnimeSort;
 
-  /** The value of type filtering. */ 
+  /** The value of type filtering. */
   readonly type: Type | null;
 }
 
@@ -37,11 +37,10 @@ export async function getAnimeList(paginationConfig: PaginationConfig): Promise<
   url.append('limit', String(paginationConfig.pageSize));
   url.append('offset', String(offset));
   url.append('ordering', `${order},id`);
-  if (paginationConfig.type !== null){
+  if (paginationConfig.type !== null) {
     url.append('type', `${paginationConfig.type}`);
 
   }
-  
 
   const response = await api.get<PaginationDto<AnimeDto>>(
     `/anime/anime/?${url}`,

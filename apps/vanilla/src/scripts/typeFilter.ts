@@ -1,5 +1,7 @@
-import { Type } from "@js-camp/core/models/anime";
-import { assertNonNull } from "@js-camp/core/utils/assertNonNull";
+import { Type } from '@js-camp/core/models/anime';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
+
+import { FieldOptions } from './interfaces';
 
 /**
  * Initialize filtering by type.
@@ -22,7 +24,7 @@ export function initializationTypeFilter(
  * @param valueFilter Filter value.
  */
 function addInputRadio(filterContainer: Element, valueFilter: string): void {
-  const typeContent: FilterOptions[] = [
+  const typeContent: FieldOptions<Type | null>[] = [
     {
       value: null,
       showTitle: 'All',
@@ -53,7 +55,6 @@ function addInputRadio(filterContainer: Element, valueFilter: string): void {
     },
   ];
 
-
   const filterContent = typeContent.reduce((body, current) => {
     const optionContent = `
       <label>
@@ -74,24 +75,14 @@ function addInputRadio(filterContainer: Element, valueFilter: string): void {
  */
 function addListenersToSort(filterContainer: Element, sendValue: Function): void {
   filterContainer.addEventListener('change', () => {
-    const typeContainer = document.querySelector<HTMLInputElement>('input[name="type"]:checked')
+    const typeContainer = document.querySelector<HTMLInputElement>('input[name="type"]:checked');
     assertNonNull(typeContainer);
-    let type: Type | null = Type.Movie
-    if (Object.values(Type).includes(typeContainer.value as any)) {
-      type = typeContainer.value as Type
+    let type: Type | null = Type.Movie;
+    if (Object.values(Type).includes(typeContainer.value as Type)) {
+      type = typeContainer.value as Type;
     } else {
       type = null;
     }
     sendValue(type);
   }, { once: true });
-}
-
-/** Available attributes for the filter fields. */
-interface FilterOptions {
-
-  /** Option value. */
-  readonly value: Type | null;
-
-  /** Option title. */
-  readonly showTitle: string;
 }
