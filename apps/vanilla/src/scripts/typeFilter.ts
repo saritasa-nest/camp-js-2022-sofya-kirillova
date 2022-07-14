@@ -69,6 +69,14 @@ function addInputRadio(filterContainer: Element, valueFilter: string): void {
 }
 
 /**
+ * Check whether the value is Type.
+ * @param value Tested value.
+ */
+function checkIsType(value: string): value is Type {
+  return Object.values(Type).includes(value as Type);
+}
+
+/**
  * Add a change event to the filter.
  * @param filterContainer The block where the filter is located.
  * @param sendValue Send the filter value.
@@ -77,9 +85,9 @@ function addListenersToSort(filterContainer: Element, sendValue: Function): void
   filterContainer.addEventListener('change', () => {
     const typeContainer = document.querySelector<HTMLInputElement>('input[name="type"]:checked');
     assertNonNull(typeContainer);
-    let type: Type | null = Type.Movie;
-    if (Object.values(Type).includes(typeContainer.value as Type)) {
-      type = typeContainer.value as Type;
+    let type: Type | null;
+    if (checkIsType(typeContainer.value)) {
+      type = typeContainer.value;
     } else {
       type = null;
     }

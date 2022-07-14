@@ -14,7 +14,7 @@ const typeFilterContainer = document.querySelector('.anime__filter');
 const pageSize = 30;
 let currentPage = 1;
 let sortOrder: AnimeSort = 'titleEng';
-let typeFilterValue: Type | null = Type.Movie;
+let typeFilterValue: Type | null = null;
 
 /**  Render sorting, anime table and pagination. */
 async function renderAnime(): Promise<void> {
