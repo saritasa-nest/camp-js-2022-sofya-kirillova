@@ -20,6 +20,9 @@ interface PaginationConfig {
 
   /** Sorting mode. */
   readonly order: AnimeSort;
+
+  /** Search anime. */
+  readonly search: string;
 }
 
 /**
@@ -29,15 +32,16 @@ interface PaginationConfig {
 export async function getAnimeList(paginationConfig: PaginationConfig): Promise<Pagination<Anime>> {
   const order = AnimeSortMapper.toDto(paginationConfig.order);
   const offset = (paginationConfig.currentPage - 1) * paginationConfig.pageSize;
-
   const url = new URLSearchParams();
   url.append('limit', String(paginationConfig.pageSize));
   url.append('offset', String(offset));
   url.append('ordering', `${order},id`);
+  url.append('title_eng__icontains', `${paginationConfig.search}`);
 
   const response = await api.get<PaginationDto<AnimeDto>>(
     `/anime/anime/?${url}`,
   );
+
   const { data } = response;
   return AnimeListMapper.fromDto(data);
 }
