@@ -6,7 +6,7 @@ import { AnimeSort } from '@js-camp/core/models/animeSort';
  * @param sortOrder Sort order.
  * @param sendSortOrder Send the sort order.
  */
-export function sortInitialization(
+export function initializationSort(
   sortContainer: HTMLSelectElement,
   sortOrder: AnimeSort,
   sendSortOrder: Function,

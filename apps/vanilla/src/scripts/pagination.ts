@@ -4,16 +4,16 @@ import { ButtonParameters } from './interfaces';
 export class Pagination {
 
   /** The block where the pagination is located. */
-  public paginationContainer: Element;
+  public readonly paginationContainer: Element;
 
   /** The page from which the pagination begins. */
-  public startPage: number;
+  public readonly startPage: number;
 
   /** Total number of pages in pagination. */
-  public pagesCount: number;
+  public readonly pagesCount: number;
 
   /** Send the current page number. */
-  public sendCurrentPage: Function;
+  public readonly sendCurrentPage: Function;
 
   public constructor(paginationContainer: Element, startPage: number, pagesCount: number, sendCurrentPage: Function) {
     this.paginationContainer = paginationContainer;
@@ -86,21 +86,22 @@ export class Pagination {
    * @param event The pressed button.
    */
   private addListenersToPagination(event: Event): void {
+    let currentPage = this.startPage
     if (!(event.target instanceof HTMLButtonElement)) {
       return;
     }
     scrollTo(0, 0);
     const selectedPageContainer = event.target;
     if (selectedPageContainer.value === 'next_page') {
-      this.startPage++;
+      currentPage++;
     } else if (selectedPageContainer.value === 'previous_page') {
-      this.startPage--;
+      currentPage--;
     } else if (isNaN(Number(selectedPageContainer.value))) {
       throw new Error('Page number not found.');
     } else {
-      this.startPage = Number(selectedPageContainer.value);
+      currentPage = Number(selectedPageContainer.value);
     }
-    this.sendCurrentPage(this.startPage);
+    this.sendCurrentPage(currentPage);
   }
 
 }

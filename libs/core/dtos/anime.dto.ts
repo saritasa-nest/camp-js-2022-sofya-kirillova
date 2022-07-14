@@ -22,9 +22,9 @@ export interface AnimeDto {
   readonly aired: {
 
     /** Aired start, for example, "2014-12-20T17:30:50.416Z". */
-    readonly start: string;
+    readonly start: string | null;
 
-    /** Aired end, for example, "2014-12-20T17:30:50.416Z". */
-    readonly end: string;
+    /** Aired end, for example, "2014-12-20T17:30:50.416Z" or null. */
+    readonly end: string | null;
   };
 }
