@@ -6,7 +6,7 @@ import { getAnimeList } from '../requests/animeList';
 import { renderAnimeTable } from '../scripts/animeTable';
 import { Pagination } from '../scripts/pagination';
 import { sortInitialization } from '../scripts/sort';
-import { initializationTypeFilter } from '../scripts/typeFilter';
+import { initializeTypeFiltering } from '../scripts/typeFilter';
 
 const paginationContainer = document.querySelector('.anime__pagination');
 const sortContainer = document.querySelector('.anime__sort');
@@ -28,7 +28,7 @@ async function renderAnime(): Promise<void> {
   const pagination = new Pagination(paginationContainer, currentPage, pagesCount, setCurrentPage);
   pagination.renderPagination();
   sortInitialization(sortContainer, sortOrder, setSortOrder);
-  initializationTypeFilter(typeFilterContainer, String(typeFilterValue), setTypeFilter);
+  initializeTypeFiltering(typeFilterContainer, String(typeFilterValue), setTypeFilter);
   renderAnimeTable(animeData.results);
 }
 

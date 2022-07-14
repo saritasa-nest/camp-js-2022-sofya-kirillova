@@ -9,7 +9,7 @@ import { FieldOptions } from './interfaces';
  * @param valueFilter Filter value.
  * @param sendValue Send the filter value.
  */
-export function initializationTypeFilter(
+export function initializeTypeFiltering(
   filterContainer: Element,
   valueFilter: string,
   sendValue: Function,
