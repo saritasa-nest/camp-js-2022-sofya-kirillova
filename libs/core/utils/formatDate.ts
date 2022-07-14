@@ -9,8 +9,8 @@ export function formatDate(date: Date | null): string {
     day: '2-digit',
   };
   if (date === null) {
-    return 'No date'
-  } else {
-    return date.toLocaleString('ru', options);
+    return 'No date';
   }
+  return date.toLocaleString('ru', options);
+
 }

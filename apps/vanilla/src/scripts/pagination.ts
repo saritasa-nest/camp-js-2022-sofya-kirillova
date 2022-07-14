@@ -86,7 +86,7 @@ export class Pagination {
    * @param event The pressed button.
    */
   private addListenersToPagination(event: Event): void {
-    let currentPage = this.startPage
+    let currentPage = this.startPage;
     if (!(event.target instanceof HTMLButtonElement)) {
       return;
     }
