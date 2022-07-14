@@ -26,20 +26,28 @@ export class Pagination {
   public renderPagination(): void {
     const rangePlaceholder = document.createElement('span');
     rangePlaceholder.textContent = '...';
-    const maxStepsSelectedPage = 3;
+    const maxStepsSelectedPage = 2;
     const reportStart = 1;
     const numberOfDisplayedPages = maxStepsSelectedPage * 2;
     this.paginationContainer.innerHTML = '';
-
+    if (this.pagesCount === 1) {
+      return;
+    }
     if (this.startPage !== reportStart) {
       this.paginationContainer.append(this.createButton({ content: '&#9668;', value: 'previous_page' }));
     }
     if (this.startPage < numberOfDisplayedPages) {
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
-        this.paginationContainer.append(this.createButton({ content: i }));
+        if (i <= this.pagesCount) {
+          this.paginationContainer.append(this.createButton({ content: i }));
+        } else {
+          break;
+        }
       }
-      this.paginationContainer.append(rangePlaceholder);
-      this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
+      if (this.pagesCount > numberOfDisplayedPages) {
+        this.paginationContainer.append(rangePlaceholder);
+        this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
+      }
 
     } else if (this.pagesCount - this.startPage < numberOfDisplayedPages - 1) {
       this.paginationContainer.append(this.createButton({ content: reportStart }));
@@ -59,7 +67,7 @@ export class Pagination {
       this.paginationContainer.append(rangePlaceholder.cloneNode(true));
       this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
     }
-    if (this.startPage !== this.pagesCount) {
+    if (this.startPage !== this.pagesCount && this.pagesCount > numberOfDisplayedPages) {
       this.paginationContainer.append(this.createButton({ content: '&#9658;', value: 'next_page' }));
     }
 
