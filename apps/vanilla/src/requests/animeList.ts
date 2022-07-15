@@ -18,7 +18,7 @@ interface PaginationConfig {
   /** Current page. */
   readonly currentPage: number;
 
-  /** Sorting mode. */
+  /** Sorting. */
   readonly order: AnimeSort;
 }
 
