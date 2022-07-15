@@ -2,7 +2,10 @@ import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
 
 import { api } from '../scripts/API';
 
-/** Update user access token. */
+/**
+ * Update user access token.
+ * @returns Whether the user is authorized.
+ */
 export async function updateToken(): Promise<boolean> {
   let isVerifyToken = false;
   const refreshToken = localStorage.getItem('refresh');

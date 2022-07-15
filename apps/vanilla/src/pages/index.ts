@@ -1,4 +1,4 @@
-import { assertNonNull } from '@js-camp/core/utils/functions';
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { verifyToken } from '../requests/verifyToken';
 
@@ -9,13 +9,12 @@ async function renderHeader(): Promise<void> {
   assertNonNull(header);
   let template;
   if (isTokenValid === true) {
-    template = document.querySelector('#authorized');
+    template = document.querySelector<HTMLTemplateElement>('#authorized');
   } else {
-    template = document.querySelector('#unauthorized');
+    template = document.querySelector<HTMLTemplateElement>('#unauthorized');
   }
-  if (!(template instanceof HTMLTemplateElement)) {
-    throw new Error('not template');
-  }
+
+  assertNonNull(template);
   header.append(template.content);
 }
 renderHeader();

@@ -13,20 +13,29 @@
     <a href="/" class="body__back">Back</a>
   </header>
   <div class="registration">
-    <h2>Registration</h2>
     <form class="registration__form">
-      <label class="registration__label item-d" for="last_name">Surname</label>
-      <input name="last-name" type="text" id="last_name">
-      <label class="registration__label" for="first_name">Name</label>
-      <input name="first-name" type="text" id="first_name">
-      <label class="registration__label" for="email">E-mail</label>
-      <input name="email" type="email" id="email">
-      <label class="registration__label" for="password">Password</label>
-      <input name="password" type="password" id="name">
-      <label class="registration__label" for="repeat_password">Re-type password</label>
-      <input name="repeat-password" type="password" id="name">
-      <h5 class="registration__error display-none">Error</h5>
+      
+      <h1>Registration</h1>
+
+      <label class="registration__label item-d">
+        Surname <input name="last-name" type="text">
+      </label>
+
+      <label class="registration__label">
+        Name <input name="first-name" type="text"></label>
+
+      <label class="registration__label">
+        E-mail <input name="email" type="email"></label>
+
+      <label class="registration__label">
+        Password <input name="password" type="password"></label>
+
+      <label class="registration__label">
+        Re-type password <input name="repeat-password" type="password"></label>
+
+      <p class="registration__error display-none">Error</p>
       <button class="registration__button" type="button">submit</button>
+
     </form>
   </div>
   <script type="module" src="./registration.ts"></script>

@@ -2,7 +2,10 @@ import { api } from '../scripts/API';
 
 import { updateToken } from './refreshToken';
 
-/** User access token verification. */
+/**
+ * User access token verification.
+ * @returns Whether the user is authorized.
+ */
 export async function verifyToken(): Promise<boolean> {
   const accessToken = localStorage.getItem('access');
   let isVerifyToken = false;

@@ -1,6 +1,7 @@
+import { FieldErrorMapper } from '@js-camp/core/mappers/fieldError.mapper';
 import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
 import { FieldError } from '@js-camp/core/models/fieldError';
-import { assertNonNull, displayTheError } from '@js-camp/core/utils/functions';
+
 import { AxiosError } from 'axios';
 
 import { api } from '../scripts/API';
@@ -9,9 +10,9 @@ import { api } from '../scripts/API';
  * Sends a request for user registration.
  * @param userData Parameters for user registration.
  */
-export async function register(userData: FormData): Promise<void> {
+export async function register(userData: FormData): Promise<void | FieldError> {
   try {
-    const response = await api.post(`/auth/register/`, userData)
+    const response = await api.post(`/auth/register/`, userData);
     const token = TokenMapper.fromDto(response.data);
     localStorage.setItem('access', token.access);
     localStorage.setItem('refresh', token.refresh);
@@ -20,9 +21,6 @@ export async function register(userData: FormData): Promise<void> {
     if (!(error instanceof AxiosError) || error.response === undefined) {
       throw error;
     }
-    const errorData = error.response.data as FieldError;
-    const errorContainer = document.querySelector('.registration__error');
-    assertNonNull(errorContainer);
-    displayTheError(Object.values(errorData.data)[0][0], errorContainer);
+    return FieldErrorMapper.fromDto(error.response.data);
   }
 }

@@ -1,18 +1,19 @@
+import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
+import { FieldErrorMapper } from '@js-camp/core/mappers/fieldError.mapper';
+
+import { AxiosError } from 'axios';
+
 import { FieldError } from '@js-camp/core/models/fieldError';
 
-import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
-import { assertNonNull, displayTheError } from '@js-camp/core/utils/functions';
-
 import { api } from '../scripts/API';
-import { AxiosError } from 'axios';
 
 /**
  * Sends an authorization request.
- * @param userData Sends a request for user authorization.
+ * @param authData Sends a request for user authorization.
  */
-export async function authentication(userData: FormData): Promise<void> {
+export async function login(authData: FormData): Promise<void | FieldError> {
   try {
-    const response = await api.post(`/auth/login/`, userData)
+    const response = await api.post(`/auth/login/`, authData);
     const token = TokenMapper.fromDto(response.data);
     localStorage.setItem('access', token.access);
     localStorage.setItem('refresh', token.refresh);
@@ -21,10 +22,6 @@ export async function authentication(userData: FormData): Promise<void> {
     if (!(error instanceof AxiosError) || error.response === undefined) {
       throw error;
     }
-    const errorData = error.response.data as FieldError;
-    const errorContainer = document.querySelector('.authorization__error');
-    assertNonNull(errorContainer);
-    displayTheError(errorData.detail, errorContainer);
+    return FieldErrorMapper.fromDto(error.response.data);
   }
-
 }

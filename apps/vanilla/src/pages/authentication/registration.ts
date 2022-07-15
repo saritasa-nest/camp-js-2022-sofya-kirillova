@@ -1,6 +1,12 @@
-import { assertNonNull, displayTheError } from '@js-camp/core/utils/functions';
+
+import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
+import { displayError } from '@js-camp/core/utils/displayError';
+import { checkFieldsEmptiness } from '@js-camp/core/utils/checkFieldsEmptiness';
+
+import { FieldError } from '@js-camp/core/models/fieldError';
+
 import { register } from '../../requests/registration';
-import { fillFields } from '../../scripts/fillFields';
+import { AVATAR_USER } from '../../scripts/constants';
 
 const button = document.querySelector('.registration__button');
 assertNonNull(button);
@@ -9,24 +15,21 @@ button.addEventListener('click', checkFields);
 /** Check the fields for correctness. */
 export function checkFields(): void {
 
-  const formContainer = document.querySelector('.registration__form');
-  if (!(formContainer instanceof HTMLFormElement)) {
-    throw new Error('not form');
-  }
-
+  const formContainer = document.querySelector<HTMLFormElement>('.registration__form');
+  assertNonNull(formContainer);
   const formData = new FormData(formContainer);
   const errorContainer = document.querySelector('.registration__error');
   assertNonNull(errorContainer);
-  const isFillFields = fillFields(formData);
-  if (isFillFields == false) {
-    displayTheError('Please fill in all fields', errorContainer);
-    return
+  const isFillFields = checkFieldsEmptiness(formData);
+  if (isFillFields === false) {
+    displayError('Please fill in all fields', errorContainer);
+    return;
   }
 
   const password = formData.get('password');
   const repeatPassword = formData.get('repeat-password');
   if (password !== repeatPassword) {
-    displayTheError('Passwords mismatch', errorContainer);
+    displayError('Passwords mismatch', errorContainer);
     return;
   }
   requestRegistration(formData);
@@ -36,13 +39,14 @@ export function checkFields(): void {
  * Sends the registration request.
  * @param formData Form field data.
  */
-function requestRegistration(formData: FormData): void {
-  const avatarUser = 'https://s3.us-west-2.amazonaws.com/camp-js-backend-files-dev/user_avatars' +
-  '%2Ff33c09a7-a15e-4b7c-b47f-650bfe19faff%2Fprofile.jpg';
-
-  formData.append('avatar', avatarUser);
+async function requestRegistration(formData: FormData): Promise<void> {
+  const errorContainer = document.querySelector('.registration__error');
+  assertNonNull(errorContainer);
+  formData.append('avatar', AVATAR_USER);
   formData.delete('repeat-password');
 
-  register(formData);
+  const errorInformation = await register(formData);
+  if (errorInformation instanceof FieldError) {
+    displayError(Object.values(errorInformation.data)[0][0], errorContainer);
+  }
 }
-

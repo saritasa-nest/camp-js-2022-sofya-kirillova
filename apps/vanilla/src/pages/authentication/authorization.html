@@ -13,14 +13,19 @@
     <a href="/" class="body__back">Back</a>
   </header>
   <div class="authorization">
-    <h2>Authorization</h2>
     <form class="authorization__form">
-      <label class="authorization__label" for="email">E-mail</label>
-      <input name="email" type="email" id="email">
-      <label class="authorization__label" for="password">Password</label>
-      <input name="password" type="password" id="name">
-      <h5 class="authorization__error display-none">Error</h5>
+
+      <h1>Authorization</h1>
+
+      <label class="authorization__label" >
+        E-mail <input name="email" type="email"></label>
+
+      <label class="authorization__label">
+        Password <input name="password" type="password"></label>
+
+      <p class="authorization__error display-none">Error</p>
       <button class="authorization__button" type="button">submit</button>
+
     </form>
   </div>
   <script type="module" src="./authorization.ts"></script>
