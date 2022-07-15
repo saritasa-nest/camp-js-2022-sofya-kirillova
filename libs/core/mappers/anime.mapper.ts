@@ -1,5 +1,5 @@
-import { AnimeDto } from '../dtos/anime.dto';
-import { Anime } from '../models/anime';
+import { AnimeDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
+import { Anime, AnimeStatus, AnimeType } from '../models/anime';
 
 export namespace AnimeMapper {
 
@@ -8,14 +8,30 @@ export namespace AnimeMapper {
    * @param dto Anime dto.
    */
   export function fromDto(dto: AnimeDto): Anime {
+
     return new Anime({
       image: dto.image,
       titleEnglish: dto.title_eng,
       titleJapanese: dto.title_jpn,
-      type: dto.type,
-      status: dto.status,
+      type: fromDtoMapType[dto.type],
+      status: fromDtoMapStatus[dto.status],
       airingStart: dto.aired.start === null ? null : new Date(dto.aired.start),
       airingFinish: dto.aired.end === null ? null : new Date(dto.aired.end),
     });
   }
+
+  const fromDtoMapStatus: Readonly<Record<AnimeStatusDto, AnimeStatus>> = {
+    [AnimeStatusDto.Airing]: 'On air',
+    [AnimeStatusDto.Finished]: 'Finished',
+    [AnimeStatusDto.NotYetAired]: 'Not yet aired',
+  };
+
+  const fromDtoMapType: Readonly<Record<AnimeTypeDto, AnimeType>> = {
+    [AnimeTypeDto.Tv]: 'TV',
+    [AnimeTypeDto.Ova]: 'OVA',
+    [AnimeTypeDto.Movie]: 'Movie',
+    [AnimeTypeDto.Special]: 'Special',
+    [AnimeTypeDto.Ona]: 'ONA',
+    [AnimeTypeDto.Music]: 'Music',
+  };
 }
