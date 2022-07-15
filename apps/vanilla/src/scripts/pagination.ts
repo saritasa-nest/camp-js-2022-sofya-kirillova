@@ -3,19 +3,20 @@ import { ButtonParameters } from './interfaces';
 /** Pagination. */
 export class Pagination {
 
-  /** The block where the pagination is located. */
-  public readonly paginationContainer: Element;
+  public constructor(
 
-  /** The page from which the pagination begins. */
-  public readonly startPage: number;
+    /** The block where the pagination is located. */
+    public readonly paginationContainer: Element,
 
-  /** Total number of pages in pagination. */
-  public readonly pagesCount: number;
+    /** The page from which the pagination begins. */
+    public readonly startPage: number,
 
-  /** Send the current page number. */
-  public readonly sendCurrentPage: Function;
+    /** Total number of pages in pagination. */
+    public readonly pagesCount: number,
 
-  public constructor(paginationContainer: Element, startPage: number, pagesCount: number, sendCurrentPage: Function) {
+    /** Send the current page number. */
+    public readonly sendCurrentPage: (currentPage: number) => void,
+  ) {
     this.paginationContainer = paginationContainer;
     this.startPage = startPage;
     this.pagesCount = pagesCount;
@@ -28,27 +29,27 @@ export class Pagination {
     rangePlaceholder.textContent = '...';
     const maxStepsSelectedPage = 3;
     const reportStart = 1;
-    const numberOfDisplayedPages = maxStepsSelectedPage * 2;
+    let numberOfDisplayedPages: number;
+    if (this.pagesCount < maxStepsSelectedPage * 2) {
+      numberOfDisplayedPages = this.pagesCount;
+    } else {
+      numberOfDisplayedPages = maxStepsSelectedPage * 2;
+    }
     this.paginationContainer.innerHTML = '';
-
     if (this.startPage !== reportStart) {
       this.paginationContainer.append(this.createButton({ content: '&#9668;', value: 'previous_page' }));
     }
-    if (this.startPage < numberOfDisplayedPages) {
+    if (this.startPage <= numberOfDisplayedPages) {
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
         this.paginationContainer.append(this.createButton({ content: i }));
       }
-      this.paginationContainer.append(rangePlaceholder);
-      this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
-
-    } else if (this.pagesCount - this.startPage < numberOfDisplayedPages - 1) {
+    } else if (this.pagesCount - this.startPage <= numberOfDisplayedPages - 1) {
       this.paginationContainer.append(this.createButton({ content: reportStart }));
       this.paginationContainer.append(rangePlaceholder);
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
         const numberPage = this.pagesCount + i - numberOfDisplayedPages;
         this.paginationContainer.append(this.createButton({ content: numberPage }));
       }
-
     } else {
       this.paginationContainer.append(this.createButton({ content: reportStart }));
       this.paginationContainer.append(rangePlaceholder);
