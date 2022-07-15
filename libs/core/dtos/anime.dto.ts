@@ -1,4 +1,4 @@
-import { Status, Type } from '../models/anime';
+import { Status, AnimeType } from '../models/anime';
 
 /** Anime DTO. */
 export interface AnimeDto {
@@ -13,7 +13,7 @@ export interface AnimeDto {
   readonly title_jpn: string;
 
   /** Type of the anime. */
-  readonly type: Type;
+  readonly type: AnimeType;
 
   /** Status of the anime. */
   readonly status: Status;

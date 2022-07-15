@@ -30,7 +30,7 @@
   width: 75px;
 }
 
-.anime__pagination button {
+.pagination__page {
   background-color: inherit;
   border: none;
 }

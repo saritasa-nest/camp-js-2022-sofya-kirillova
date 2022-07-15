@@ -75,9 +75,11 @@ export class Pagination {
     buttonElement.innerHTML = String(parameters.content);
     buttonElement.addEventListener('click', event => this.addListenersToPagination(event));
     buttonElement.value = String(value);
-    if (parameters.content === this.startPage) {
-      buttonElement.className = 'pagination__page--current';
-    }
+
+    buttonElement.className = parameters.content === this.startPage ?
+      'pagination__page pagination__page--current' :
+      'pagination__page';
+
     return buttonElement;
   }
 

@@ -9,7 +9,7 @@ import { Pagination } from '@js-camp/core/models/pagination';
 
 import { api } from './API';
 
-/** Parameters for getting anime from the database. */
+/** Parameters for getting anime. */
 interface PaginationConfig {
 
   /** The number of results returned per page. */
@@ -24,9 +24,10 @@ interface PaginationConfig {
 
 /**
  * Sends a request to the database.
- * @param paginationConfig Parameters for getting anime from the database.
+ * @param paginationConfig Parameters for getting anime.
  */
 export async function getAnimeList(paginationConfig: PaginationConfig): Promise<Pagination<Anime>> {
+
   const order = AnimeSortMapper.toDto(paginationConfig.order);
   const offset = (paginationConfig.currentPage - 1) * paginationConfig.pageSize;
 

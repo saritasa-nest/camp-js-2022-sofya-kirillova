@@ -8,7 +8,7 @@ export enum Status {
 }
 
 /** Available anime types. */
-export enum Type {
+export enum AnimeType {
   Tv = 'TV',
   Ova = 'OVA',
   Movie = 'MOVIE',
@@ -30,7 +30,7 @@ export class Anime extends Immerable {
   public readonly titleJapanese: string;
 
   /** Type anime of the anime. */
-  public readonly type: Type;
+  public readonly type: AnimeType;
 
   /** Status of the anime. */
   public readonly status: Status;
