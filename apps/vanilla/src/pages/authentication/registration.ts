@@ -18,7 +18,7 @@ export function checkFields(): void {
   const formContainer = document.querySelector<HTMLFormElement>('.registration__form');
   assertNonNull(formContainer);
   const formData = new FormData(formContainer);
-  const errorContainer = document.querySelector('.registration__error');
+  const errorContainer = document.querySelector('.registration__error-description');
   assertNonNull(errorContainer);
   const isFillFields = checkFieldsEmptiness(formData);
   if (isFillFields === false) {
@@ -40,7 +40,7 @@ export function checkFields(): void {
  * @param formData Form field data.
  */
 async function requestRegistration(formData: FormData): Promise<void> {
-  const errorContainer = document.querySelector('.registration__error');
+  const errorContainer = document.querySelector('.registration__error-description');
   assertNonNull(errorContainer);
   formData.append('avatar', AVATAR_USER);
   formData.delete('repeat-password');

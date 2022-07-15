@@ -16,7 +16,7 @@ button.addEventListener('click', requestAuthentication);
 async function requestAuthentication(): Promise<void> {
   assertNonNull(formContainer);
   const formData = new FormData(formContainer);
-  const errorContainer = document.querySelector('.authorization__error');
+  const errorContainer = document.querySelector('.authorization__error-description');
   const isFillFields = checkFieldsEmptiness(formData);
   assertNonNull(errorContainer);
 

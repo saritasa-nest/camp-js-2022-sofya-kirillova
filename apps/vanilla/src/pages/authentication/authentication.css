@@ -37,8 +37,8 @@
   width: 150px;
 }
 
-.registration__error,
-.authorization__error {
+.registration__error-description,
+.authorization__error-description {
   color: var(--error-color);
   font-size: 0.8em;
 }
