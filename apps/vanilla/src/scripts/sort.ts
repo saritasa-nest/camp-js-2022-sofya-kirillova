@@ -45,7 +45,6 @@ function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
 
   sortContainer.innerHTML = selectContent;
   sortContainer.value = order;
-
 }
 
 /**
