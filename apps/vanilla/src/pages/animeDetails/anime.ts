@@ -1,3 +1,3 @@
-import { animeDetails } from "../../requests/animeDetails";
+import { animeDetails } from '../../requests/animeDetails';
 
-animeDetails(1)
+animeDetails(1);
