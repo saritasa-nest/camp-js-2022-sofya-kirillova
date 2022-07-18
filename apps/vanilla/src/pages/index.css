@@ -5,8 +5,11 @@
   display: flex;
   justify-content: flex-end;
   background-color: var(--accent-color-1);
-  column-gap: 5px;
   padding: 35px 50px 15px;
+}
+
+.header_login {
+  margin-right: 5px;
 }
 
 .anime {
@@ -35,7 +38,7 @@
   border: none;
 }
 
-.anime__name {
+.anime__title {
   display: flex;
   flex-direction: column;
 }

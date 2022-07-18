@@ -4,15 +4,15 @@ import { AnimeSort } from '@js-camp/core/models/animeSort';
  * Initialize sorting.
  * @param sortContainer The block where the sort is located.
  * @param sortOrder Sort order.
- * @param sendSortOrder Send the sort order.
+ * @param returnSortOrder Return the sort order.
  */
 export function initializeSort(
   sortContainer: HTMLSelectElement,
   sortOrder: AnimeSort,
-  sendSortOrder: Function,
+  returnSortOrder: (sort: AnimeSort) => void,
 ): void {
   addSelect(sortContainer, sortOrder);
-  addListenersToSort(sortContainer, sendSortOrder);
+  addListenersToSort(sortContainer, returnSortOrder);
 }
 
 /**
@@ -25,21 +25,21 @@ function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
   const selectOptions: OptionAttributes[] = [
     {
       value: 'titleEng',
-      showTitle: 'english title',
+      label: 'english title',
     },
     {
       value: 'airedStart',
-      showTitle: 'aired start',
+      label: 'aired start',
     },
     {
       value: 'status',
-      showTitle: 'status',
+      label: 'status',
     },
   ];
 
   const selectContent = selectOptions.reduce((body, current) => {
     const optionContent = `
-      <option value="${current.value}">${current.showTitle}</option>`;
+      <option value="${current.value}">${current.label}</option>`;
     return body + optionContent;
   }, ``);
 
@@ -51,13 +51,13 @@ function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
 /**
  * Add a change event to the select.
  * @param sortContainer The block where the sort is located.
- * @param sendSortOrder Send the sort order.
+ * @param returnSortOrder Send the sort order.
  */
-function addListenersToSort(sortContainer: HTMLSelectElement, sendSortOrder: Function): void {
+function addListenersToSort(sortContainer: HTMLSelectElement, returnSortOrder: (sort: AnimeSort) => void): void {
   sortContainer.addEventListener('change', () => {
 
     const order = sortContainer.value as AnimeSort;
-    sendSortOrder(order);
+    returnSortOrder(order);
   }, { once: true });
 }
 
@@ -68,5 +68,5 @@ interface OptionAttributes {
   readonly value: AnimeSort;
 
   /** Option title. */
-  readonly showTitle: string;
+  readonly label: string;
 }
