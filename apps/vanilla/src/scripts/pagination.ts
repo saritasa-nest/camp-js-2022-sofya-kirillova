@@ -162,9 +162,9 @@ function addPaginationLimit(
       ...buttonParameters,
     }));
   } else {
-    paginationLimitOptions.paginationContainer.append(rangePlaceholder.cloneNode(true));
     paginationLimitOptions.paginationContainer.append(createButton({
       ...buttonParameters,
     }));
+    paginationLimitOptions.paginationContainer.append(rangePlaceholder.cloneNode(true));
   }
 }
