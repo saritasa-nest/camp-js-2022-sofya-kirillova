@@ -65,7 +65,6 @@ function addInputRadio(filterContainer: Element, valueFilter: string): void {
     return body + optionContent;
   }, ``);
   filterContainer.innerHTML = filterContent;
-
 }
 
 /**

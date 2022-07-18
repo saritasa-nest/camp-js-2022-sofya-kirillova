@@ -34,35 +34,38 @@ export class Pagination {
     if (this.startPage !== reportStart) {
       this.paginationContainer.append(this.createButton({ content: '&#9668;', value: 'previous_page' }));
     }
+
     if (this.startPage < numberOfDisplayedPages) {
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
         this.paginationContainer.append(this.createButton({ content: i }));
       }
+
       this.paginationContainer.append(rangePlaceholder);
       this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
-
     } else if (this.pagesCount - this.startPage < numberOfDisplayedPages - 1) {
       this.paginationContainer.append(this.createButton({ content: reportStart }));
       this.paginationContainer.append(rangePlaceholder);
+
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
         const numberPage = this.pagesCount + i - numberOfDisplayedPages;
         this.paginationContainer.append(this.createButton({ content: numberPage }));
       }
-
     } else {
       this.paginationContainer.append(this.createButton({ content: reportStart }));
       this.paginationContainer.append(rangePlaceholder);
+
       for (let i = -maxStepsSelectedPage; i <= maxStepsSelectedPage; i++) {
         const numberPage = this.startPage + i;
         this.paginationContainer.append(this.createButton({ content: numberPage }));
       }
+
       this.paginationContainer.append(rangePlaceholder.cloneNode(true));
       this.paginationContainer.append(this.createButton({ content: this.pagesCount }));
     }
+
     if (this.startPage !== this.pagesCount) {
       this.paginationContainer.append(this.createButton({ content: '&#9658;', value: 'next_page' }));
     }
-
   }
 
   /**
@@ -102,5 +105,4 @@ export class Pagination {
     }
     this.sendCurrentPage(this.startPage);
   }
-
 }

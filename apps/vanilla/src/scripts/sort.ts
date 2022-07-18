@@ -49,7 +49,6 @@ function createOptions(sortContainer: HTMLSelectElement, order: AnimeSort): void
 
   sortContainer.innerHTML = selectContent;
   sortContainer.value = order;
-
 }
 
 /**

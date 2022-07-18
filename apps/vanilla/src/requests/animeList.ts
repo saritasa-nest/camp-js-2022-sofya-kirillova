@@ -39,7 +39,6 @@ export async function getAnimeList(paginationConfig: PaginationConfig): Promise<
   url.append('ordering', `${order},id`);
   if (paginationConfig.type !== null) {
     url.append('type', `${paginationConfig.type}`);
-
   }
 
   const response = await api.get<PaginationDto<AnimeDto>>(
