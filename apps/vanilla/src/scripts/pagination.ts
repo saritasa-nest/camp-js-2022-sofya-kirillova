@@ -157,14 +157,14 @@ function addPaginationLimit(
   const rangePlaceholder = document.createElement('span');
   rangePlaceholder.textContent = '...';
   if (paginationLimitOptions.isLeftLimit === true) {
-    paginationLimitOptions.paginationContainer.append(rangePlaceholder.cloneNode(true));
     paginationLimitOptions.paginationContainer.append(createButton({
       ...buttonParameters,
     }));
+    paginationLimitOptions.paginationContainer.append(rangePlaceholder.cloneNode(true));
   } else {
+    paginationLimitOptions.paginationContainer.append(rangePlaceholder.cloneNode(true));
     paginationLimitOptions.paginationContainer.append(createButton({
       ...buttonParameters,
     }));
-    paginationLimitOptions.paginationContainer.append(rangePlaceholder.cloneNode(true));
   }
 }
