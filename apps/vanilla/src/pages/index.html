@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./index.css" />
-    <title>Vite App</title>
-  </head>
-  <body class="default-layout">
 
-    <script type="module" src="./index.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./index.css" />
+  <link rel="stylesheet" href="./animeDetails/anime.css" />
+  <title>Vite App</title>
+</head>
+
+<body>
+  <header class="header">
+    <a href="/" class="body__back">Back</a>
+  </header>
+  <div class="animeDetails">
+    <div class="animeDetails__title">
+    </div>
+  </div>
+  <script type="module" src="./animeDetails/anime.ts"></script>
+  <script type="module" src="./index.ts"></script>
+</body>
+
 </html>

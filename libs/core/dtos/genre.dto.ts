@@ -8,10 +8,10 @@ export interface GenreDto {
   readonly name: string;
 
   /** Creation time, for example, "2014-12-20T17:30:50.416Z". */
-  readonly created: string;
+  readonly created: string | null;
 
   /** Time of the last modification, for example, "2014-12-20T17:30:50.416Z". */
-  readonly modified: string;
+  readonly modified: string | null;
 
   /** DTO type. */
   readonly type: 'GENRES';
