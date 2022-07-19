@@ -1,17 +1,15 @@
 import { AnimeSort } from '@js-camp/core/models/animeSort';
 
-import { FieldOptions } from './interfaces';
-
 /**
  * Initialize sorting.
  * @param formContainer The block where the sorting form is located.
  * @param sortOrder Sort order.
  * @param sendSortOrder Send the sort order.
  */
-export function sortInitialization(
+export function initializeSort(
   formContainer: Element,
   sortOrder: AnimeSort,
-  sendSortOrder: Function,
+  sendSortOrder: (sort: AnimeSort) => void,
 ): void {
   const sortContainer = document.createElement('select');
   formContainer.replaceWith(sortContainer);
@@ -26,39 +24,51 @@ export function sortInitialization(
  */
 function createOptions(sortContainer: HTMLSelectElement, order: AnimeSort): void {
 
-  const selectOptions: FieldOptions<AnimeSort>[] = [
+  const selectOptions: readonly OptionAttributes[] = [
     {
       value: 'titleEng',
-      showTitle: 'english title',
+      label: 'english title',
     },
     {
       value: 'airedStart',
-      showTitle: 'aired start',
+      label: 'aired start',
     },
     {
       value: 'status',
-      showTitle: 'status',
+      label: 'status',
     },
   ];
 
   const selectContent = selectOptions.reduce((body, current) => {
     const optionContent = `
-      <option value="${current.value}">${current.showTitle}</option>`;
+      <option value="${current.value}">${current.label}</option>`;
     return body + optionContent;
   }, ``);
 
   sortContainer.innerHTML = selectContent;
   sortContainer.value = order;
+
 }
 
 /**
  * Add a change event to the select.
  * @param sortContainer The block where the sort is located.
- * @param sendSortOrder Send the sort order.
+ * @param returnSortOrder Send the sort order.
  */
-function addListenersToSort(sortContainer: HTMLSelectElement, sendSortOrder: Function): void {
+function addListenersToSort(sortContainer: HTMLSelectElement, returnSortOrder: (sort: AnimeSort) => void): void {
   sortContainer.addEventListener('change', () => {
+
     const order = sortContainer.value as AnimeSort;
-    sendSortOrder(order);
-  });
+    returnSortOrder(order);
+  }, { once: true });
+}
+
+/** Available attributes for the option. */
+interface OptionAttributes {
+
+  /** Option value. */
+  readonly value: AnimeSort;
+
+  /** Option title. */
+  readonly label: string;
 }

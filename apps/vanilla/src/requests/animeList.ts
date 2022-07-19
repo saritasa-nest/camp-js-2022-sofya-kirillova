@@ -1,44 +1,32 @@
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 import { AnimeListMapper } from '@js-camp/core/mappers/animeLIst.mapper';
 import { AnimeSortMapper } from '@js-camp/core/mappers/animeSort.mapper';
 
-import { Anime, Type } from '@js-camp/core/models/anime';
-import { AnimeSort } from '@js-camp/core/models/animeSort';
+import { Anime } from '@js-camp/core/models/anime';
 import { Pagination } from '@js-camp/core/models/pagination';
+
+import { PaginationConfig } from '../scripts/interfaces';
 
 import { api } from './API';
 
-/** Parameters for getting anime from the database. */
-interface PaginationConfig {
-
-  /** The number of results returned per page. */
-  readonly pageSize: number;
-
-  /** Current page. */
-  readonly currentPage: number;
-
-  /** Sorting mode. */
-  readonly order: AnimeSort;
-
-  /** The value of type filtering. */
-  readonly type: Type | null;
-}
-
 /**
  * Sends a request to the database.
- * @param paginationConfig Parameters for getting anime from the database.
+ * @param paginationConfig Parameters for getting anime.
  */
 export async function getAnimeList(paginationConfig: PaginationConfig): Promise<Pagination<Anime>> {
+
   const order = AnimeSortMapper.toDto(paginationConfig.order);
   const offset = (paginationConfig.currentPage - 1) * paginationConfig.pageSize;
-
+  const additionalSortingParameter = 'id';
   const url = new URLSearchParams();
   url.append('limit', String(paginationConfig.pageSize));
   url.append('offset', String(offset));
-  url.append('ordering', `${order},id`);
+  url.append('ordering', `${order},${additionalSortingParameter}`);
   if (paginationConfig.type !== null) {
-    url.append('type', `${paginationConfig.type}`);
+    const type = AnimeMapper.toDtoMapType[paginationConfig.type];
+    url.append('type', `${type}`);
   }
 
   const response = await api.get<PaginationDto<AnimeDto>>(

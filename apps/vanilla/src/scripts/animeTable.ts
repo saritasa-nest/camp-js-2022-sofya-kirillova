@@ -13,7 +13,7 @@ export function renderAnimeTable(animeData: readonly Anime[]): void {
     const animeContent = `
       <tr>
         <td><img class='anime__image' alt='anime image' src='${current.image}'></td>
-        <td class="anime__name">
+        <td class="anime__title">
           <span>${current.titleEnglish}</span>
           <span class="anime__title-eng">${current.titleJapanese}</span>
         </td>

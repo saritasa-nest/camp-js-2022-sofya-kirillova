@@ -1,4 +1,5 @@
-import { Type } from '@js-camp/core/models/anime';
+
+import { AnimeType, checkIsType } from '@js-camp/core/models/animeType';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { FieldOptions } from './interfaces';
@@ -12,7 +13,7 @@ import { FieldOptions } from './interfaces';
 export function initializeTypeFiltering(
   filterContainer: Element,
   valueFilter: string,
-  sendValue: Function,
+  sendValue: (sort: AnimeType | null) => void,
 ): void {
   addInputRadio(filterContainer, valueFilter);
   addListenersToSort(filterContainer, sendValue);
@@ -24,33 +25,33 @@ export function initializeTypeFiltering(
  * @param valueFilter Filter value.
  */
 function addInputRadio(filterContainer: Element, valueFilter: string): void {
-  const typeContent: FieldOptions<Type | null>[] = [
+  const typeContent: readonly FieldOptions<AnimeType | null>[] = [
     {
       value: null,
       showTitle: 'All',
     },
     {
-      value: Type.Tv,
+      value: AnimeType.Tv,
       showTitle: 'TV',
     },
     {
-      value: Type.Ova,
+      value: AnimeType.Ova,
       showTitle: 'OVA',
     },
     {
-      value: Type.Movie,
+      value: AnimeType.Movie,
       showTitle: 'Movie',
     },
     {
-      value: Type.Ona,
+      value: AnimeType.Ona,
       showTitle: 'ONA',
     },
     {
-      value: Type.Special,
+      value: AnimeType.Special,
       showTitle: 'Special',
     },
     {
-      value: Type.Music,
+      value: AnimeType.Music,
       showTitle: 'Music',
     },
   ];
@@ -68,23 +69,15 @@ function addInputRadio(filterContainer: Element, valueFilter: string): void {
 }
 
 /**
- * Check whether the value is Type.
- * @param value Tested value.
- */
-function checkIsType(value: string): value is Type {
-  return Object.values(Type).includes(value as Type);
-}
-
-/**
  * Add a change event to the filter.
  * @param filterContainer The block where the filter is located.
  * @param sendValue Send the filter value.
  */
-function addListenersToSort(filterContainer: Element, sendValue: Function): void {
+function addListenersToSort(filterContainer: Element, sendValue: (sort: AnimeType | null) => void): void {
   filterContainer.addEventListener('change', () => {
     const typeContainer = document.querySelector<HTMLInputElement>('input[name="type"]:checked');
     assertNonNull(typeContainer);
-    let type: Type | null;
+    let type: AnimeType | null;
     if (checkIsType(typeContainer.value)) {
       type = typeContainer.value;
     } else {

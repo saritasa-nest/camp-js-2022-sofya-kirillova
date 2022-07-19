@@ -1,16 +1,15 @@
 @import url("../global/index.css");
 @import url("../global/variables.css");
 
-.title {
-  color: var(--heading-color-1);
-}
-
 .header {
   display: flex;
   justify-content: flex-end;
-  background-color: var(--heading-color-3);
-  column-gap: 5px;
+  background-color: var(--accent-color-1);
   padding: 35px 50px 15px;
+}
+
+.header_login {
+  margin-right: 5px;
 }
 
 .anime {
@@ -34,23 +33,23 @@
   width: 75px;
 }
 
-.anime__pagination button {
+.pagination__page {
   background-color: inherit;
   border: none;
 }
 
-.anime__name {
+.anime__title {
   display: flex;
   flex-direction: column;
 }
 
 .anime__title-eng {
   font-size: 0.7em;
-  color: var(--name-color-1);
+  color: var(--accent-color-3);
 }
 
 .pagination__page--current {
-  color: var(--heading-color-3);
+  color: var(--accent-color-1);
   font-size: 1.1em;
 }
 

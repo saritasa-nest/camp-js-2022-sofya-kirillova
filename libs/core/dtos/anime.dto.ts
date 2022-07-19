@@ -1,4 +1,19 @@
-import { Status, Type } from '../models/anime';
+/** Available anime statuses. */
+export enum AnimeStatusDto {
+  Airing = 'AIRING',
+  Finished = 'FINISHED',
+  NotYetAired = 'NOT_YET_AIRED',
+}
+
+/** Available anime types. */
+export enum AnimeTypeDto {
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'MOVIE',
+  Special = 'SPECIAL',
+  Ona = 'ONA',
+  Music = 'MUSIC',
+}
 
 /** Anime DTO. */
 export interface AnimeDto {
@@ -13,18 +28,18 @@ export interface AnimeDto {
   readonly title_jpn: string;
 
   /** Type of the anime. */
-  readonly type: Type;
+  readonly type: AnimeTypeDto;
 
   /** Status of the anime. */
-  readonly status: Status;
+  readonly status: AnimeStatusDto;
 
   /** Aired date of the anime. */
   readonly aired: {
 
     /** Aired start, for example, "2014-12-20T17:30:50.416Z". */
-    readonly start: string;
+    readonly start: string | null;
 
-    /** Aired end, for example, "2014-12-20T17:30:50.416Z". */
-    readonly end: string;
+    /** Aired end, for example, "2014-12-20T17:30:50.416Z" or null. */
+    readonly end: string | null;
   };
 }

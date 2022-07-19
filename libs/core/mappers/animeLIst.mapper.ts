@@ -15,8 +15,6 @@ export namespace AnimeListMapper {
     const results = dto.results.map(anime => AnimeMapper.fromDto(anime));
     return new Pagination<Anime>({
       count: dto.count,
-      urlNextPage: dto.next,
-      urlPreviousPage: dto.previous,
       results,
     });
   }
