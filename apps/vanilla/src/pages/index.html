@@ -1,16 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./index.css" />
-    <title>Vite App</title>
-  </head>
-  <body class="default-layout">
-    <h1 class="title">Main page ⚡</h1>
-    <div class="links">
-      <a href="/example/">Go to example page</a>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <link rel="stylesheet" href="./index.css" />
+
+  <title>List anime</title>
+</head>
+
+<body>
+  <header class="header">
+    <a href="#" class="header_login">login</a>
+    <a href="#">register</a>
+  </header>
+  <div class="anime">
+
+    <div class="anime__forms">
+      <form class="anime__sort">
+      </form>
+      <form class="anime__filter">
+      </form>
     </div>
-    <script type="module" src="./index.ts"></script>
-  </body>
+
+    <table aria-describedby="anime table" class="anime__table">
+      <thead>
+        <tr>
+          <th class="visually-hidden">image</th>
+          <th>name</th>
+          <th>type</th>
+          <th>status</th>
+          <th>aired start</th>
+        </tr>
+      </thead>
+      <tbody class="anime__tbody">
+      </tbody>
+    </table>
+
+    <div class="anime__pagination">
+    </div>
+    
+  </div>
+
+  <script type="module" src="./index.ts"></script>
+</body>
+
 </html>
