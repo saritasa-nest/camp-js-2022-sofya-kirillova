@@ -52,15 +52,3 @@
   color: var(--accent-color-1);
   font-size: 1.1em;
 }
-
-.anime__sort {
-  padding: 5px 15px;
-  font-size: 0.8em;
-  outline: none;
-  margin-left: 0;
-  margin-right: auto;
-}
-
-.anime__sort:focus {
-  outline: 1px solid var(--accent-color-1);
-}

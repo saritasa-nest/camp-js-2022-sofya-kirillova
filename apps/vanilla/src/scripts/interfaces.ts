@@ -7,7 +7,7 @@ export interface PaginationParameters {
   readonly startPage: number;
 
   /** The block where the pagination is located. */
-  readonly paginationContainer: Element;
+  readonly paginationContainer: HTMLDivElement;
 
   /** Total number of pages in pagination. */
   readonly pagesCount: number;
@@ -19,7 +19,7 @@ export interface PaginationParameters {
 /** Parameters for button. */
 export interface ButtonParameters {
 
-  /** Content of the button tag. */
+  /** The label that is displayed on the screen. */
   readonly label: string | number;
 
   /** Value of the button tag. */
@@ -27,9 +27,6 @@ export interface ButtonParameters {
 
   /** The page from which the pagination begins. */
   readonly startPage: number;
-
-  /** Return the current page number. */
-  readonly returnCurrentPage: (currentPage: number) => void;
 
 }
 
@@ -39,8 +36,8 @@ export interface PaginationConfig {
   /** The number of results returned per page. */
   readonly pageSize: number;
 
-  /** Current page. */
-  readonly currentPage: number;
+  /** Requested page. */
+  readonly page: number;
 
   /** Sorting. */
   readonly order: AnimeSort;

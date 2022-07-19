@@ -11,13 +11,19 @@ export function renderPagination(paginationParameters: PaginationParameters): vo
   const firstPageNumber = 1;
   const buttonParameters = {
     startPage: paginationParameters.startPage,
-    returnCurrentPage: paginationParameters.returnCurrentPage,
   };
+
+  paginationParameters.paginationContainer.onclick = (event => setCurrentPage(
+    event,
+    paginationParameters.startPage,
+    paginationParameters.returnCurrentPage,
+  ));
+
   const paginationLimitOptions = {
     pagesCount: paginationParameters.pagesCount,
     paginationContainer: paginationParameters.paginationContainer,
   };
-  const numberOfDisplayedPages = returnSmallestValue(paginationParameters.pagesCount, maxStepsSelectedPage * 2);
+  const numberOfDisplayedPages = Math.min(paginationParameters.pagesCount, maxStepsSelectedPage * 2);
   paginationParameters.paginationContainer.innerHTML = '';
 
   if (paginationParameters.startPage !== firstPageNumber) {
@@ -92,12 +98,8 @@ function createButton(parameters: ButtonParameters): HTMLButtonElement {
   const value = parameters.value ?? parameters.label;
   const buttonElement = document.createElement('button');
   buttonElement.innerHTML = String(parameters.label);
-  buttonElement.addEventListener('click', event => addListenersToPagination(
-    event,
-    parameters.startPage,
-    parameters.returnCurrentPage,
-  ));
-  buttonElement.value = String(value);
+
+  buttonElement.setAttribute('data-value', String(value));
   buttonElement.className = parameters.label === parameters.startPage ?
     'pagination__page pagination__page--current' :
     'pagination__page';
@@ -106,43 +108,33 @@ function createButton(parameters: ButtonParameters): HTMLButtonElement {
 }
 
 /**
+ * Set and return the current page in the pagination.
  * @param event The pressed button.
  * @param startPage The page from which the pagination begins.
  * @param returnCurrentPage Return the current page number.
  */
-function addListenersToPagination(
+function setCurrentPage(
   event: Event,
   startPage: number,
   returnCurrentPage: (currentPage: number) => void,
 ): void {
-  let currentPage = startPage;
   if (!(event.target instanceof HTMLButtonElement)) {
     return;
   }
+  let currentPage = startPage;
   scrollTo(0, 0);
   const selectedPageContainer = event.target;
-  if (selectedPageContainer.value === 'next_page') {
+  const value = selectedPageContainer.getAttribute('data-value');
+  if (value === 'next_page') {
     currentPage++;
-  } else if (selectedPageContainer.value === 'previous_page') {
+  } else if (value === 'previous_page') {
     currentPage--;
-  } else if (isNaN(Number(selectedPageContainer.value))) {
+  } else if (isNaN(Number(value))) {
     throw new Error('Page number not found.');
   } else {
-    currentPage = Number(selectedPageContainer.value);
+    currentPage = Number(value);
   }
   returnCurrentPage(currentPage);
-}
-
-/**
- * Compares two numbers.
- * @param firstNumber The first number.
- * @param secondNumber The second number.
- */
-function returnSmallestValue(firstNumber: number, secondNumber: number): number {
-  if (firstNumber < secondNumber) {
-    return firstNumber;
-  }
-  return secondNumber;
 }
 
 /**

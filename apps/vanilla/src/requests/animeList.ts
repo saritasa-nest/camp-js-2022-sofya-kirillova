@@ -17,7 +17,7 @@ import { api } from './API';
 export async function getAnimeList(paginationConfig: PaginationConfig): Promise<Pagination<Anime>> {
 
   const order = AnimeSortMapper.toDto(paginationConfig.order);
-  const offset = (paginationConfig.currentPage - 1) * paginationConfig.pageSize;
+  const offset = (paginationConfig.page - 1) * paginationConfig.pageSize;
   const additionalSortingParameter = 'id';
 
   const url = new URLSearchParams();

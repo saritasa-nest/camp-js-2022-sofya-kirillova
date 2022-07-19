@@ -2,17 +2,19 @@ import { AnimeSort } from '@js-camp/core/models/animeSort';
 
 /**
  * Initialize sorting.
- * @param sortContainer The block where the sort is located.
+ * @param formContainer The block where the sorting form is located.
  * @param sortOrder Sort order.
- * @param returnSortOrder Return the sort order.
+ * @param sendSortOrder Send the sort order.
  */
 export function initializeSort(
-  sortContainer: HTMLSelectElement,
+  formContainer: Element,
   sortOrder: AnimeSort,
-  returnSortOrder: (sort: AnimeSort) => void,
+  sendSortOrder: (sort: AnimeSort) => void,
 ): void {
-  addSelect(sortContainer, sortOrder);
-  addListenersToSort(sortContainer, returnSortOrder);
+  const sortContainer = document.createElement('select');
+  formContainer.replaceWith(sortContainer);
+  createOptions(sortContainer, sortOrder);
+  setCurrentParameterSort(sortContainer, sendSortOrder);
 }
 
 /**
@@ -20,7 +22,7 @@ export function initializeSort(
  * @param sortContainer The block where the sort is located.
  * @param order Sort order.
  */
-function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
+function createOptions(sortContainer: HTMLSelectElement, order: AnimeSort): void {
 
   const selectOptions: OptionAttributes[] = [
     {
@@ -48,16 +50,16 @@ function addSelect(sortContainer: HTMLSelectElement, order: AnimeSort): void {
 }
 
 /**
- * Add a change event to the select.
+ * Set and return the current sort parameter.
  * @param sortContainer The block where the sort is located.
- * @param returnSortOrder Send the sort order.
+ * @param returnSortOrder Return the sort order.
  */
-function addListenersToSort(sortContainer: HTMLSelectElement, returnSortOrder: (sort: AnimeSort) => void): void {
+function setCurrentParameterSort(sortContainer: HTMLSelectElement, returnSortOrder: (sort: AnimeSort) => void): void {
   sortContainer.addEventListener('change', () => {
 
     const order = sortContainer.value as AnimeSort;
     returnSortOrder(order);
-  }, { once: true });
+  });
 }
 
 /** Available attributes for the option. */

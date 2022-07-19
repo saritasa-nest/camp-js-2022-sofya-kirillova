@@ -7,7 +7,7 @@ import { PaginationConfig, PaginationParameters } from '../scripts/interfaces';
 import { renderPagination } from '../scripts/pagination';
 import { initializeSort } from '../scripts/sort';
 
-const paginationContainer = document.querySelector('.anime__pagination');
+const paginationContainer = document.querySelector<HTMLDivElement>('.anime__pagination');
 const sortContainer = document.querySelector<HTMLSelectElement>('.anime__sort');
 const pageSize = 30;
 let currentPage = 1;
@@ -18,7 +18,7 @@ async function renderAnime(): Promise<void> {
   assertNonNull(paginationContainer);
   assertNonNull(sortContainer);
 
-  const paginationConfig: PaginationConfig = { pageSize, currentPage, order: sortOrder };
+  const paginationConfig: PaginationConfig = { pageSize, page: currentPage, order: sortOrder };
   const animeData = await getAnimeList(paginationConfig);
   const pagesCount = Math.ceil(animeData.count / pageSize);
   const paginationParameters: PaginationParameters = {
