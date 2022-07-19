@@ -1,6 +1,4 @@
-import { Genre } from './genre';
 import { Immerable, OmitImmerable } from './immerable';
-import { Studio } from './studio';
 
 /** Available anime statuses. */
 export type AnimeStatus = 'On air' | 'Finished' | 'Not yet aired';
@@ -9,7 +7,7 @@ export type AnimeStatus = 'On air' | 'Finished' | 'Not yet aired';
 export type AnimeType = 'TV' | 'OVA' | 'Movie' | 'Special' | 'ONA' | 'Music';
 
 /** Anime. */
-export class Anime extends Immerable {
+export class AnimeCommon extends Immerable {
 
   /** Image of the anime. */
   public readonly image: string;
@@ -32,18 +30,6 @@ export class Anime extends Immerable {
   /** End date of airing. */
   public readonly airingFinish: Date | null;
 
-  /** Synopsis of the anime. */
-  public readonly synopsis?: string;
-
-  /** Is the anime on the air. */
-  public readonly airing?: boolean;
-
-  /** List of studios creating on anime. */
-  public readonly studiosData?: Studio[];
-
-  /** List of anime genres. */
-  public readonly genresData?: Genre[];
-
   public constructor(data: InitArgsAnime) {
     super();
     this.image = data.image;
@@ -53,11 +39,7 @@ export class Anime extends Immerable {
     this.status = data.status;
     this.airingStart = data.airingStart;
     this.airingFinish = data.airingFinish;
-    this.synopsis = data.synopsis;
-    this.airing = data.airing;
-    this.studiosData = data.studiosData;
-    this.genresData = data.genresData;
   }
 }
 
-type InitArgsAnime = OmitImmerable<Anime>;
+type InitArgsAnime = OmitImmerable<AnimeCommon>;

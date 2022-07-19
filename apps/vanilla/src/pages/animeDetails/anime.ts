@@ -1,12 +1,12 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { AnimeFull } from '@js-camp/core/models/animeFull';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { formatDate } from '@js-camp/core/utils/formatDate';
 
 import { getAnimeDetails } from '../../requests/animeDetails';
 
-/**  */
+/** Render anime details. */
 async function renderAnimeDetails(): Promise<void> {
-  const animeDetails: Anime = await getAnimeDetails(5);
+  const animeDetails: AnimeFull = await getAnimeDetails(5);
   const separator = ', ';
   const animeDetailsContainer = document.querySelector('.animeDetails');
   assertNonNull(animeDetailsContainer);
@@ -27,9 +27,9 @@ async function renderAnimeDetails(): Promise<void> {
 renderAnimeDetails();
 
 /**
- *
- * @param showParameterName
- * @param showParameterValue
+ * Add the anime option to the page.
+ * @param showParameterName Parameter name.
+ * @param showParameterValue Parameter value.
  */
 function addAnimeDetail(showParameterName: string, showParameterValue: string | undefined | string[]): void {
   if (showParameterValue === undefined) {
@@ -46,8 +46,8 @@ function addAnimeDetail(showParameterName: string, showParameterValue: string | 
 }
 
 /**
- * 
- * @param imageUrl 
+ * Add an anime image to the page.
+ * @param imageUrl URL image.
  */
 function addImage(imageUrl: string): void {
   const animeDetailsContainer = document.querySelector('.animeDetails');
@@ -60,9 +60,9 @@ function addImage(imageUrl: string): void {
 }
 
 /**
- * 
- * @param className 
- * @param showTitle 
+ * Add an anime title to the page.
+ * @param className Class name for the title container.
+ * @param showTitle Display title of the anime.
  */
 function addTitle(className: string, showTitle: string): void {
   const animeTitleContainer = document.querySelector('.animeDetails__title');

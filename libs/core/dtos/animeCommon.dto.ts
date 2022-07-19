@@ -1,6 +1,3 @@
-import { GenreDto } from './genre.dto';
-import { StudioDto } from './studio.dto';
-
 /** Available anime statuses. */
 export enum AnimeStatusDto {
   Airing = 'AIRING',
@@ -19,7 +16,7 @@ export enum AnimeTypeDto {
 }
 
 /** Anime DTO. */
-export interface AnimeDto {
+export interface AnimeCommonDto {
 
   /** Image of the anime. */
   readonly image: string;
@@ -45,16 +42,4 @@ export interface AnimeDto {
     /** Aired end, for example, "2014-12-20T17:30:50.416Z" or null. */
     readonly end: string | null;
   };
-
-  /** Synopsis of the anime. */
-  readonly synopsis?: string;
-
-  /** Is the anime on the air. */
-  readonly airing?: boolean;
-
-  /** List of studios creating on anime. */
-  readonly studios_data?: readonly StudioDto[];
-
-  /** List of anime genres. */
-  readonly genres_data?: readonly GenreDto[];
 }
