@@ -69,6 +69,6 @@ export interface FieldOptions<T> {
   /** Option value. */
   readonly value: T;
 
-  /** Option title. */
-  readonly showTitle: string;
+  /** Displayed on the screen. */
+  readonly label: string;
 }

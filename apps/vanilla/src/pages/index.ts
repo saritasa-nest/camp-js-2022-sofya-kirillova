@@ -37,7 +37,6 @@ async function renderAnime(): Promise<void> {
   initializeSort(sortContainer, sortOrder, setSortOrder);
   initializeTypeFiltering(typeFilterContainer, String(typeFilterValue), setTypeFilter);
   renderAnimeTable(animeData.results);
-
 }
 
 /**

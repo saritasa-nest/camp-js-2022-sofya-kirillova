@@ -1,5 +1,7 @@
 import { AnimeSort } from '@js-camp/core/models/animeSort';
 
+import { FieldOptions } from './interfaces';
+
 /**
  * Initialize sorting.
  * @param formContainer The block where the sorting form is located.
@@ -24,7 +26,7 @@ export function initializeSort(
  */
 function createOptions(sortContainer: HTMLSelectElement, order: AnimeSort): void {
 
-  const selectOptions: readonly OptionAttributes[] = [
+  const selectOptions: readonly FieldOptions<AnimeSort>[] = [
     {
       value: 'titleEng',
       label: 'english title',
@@ -47,7 +49,6 @@ function createOptions(sortContainer: HTMLSelectElement, order: AnimeSort): void
 
   sortContainer.innerHTML = selectContent;
   sortContainer.value = order;
-
 }
 
 /**
@@ -61,14 +62,4 @@ function addListenersToSort(sortContainer: HTMLSelectElement, returnSortOrder: (
     const order = sortContainer.value as AnimeSort;
     returnSortOrder(order);
   }, { once: true });
-}
-
-/** Available attributes for the option. */
-interface OptionAttributes {
-
-  /** Option value. */
-  readonly value: AnimeSort;
-
-  /** Option title. */
-  readonly label: string;
 }
