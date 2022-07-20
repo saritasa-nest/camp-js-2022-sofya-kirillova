@@ -1,1 +1,30 @@
 @import url("../global/index.css");
+@import url("../global/variables.css");
+
+.hiding-block {
+  width: 100vw;
+  height: 100vw;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  top: 25%;
+}
+
+.hiding-block__message {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  z-index: 1;
+  padding: 25px 50px;
+  background-color: var(--accent-color-2);
+  border: 1px solid var(--primary-light-contrast-color);
+  border-radius: 10px;
+}
+
+.hiding-block__close {
+  align-self: flex-end;
+  margin-top: 10px;
+  background-color: initial;
+  border: none;
+  color: var(--error-color);
+}

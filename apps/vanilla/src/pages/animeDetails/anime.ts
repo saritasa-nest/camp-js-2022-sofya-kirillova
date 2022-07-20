@@ -24,7 +24,8 @@ async function renderAnimeDetails(): Promise<void> {
   addAnimeDetail('Synopsis', animeDetails.synopsis);
 
 }
-renderAnimeDetails();
+
+// renderAnimeDetails();
 
 /**
  * Add the anime option to the page.
