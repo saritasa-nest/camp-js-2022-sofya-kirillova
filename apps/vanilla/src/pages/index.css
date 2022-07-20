@@ -1,5 +1,63 @@
 @import url("../global/index.css");
+@import url("../global/variables.css");
 
-.title {
-  color: var(--heading-color-1);
+.header {
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--accent-color-1);
+  column-gap: 5px;
+  padding: 35px 50px 15px;
+}
+
+.anime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65%;
+  margin: 25px auto 0;
+}
+
+.anime__table {
+  margin-top: 25px;
+  width: 100%;
+}
+
+.anime__table th {
+  text-align: left;
+}
+
+.anime__image {
+  width: 75px;
+}
+
+.anime__pagination button {
+  background-color: inherit;
+  border: none;
+}
+
+.anime__name {
+  display: flex;
+  flex-direction: column;
+}
+
+.anime__title-eng {
+  font-size: 0.7em;
+  color: var(--accent-color-3);
+}
+
+.pagination__page--current {
+  color: var(--accent-color-1);
+  font-size: 1.1em;
+}
+
+.anime__sort {
+  padding: 5px 15px;
+  font-size: 0.8em;
+  outline: none;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.anime__sort:focus {
+  outline: 1px solid var(--accent-color-1);
 }
