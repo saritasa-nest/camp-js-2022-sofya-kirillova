@@ -47,11 +47,11 @@ export interface PaginationConfig {
 export interface PaginationLimitOptions {
 
   /** Side of the pagination limit location. */
-  isLeftLimit: boolean;
+  readonly isLeftLimit: boolean;
 
   /** Total number of pages in pagination. */
-  pagesCount: number;
+  readonly pagesCount: number;
 
   /** The block where the pagination is located. */
-  paginationContainer: Element;
+  readonly paginationContainer: Element;
 }

@@ -8,7 +8,7 @@
   padding: 35px 50px 15px;
 }
 
-.header_login {
+.header__login {
   margin-right: 5px;
 }
 
@@ -23,10 +23,6 @@
 .anime__table {
   margin-top: 25px;
   width: 100%;
-}
-
-.anime__table th {
-  text-align: left;
 }
 
 .anime__image {

@@ -35,3 +35,7 @@ select {
 select:focus {
   outline: 1px solid var(--heading-color-3);
 }
+
+th {
+  text-align: left;
+}

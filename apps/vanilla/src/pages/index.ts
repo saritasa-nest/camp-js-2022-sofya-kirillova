@@ -34,7 +34,7 @@ async function renderAnime(): Promise<void> {
 }
 
 /**
- * Set the Current pagination page.
+ * Set the current pagination page.
  * @param page Current pagination page.
  */
 function setCurrentPage(page: number): void {

@@ -23,8 +23,7 @@ export function initializeSort(
  * @param order Sort order.
  */
 function createOptions(sortContainer: HTMLSelectElement, order: AnimeSort): void {
-
-  const selectOptions: OptionAttributes[] = [
+  const selectOptions: readonly OptionAttributes[] = [
     {
       value: 'titleEng',
       label: 'english title',
