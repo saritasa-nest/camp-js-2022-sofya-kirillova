@@ -5,7 +5,7 @@
  */
 export function initializeSearch(
   selectContainer: HTMLSelectElement,
-  sendSearch: Function,
+  sendSearch: (searchText: string) => void,
 ): void {
   addSearch(selectContainer, sendSearch);
 }

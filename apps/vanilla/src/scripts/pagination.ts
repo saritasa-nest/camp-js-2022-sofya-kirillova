@@ -38,11 +38,10 @@ export class Pagination {
     }
     if (this.startPage < numberOfDisplayedPages) {
       for (let i = 1; i <= numberOfDisplayedPages; i++) {
-        if (i <= this.pagesCount) {
-          this.paginationContainer.append(this.createButton({ content: i }));
-        } else {
+        if (i > this.pagesCount) {
           break;
         }
+        this.paginationContainer.append(this.createButton({ content: i }));
       }
       if (this.pagesCount > numberOfDisplayedPages) {
         this.paginationContainer.append(rangePlaceholder);
