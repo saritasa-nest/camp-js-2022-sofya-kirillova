@@ -1,5 +1,50 @@
 @import url("../global/index.css");
+@import url("../global/variables.css");
 
-.title {
-  color: var(--heading-color-1);
+.header {
+  display: flex;
+  justify-content: flex-end;
+  background-color: var(--accent-color-1);
+  padding: 35px 50px 15px;
+}
+
+.header__login {
+  margin-right: 5px;
+}
+
+.anime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 65%;
+  margin: 25px auto 0;
+}
+
+.anime__table {
+  margin-top: 25px;
+  width: 100%;
+}
+
+.anime__image {
+  width: 75px;
+}
+
+.pagination__page {
+  background-color: inherit;
+  border: none;
+}
+
+.anime__title {
+  display: flex;
+  flex-direction: column;
+}
+
+.anime__title-eng {
+  font-size: 0.7em;
+  color: var(--accent-color-3);
+}
+
+.pagination__page--current {
+  color: var(--accent-color-1);
+  font-size: 1.1em;
 }

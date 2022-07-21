@@ -1,6 +1,6 @@
 import { resolve } from 'path';
 
-import { defineConfig } from 'vite';
+import { defineConfig} from 'vite';
 
 const root = resolve(__dirname, 'src/pages');
 const outDir = resolve(__dirname, '../../dist/apps/vanilla');
@@ -22,6 +22,7 @@ export default defineConfig({
         resolve(root, 'index.html'),
         resolve(root, 'example', 'index.html'),
         resolve(root, 'example', 'nested', 'index.html'),
+        resolve(root, 'register', 'index.html'),
       ],
     },
   },
