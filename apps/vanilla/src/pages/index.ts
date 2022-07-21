@@ -8,7 +8,7 @@ async function renderHeader(): Promise<void> {
   const header = document.querySelector('.header');
   assertNonNull(header);
   let template;
-  if (isTokenValid === true) {
+  if (isTokenValid) {
     template = document.querySelector<HTMLTemplateElement>('#authorized');
   } else {
     template = document.querySelector<HTMLTemplateElement>('#unauthorized');

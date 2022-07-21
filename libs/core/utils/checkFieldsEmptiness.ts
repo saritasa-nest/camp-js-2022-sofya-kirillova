@@ -3,8 +3,8 @@
  * @param formData Form Data.
  */
 export function checkFieldsEmptiness(formData: FormData): boolean {
-  for (const input of formData.entries()) {
-    if (input[1] === '') {
+  for (const formValue of formData.values()) {
+    if (formValue === '') {
       return false;
     }
   }

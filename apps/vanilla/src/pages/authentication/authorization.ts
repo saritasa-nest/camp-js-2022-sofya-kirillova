@@ -17,13 +17,15 @@ async function requestAuthentication(): Promise<void> {
   assertNonNull(formContainer);
   const formData = new FormData(formContainer);
   const errorContainer = document.querySelector('.authorization__error-description');
-  const isFillFields = checkFieldsEmptiness(formData);
+  const isFormFilled = checkFieldsEmptiness(formData);
   assertNonNull(errorContainer);
 
-  if (isFillFields === true) {
+  if (isFormFilled) {
     const errorInformation = await login(formData);
     if (errorInformation instanceof FieldError) {
       displayError(errorInformation.detail, errorContainer);
+    } else {
+      window.location.replace('/');
     }
   } else {
     displayError('Please fill in all fields', errorContainer);

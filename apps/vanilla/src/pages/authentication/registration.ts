@@ -20,8 +20,8 @@ export function checkFields(): void {
   const formData = new FormData(formContainer);
   const errorContainer = document.querySelector('.registration__error-description');
   assertNonNull(errorContainer);
-  const isFillFields = checkFieldsEmptiness(formData);
-  if (isFillFields === false) {
+  const isFormFilled = checkFieldsEmptiness(formData);
+  if (!isFormFilled) {
     displayError('Please fill in all fields', errorContainer);
     return;
   }
@@ -48,5 +48,7 @@ async function requestRegistration(formData: FormData): Promise<void> {
   const errorInformation = await register(formData);
   if (errorInformation instanceof FieldError) {
     displayError(Object.values(errorInformation.data)[0][0], errorContainer);
+  } else {
+    window.location.replace('/');
   }
 }

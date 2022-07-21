@@ -10,13 +10,13 @@ import { api } from '../scripts/API';
  * Sends a request for user registration.
  * @param userData Parameters for user registration.
  */
-export async function register(userData: FormData): Promise<void | FieldError> {
+export async function register(userData: FormData): Promise<true | FieldError> {
   try {
     const response = await api.post(`/auth/register/`, userData);
     const token = TokenMapper.fromDto(response.data);
     localStorage.setItem('access', token.access);
     localStorage.setItem('refresh', token.refresh);
-    window.location.replace('/');
+    return true;
   } catch (error: unknown) {
     if (!(error instanceof AxiosError) || error.response === undefined) {
       throw error;

@@ -10,3 +10,18 @@ export const api =
       [API_KEY]: import.meta.env.VITE_API_KEY,
     },
   });
+
+// const tokenInterceptor = api.interceptors.response.use(
+//   response => {
+//     if (response) {
+
+//     }
+//     console.log(response);
+//     isVerifyToken = true;
+//   }, async error => {
+//     if (error.response.status === errorCode) {
+
+//       isVerifyToken = await updateToken();
+//     }
+//   },
+// );
