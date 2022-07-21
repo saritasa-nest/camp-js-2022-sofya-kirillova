@@ -9,7 +9,7 @@ import { api } from '../scripts/API';
 
 /**
  * Sends an authorization request.
- * @param authData Sends a request for user authorization.
+ * @param authData Parameters for user authorization.
  */
 export async function login(authData: FormData): Promise<true | FieldError> {
   try {
