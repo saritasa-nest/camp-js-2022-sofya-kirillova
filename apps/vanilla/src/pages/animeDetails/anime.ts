@@ -5,8 +5,12 @@ import { formatDate } from '@js-camp/core/utils/formatDate';
 import { getAnimeDetails } from '../../requests/animeDetails';
 
 /** Render anime details. */
-async function renderAnimeDetails(): Promise<void> {
-  const animeDetails: AnimeFull = await getAnimeDetails(5);
+export async function renderAnimeDetails(): Promise<void> {
+  const paramsString = document.location.search;
+  const searchParams = new URLSearchParams(paramsString);
+  const animeId = Number(searchParams.get('id'));
+  console.log(animeId, 484)
+  const animeDetails: AnimeFull = await getAnimeDetails(animeId);
   const separator = ', ';
   const animeDetailsContainer = document.querySelector('.animeDetails');
   assertNonNull(animeDetailsContainer);
@@ -25,7 +29,7 @@ async function renderAnimeDetails(): Promise<void> {
 
 }
 
-// renderAnimeDetails();
+renderAnimeDetails();
 
 /**
  * Add the anime option to the page.
@@ -71,5 +75,5 @@ function addTitle(className: string, showTitle: string): void {
   const titleContainer = document.createElement('p');
   titleContainer.className = className;
   titleContainer.innerHTML = showTitle;
-  animeTitleContainer.append(titleContainer);
+  animeTitleContainer.append(titleContainer.content);
 }

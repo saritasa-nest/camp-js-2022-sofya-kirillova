@@ -22,6 +22,7 @@ export namespace AnimeFullMapper {
     }));
 
     return new AnimeFull({
+      id: dto.id,
       image: dto.image,
       titleEnglish: dto.title_eng,
       titleJapanese: dto.title_jpn,

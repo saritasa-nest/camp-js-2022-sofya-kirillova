@@ -9,6 +9,9 @@ export type AnimeType = 'TV' | 'OVA' | 'Movie' | 'Special' | 'ONA' | 'Music';
 /** Anime. */
 export class AnimeCommon extends Immerable {
 
+  /** Id of the anime. */
+  public readonly id: number;
+
   /** Image of the anime. */
   public readonly image: string;
 
@@ -32,6 +35,7 @@ export class AnimeCommon extends Immerable {
 
   public constructor(data: InitArgsAnime) {
     super();
+    this.id = data.id;
     this.image = data.image;
     this.titleEnglish = data.titleEnglish;
     this.titleJapanese = data.titleJapanese;
