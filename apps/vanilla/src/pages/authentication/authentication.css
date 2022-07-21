@@ -1,0 +1,43 @@
+@import url("../../global/index.css");
+
+.header {
+  display: flex;
+  justify-content: start;
+  background-color: var(--accent-color-1);
+  align-items: center;
+  padding: 25px 15px 15px 25px;
+}
+
+.registration,
+.authorization {
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.registration__form,
+.authorization__form {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: max-content 250px;
+}
+
+.registration__label,
+.authorization__label {
+  display: flex;
+  justify-content: space-between;
+  width: 400px;
+  margin-top: 25px;
+}
+
+.registration__button,
+.authorization__button {
+  margin: 25px auto;
+  width: 150px;
+}
+
+.registration__error-description,
+.authorization__error-description {
+  color: var(--error-color);
+  font-size: 0.8em;
+}

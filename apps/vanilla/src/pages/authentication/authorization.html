@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./authentication.css" />
+  <title>Authorization</title>
+</head>
+
+<body>
+  <header class="header">
+    <a href="/" class="body__back">Back</a>
+  </header>
+  <div class="authorization">
+    <form class="authorization__form">
+
+      <h1>Authorization</h1>
+
+      <label class="authorization__label" >
+        E-mail 
+        <input name="email" type="email">
+      </label>
+
+      <label class="authorization__label">
+        Password 
+        <input name="password" type="password">
+      </label>
+
+      <p class="authorization__error-description display-none">Error</p>
+      <button class="authorization__button" type="button">submit</button>
+
+    </form>
+  </div>
+  <script type="module" src="./authorization.ts"></script>
+</body>
+
+</html>
