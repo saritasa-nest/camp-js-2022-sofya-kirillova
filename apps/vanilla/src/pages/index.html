@@ -4,12 +4,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <link rel="stylesheet" href="./index.css" />
-  <title>Anime Details</title>
+
+  <title>List anime</title>
 </head>
 
 <body>
+  <header class="header">
+    <a href="#" class="header__login">login</a>
+    <a href="#">register</a>
+  </header>
+  <div class="anime">
+    <form class="anime__sort">
+    </form>
+    <table class="anime__table">
+      <caption class="visually-hidden">Anime table</caption>
+      <thead>
+        <tr>
+          <th class="visually-hidden">image</th>
+          <th>name</th>
+          <th>type</th>
+          <th>status</th>
+          <th>aired start</th>
+        </tr>
+      </thead>
+      <tbody class="anime__tbody">
+      </tbody>
+    </table>
 
+    <div class="anime__pagination">
+    </div>
+  </div>
   <template>
     <div class="hiding-block">
       <div class="hiding-block__message">

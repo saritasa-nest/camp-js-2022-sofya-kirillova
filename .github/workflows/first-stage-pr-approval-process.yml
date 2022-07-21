@@ -2,7 +2,7 @@
 name: 1 Stage of Approval PR process
 on:
   pull_request: 
-    types: [opened, reopened]
+    types: [opened, reopened, ready_for_review]
 
 jobs:
   onOpenedPullRequest:

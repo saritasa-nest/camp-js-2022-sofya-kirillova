@@ -29,3 +29,17 @@ select {
 p {
   margin: 5px;
 }
+
+select {
+  padding: 5px 15px;
+  font-size: 0.8em;
+  outline: none;
+}
+
+select:focus {
+  outline: 1px solid var(--heading-color-3);
+}
+
+th {
+  text-align: left;
+}
