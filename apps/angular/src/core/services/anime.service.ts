@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
-// @Injectable({
-//   providedIn: 'root',
-// })
-// class EntityService() {
-//    public constructor(private http: Http) {
+import { Observable } from 'rxjs';
 
-//   }
-// }
+import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
+import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 
-// @Injectable({
-//   providedIn: 'root',
-// })
+import { environment, httpOptions } from '../../environments/environment';
 
-// export class DataService {
-//   getAccounts() {
-//     return this.http.get('https://api.camp-js.saritasa.rocks/api/v1/anime/anime/');
-//   }
-// }
+/** Anime server. */
+@Injectable({
+  providedIn: 'root',
+})
+export class AnimeService {
+
+  public constructor(private http: HttpClient) {
+  }
+
+  /** Get. */
+  public getHeroes(): Observable<PaginationDto<AnimeDto>> {
+    return this.http.get<PaginationDto<AnimeDto>>(`${environment.apiUrl}/anime/anime/`, httpOptions);
+  }
+}

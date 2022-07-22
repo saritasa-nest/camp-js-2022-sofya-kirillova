@@ -1,1 +1,32 @@
-<p>anime works!</p>
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <!-- ID Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container matColumnDef="progress">
+      <th mat-header-cell *matHeaderCellDef> Progress </th>
+      <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+    </ng-container>
+
+    <!-- Fruit Column -->
+    <ng-container matColumnDef="fruit">
+      <th mat-header-cell *matHeaderCellDef> Fruit </th>
+      <td mat-cell *matCellDef="let row"> {{row.fruit}} </td>
+    </ng-container>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data. -->
+ 
+  </table>
+
