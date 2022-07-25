@@ -20,7 +20,7 @@ export class AnimeService {
 
   /** Get Anime. */
   public getAnime(): Observable<readonly Anime[]> {
-    return this.http.get<PaginationDto<AnimeDto>>('/anime/anime/?ordering=id')
+    return this.http.get<PaginationDto<AnimeDto>>('/anime/anime/')
       .pipe(
         map(response => AnimeListMapper.fromDto(response)),
         map(response => response.results),
