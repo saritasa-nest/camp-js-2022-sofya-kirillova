@@ -1,12 +1,13 @@
+import { AnimeListMapper } from '@js-camp/core/mappers/animeLIst.mapper';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 
-import { environment, httpOptions } from '../../environments/environment';
+import { Anime } from '@js-camp/core/models/anime';
 
 /** Anime server. */
 @Injectable({
@@ -14,11 +15,16 @@ import { environment, httpOptions } from '../../environments/environment';
 })
 export class AnimeService {
 
-  public constructor(private http: HttpClient) {
-  }
+  public constructor(
+    private http: HttpClient,
+  ) { }
 
-  /** Get. */
-  public getHeroes(): Observable<PaginationDto<AnimeDto>> {
-    return this.http.get<PaginationDto<AnimeDto>>(`${environment.apiUrl}/anime/anime/`, httpOptions);
+  /** Get Anime. */
+  public getAnime(): Observable<readonly Anime[]> {
+    return this.http.get<PaginationDto<AnimeDto>>('/anime/anime/')
+      .pipe(
+        map(response => AnimeListMapper.fromDto(response)),
+        map(response => response.results),
+      );
   }
 }

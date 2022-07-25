@@ -1,5 +1,6 @@
 table {
-  width: 100%;
+  width: 65%;
+  margin: auto;
 }
 
 .mat-form-field {
@@ -8,6 +9,18 @@ table {
 }
 
 td,
-th {
-  width: 25%;
+th.mat-header-cell {
+  min-width: 20%;
+  margin: 0 5px;
+  text-align: center;
+}
+
+th:first-child,
+td:first-child {
+  width: 150px;
+}
+
+img {
+  max-width: 150px;
+  max-height: 150px;
 }

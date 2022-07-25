@@ -1,45 +1,9 @@
+import { formatDate } from '@js-camp/core/utils/formatDate';
 import { Component } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Anime } from '@js-camp/core/models/anime';
+import { Observable } from 'rxjs';
 
-export interface UserData {
-  id: string;
-  name: string;
-  progress: string;
-  fruit: string;
-}
-
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry',
-  'lychee',
-  'kiwi',
-  'mango',
-  'peach',
-  'lime',
-  'pomegranate',
-  'pineapple',
-];
-const NAMES: string[] = [
-  'Maia',
-  'Asher',
-  'Olivia',
-  'Atticus',
-  'Amelia',
-  'Jack',
-  'Charlotte',
-  'Theodore',
-  'Isla',
-  'Oliver',
-  'Isabella',
-  'Jasper',
-  'Cora',
-  'Levi',
-  'Violet',
-  'Arthur',
-  'Mia',
-  'Thomas',
-  'Elizabeth',
-];
+import { AnimeService } from './../../../core/services/anime.service';
 
 /** Anime Component. */
 @Component({
@@ -47,38 +11,25 @@ const NAMES: string[] = [
   templateUrl: './anime.component.html',
   styleUrls: ['./anime.component.css'],
 })
+
 export class AnimeComponent {
-  /** */
-  public displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
+  /** Displayed columns. */
+  public displayedColumns: string[] = ['image', 'titleEnglish', 'type', 'status', 'airingStart'];
 
-  /** */
-  public dataSource: MatTableDataSource<UserData>;
+  /** Data for a table with anime.  */
+  public animeTable$: Observable<readonly Anime[]>;
 
-  public constructor() {
-    // Create 100 users
-    const users = Array.from({ length: 100 }, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+  public constructor(
+    private animeServer: AnimeService,
+  ) {
+    this.animeTable$ = this.animeServer.getAnime();
   }
 
-}
-
-/**
- * Builds and returns a new User.
- * @param id
- */
-function createNewUser(id: number): UserData {
-  const name =
-    `${NAMES[Math.round(Math.random() * (NAMES.length - 1))]
-    } ${
-      NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0)
-    }.`;
-
-  return {
-    id: id.toString(),
-    name,
-    progress: Math.round(Math.random() * 100).toString(),
-    fruit: FRUITS[Math.round(Math.random() * (FRUITS.length - 1))],
-  };
+  /**
+   * The function formats date to 'dd.mm.yyyy' or 'no date'.
+   * @param date Date.
+   */
+  public wrapperFormatDate(date: Date | null): string {
+    return formatDate(date);
+  }
 }
