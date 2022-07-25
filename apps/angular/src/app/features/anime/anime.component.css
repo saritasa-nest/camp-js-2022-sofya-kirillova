@@ -12,6 +12,9 @@ td,
 th.mat-header-cell {
   min-width: 20%;
   margin: 0 5px;
+}
+
+th.mat-header-cell {
   text-align: center;
 }
 
@@ -23,4 +26,9 @@ td:first-child {
 img {
   max-width: 150px;
   max-height: 150px;
+}
+
+.title-japanese {
+  font-size: 0.8em;
+  color: var(--accent-color-3);
 }

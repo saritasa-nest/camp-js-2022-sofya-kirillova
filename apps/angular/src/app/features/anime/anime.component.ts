@@ -14,7 +14,7 @@ import { AnimeService } from './../../../core/services/anime.service';
 
 export class AnimeComponent {
   /** Displayed columns. */
-  public readonly displayedColumns: string[] = ['image', 'titleEnglish', 'type', 'status', 'airingStart'];
+  public readonly displayedColumns: string[] = ['image', 'title', 'type', 'status', 'airingStart'];
 
   /** Data for a table with anime.  */
   public animeTable$: Observable<readonly Anime[]>;
