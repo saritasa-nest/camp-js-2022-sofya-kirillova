@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
-/** Api-key interceptor. */
+/** Base option interceptor. */
 @Injectable()
 export class BaseInterceptor implements HttpInterceptor {
 

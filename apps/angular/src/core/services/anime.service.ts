@@ -14,7 +14,6 @@ import { Anime } from '@js-camp/core/models/anime';
   providedIn: 'root',
 })
 export class AnimeService {
-
   public constructor(
     private http: HttpClient,
   ) { }
