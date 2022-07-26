@@ -1,6 +1,10 @@
-table {
+.anime {
   width: 65%;
   margin: auto;
+}
+
+.anime__table {
+  width: 100%;
 }
 
 .mat-form-field {
@@ -8,27 +12,24 @@ table {
   width: 100%;
 }
 
-td,
-th.mat-header-cell {
-  min-width: 20%;
+.mat-cell,
+.mat-header-cell {
+  min-width: 15%;
   margin: 0 5px;
-}
-
-th.mat-header-cell {
   text-align: center;
 }
 
-th:first-child,
-td:first-child {
+.mat-cell:first-child,
+.mat-header-cell:first-child {
   width: 150px;
 }
 
-img {
+.anime__image {
   max-width: 150px;
   max-height: 150px;
 }
 
-.title-japanese {
+.anime__title-japanese {
   font-size: 0.8em;
   color: var(--accent-color-3);
 }
