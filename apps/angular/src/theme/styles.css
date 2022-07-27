@@ -1,4 +1,5 @@
 @import url("./variables.css");
+@import url("@angular/material/prebuilt-themes/indigo-pink.css");
 
 p {
   margin: 0;

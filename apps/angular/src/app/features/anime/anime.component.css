@@ -3,12 +3,12 @@
   margin: auto;
 }
 
-.anime__table {
-  width: 100%;
+.anime__management {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.mat-form-field {
-  font-size: 14px;
+.anime__table {
   width: 100%;
 }
 
@@ -17,6 +17,10 @@
   min-width: 15%;
   margin: 0 5px;
   text-align: center;
+}
+
+.mat-sort-header-container {
+  display: inline-flex;
 }
 
 .mat-cell:first-child,
@@ -32,4 +36,13 @@
 .anime__title-japanese {
   font-size: 0.8em;
   color: var(--accent-color-3);
+}
+
+.mat-form-field {
+  width: 25%;
+}
+
+.anime__search {
+  box-sizing: border-box;
+  padding: 0 5px;
 }

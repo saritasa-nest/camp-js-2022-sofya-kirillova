@@ -7,6 +7,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatSortModule } from '@angular/material/sort';
+
 import { httpInterceptorProviders } from '../core/interceptors/httpInterceptorProviders';
 
 import { SharedModule } from './../shared/shared.module';
@@ -27,6 +29,7 @@ import { AnimeComponent } from './features/anime/anime.component';
     MatTableModule,
     MatInputModule,
     NoopAnimationsModule,
+    MatSortModule,
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent],
