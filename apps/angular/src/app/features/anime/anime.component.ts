@@ -14,15 +14,22 @@ import { AnimeService } from './../../../core/services/anime.service';
 
 export class AnimeComponent {
   /** Displayed columns. */
-  public readonly displayedColumns: string[] = ['image', 'title', 'type', 'status', 'airingStart'];
+  public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'] as const;
 
   /** Data for a table with anime.  */
-  public animeTable$: Observable<readonly Anime[]>;
+  public readonly animeTable$: Observable<readonly Anime[]>;
 
-  public constructor(
-    private animeServer: AnimeService,
-  ) {
+  public constructor(private readonly animeServer: AnimeService) {
     this.animeTable$ = this.animeServer.getAnime();
+  }
+
+  /**
+   * Function to track anime.
+   * @param _index Index.
+   * @param anime Anime to track.
+   */
+  public trackAnime(_index: number, anime: Anime): Anime['id'] {
+    return anime.id;
   }
 
   /**
