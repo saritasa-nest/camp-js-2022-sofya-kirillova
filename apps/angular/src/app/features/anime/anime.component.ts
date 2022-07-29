@@ -37,7 +37,7 @@ const defaultAnimeParams = {
 export class AnimeComponent {
 
   /** Anime types displayed. */
-  public typeList: AnimeType[] = [
+  public readonly typeList: readonly AnimeType[] = [
     AnimeType.Tv,
     AnimeType.Ova,
     AnimeType.Movie,
@@ -47,10 +47,10 @@ export class AnimeComponent {
   ];
 
   /** Displayed columns. */
-  public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'];
+  public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'] as const;
 
   /** Anime sort displayed.. */
-  public sortedData: Order[] = ['titleEnglish', 'status', 'airedStart'];
+  public readonly sortedData: readonly Order[] = ['titleEnglish', 'status', 'airedStart'];
 
   /** Data for a table with anime.  */
   public readonly anime$: Observable<readonly Anime[]>;
@@ -64,17 +64,12 @@ export class AnimeComponent {
   public constructor(
     private animeServer: AnimeService,
     private router: Router,
-    private route: ActivatedRoute,
+    route: ActivatedRoute,
   ) {
     this.router.navigate([], {
-      queryParams: {
-        pageIndex: this.pageIndex,
-        pageSize: defaultAnimeParams.pageSize,
-        ordering: defaultAnimeParams.ordering,
-        direction: defaultAnimeParams.direction,
-      },
+      queryParams: { ...defaultAnimeParams },
     });
-    this.anime$ = this.route.queryParams.pipe(
+    this.anime$ = route.queryParams.pipe(
       switchMap(res => this.getAnime(res)),
     );
   }
