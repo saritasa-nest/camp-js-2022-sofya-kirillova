@@ -1,11 +1,12 @@
 <div class="anime">
-  <table class="anime__table" *ngIf="animeTable$ | async as animeTable; trackBy: trackAnime" mat-table [dataSource]="animeTable" matSort
-    aria-label="Anime table">
+  <table class="anime__table" *ngIf="animeTable$ | async as animeTable" mat-table [dataSource]="animeTable"
+    [trackBy]="trackAnime" matSort aria-label="Anime table">
 
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let anime">
-        <img class="anime__image" src="{{anime.image}}" alt="image of anime {{anime.titleEnglish || anime.titleJapanese}}">
+        <img class="anime__image" src="{{anime.image}}"
+          alt="image of anime {{anime.titleEnglish || anime.titleJapanese}}">
       </td>
     </ng-container>
 
