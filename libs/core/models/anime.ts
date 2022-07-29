@@ -16,6 +16,8 @@ export enum AnimeType {
 
 /** Anime. */
 export class Anime extends Immerable {
+  /** Anime ID. */
+  public readonly id: number;
 
   /** Image of the anime. */
   public readonly image: string;
@@ -40,6 +42,7 @@ export class Anime extends Immerable {
 
   public constructor(data: InitArgsAnime) {
     super();
+    this.id = data.id;
     this.image = data.image;
     this.titleEnglish = data.titleEnglish;
     this.titleJapanese = data.titleJapanese;

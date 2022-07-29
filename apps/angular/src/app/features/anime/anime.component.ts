@@ -104,7 +104,6 @@ export class AnimeComponent {
    */
   public applySort(sort: Sort): void {
     this.pageIndex = 0;
-
     switch (sort.direction) {
       case 'desc':
         this.addParametersToUrl({ ordering: sort.active, direction: Direction.Descending });
@@ -146,6 +145,7 @@ export class AnimeComponent {
       search: param['search'] ?? '',
       types: param['types'] ?? '',
     };
+
     return timer(fetchDelayInMilliseconds).pipe(
       switchMap(() => this.animeServer.fetchAnime(animeQueryParams)),
       map(res => {
@@ -153,5 +153,14 @@ export class AnimeComponent {
           return res.results;
         }),
     );
+  }
+
+  /**
+   * Function to track anime.
+   * @param _index Index.
+   * @param anime Anime to track.
+   */
+  public trackAnime(_index: number, anime: Anime): Anime['id'] {
+    return anime.id;
   }
 }
