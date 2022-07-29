@@ -4,7 +4,15 @@ import { Immerable, OmitImmerable } from './immerable';
 export type AnimeStatus = 'On air' | 'Finished' | 'Not yet aired';
 
 /** Available anime types. */
-export type AnimeType = 'TV' | 'OVA' | 'Movie' | 'Special' | 'ONA' | 'Music';
+// export type AnimeType = 'TV' | 'OVA' | 'Movie' | 'Special' | 'ONA' | 'Music';
+export enum AnimeType {
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'Movie',
+  Special = 'Special',
+  Ona = 'ONA',
+  Music = 'Music',
+}
 
 /** Anime. */
 export class Anime extends Immerable {

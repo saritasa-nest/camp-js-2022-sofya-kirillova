@@ -11,7 +11,7 @@ import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 
 import { Anime } from '@js-camp/core/models/anime';
 
-import { AnimeSortDto } from '@js-camp/core/dtos/animeSort';
+import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
 import { AnimeQueryParams } from '../interfaces/AnimeQueryOptions';
 
@@ -26,19 +26,20 @@ export class AnimeService {
 
   /**
    * Get Anime.
+   * @param params Anime Parameters.
    */
   public fetchAnime(params: AnimeQueryParams): Observable<Pagination<Anime>> {
     const additionalSortingParameter = 'id';
-    const sort: AnimeSortDto = params.sort?.order ? AnimeSortMapper.toDto(params.sort) : 'title_eng';
-    const search = params.search === undefined ? '' : params.search;
-    const type = params.type === undefined ? '' : params.type;
+    const types = params.types !== '' ?
+      params.types.map(type => AnimeMapper.toDtoMapType[type]).join(',') :
+      '';
 
     const url = new HttpParams()
       .set('limit', params.limit)
       .set('offset', params.page * params.limit)
-      .set('ordering', `${sort},${additionalSortingParameter}`)
-      .set('search', search)
-      .set('type__in', type);
+      .set('ordering', `${AnimeSortMapper.toDto(params.sort)},${additionalSortingParameter}`)
+      .set('search', params.search)
+      .set('type__in', types);
 
     return this.http.get<PaginationDto<AnimeDto>>(`/anime/anime/`, { params: url })
       .pipe(

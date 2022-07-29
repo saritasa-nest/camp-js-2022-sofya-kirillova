@@ -5,27 +5,18 @@
 
 .anime__management {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .anime__table {
   width: 100%;
 }
 
-.mat-cell,
-.mat-header-cell {
-  min-width: 15%;
-  margin: 0 5px;
-  text-align: center;
-}
-
-.mat-sort-header-container {
-  display: inline-flex;
-}
-
 .mat-cell:first-child,
 .mat-header-cell:first-child {
   width: 150px;
+  text-align: center;
+  padding: 10px 25px;
 }
 
 .anime__image {
@@ -45,4 +36,10 @@
 .anime__search {
   box-sizing: border-box;
   padding: 0 5px;
+}
+
+.loading-layout {
+  margin: auto;
+  margin-top: 15%;
+  width: 65%;
 }

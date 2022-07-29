@@ -27,11 +27,20 @@ export namespace AnimeMapper {
   };
 
   const fromDtoMapType: Readonly<Record<AnimeTypeDto, AnimeType>> = {
-    [AnimeTypeDto.Tv]: 'TV',
-    [AnimeTypeDto.Ova]: 'OVA',
-    [AnimeTypeDto.Movie]: 'Movie',
-    [AnimeTypeDto.Special]: 'Special',
-    [AnimeTypeDto.Ona]: 'ONA',
-    [AnimeTypeDto.Music]: 'Music',
+    [AnimeTypeDto.Tv]: AnimeType.Tv,
+    [AnimeTypeDto.Ova]: AnimeType.Ova,
+    [AnimeTypeDto.Movie]: AnimeType.Movie,
+    [AnimeTypeDto.Special]: AnimeType.Special,
+    [AnimeTypeDto.Ona]: AnimeType.Ona,
+    [AnimeTypeDto.Music]: AnimeType.Music,
+  };
+
+  export const toDtoMapType: Readonly<Record<AnimeType, AnimeTypeDto>> = {
+    [AnimeType.Tv]: AnimeTypeDto.Tv,
+    [AnimeType.Ova]: AnimeTypeDto.Ova,
+    [AnimeType.Movie]: AnimeTypeDto.Movie,
+    [AnimeType.Special]: AnimeTypeDto.Special,
+    [AnimeType.Ona]: AnimeTypeDto.Ona,
+    [AnimeType.Music]: AnimeTypeDto.Music,
   };
 }

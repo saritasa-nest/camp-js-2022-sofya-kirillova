@@ -1,7 +1,7 @@
 import { AnimeType } from '@js-camp/core/models/anime';
 import { AnimeSort } from '@js-camp/core/models/animeSort';
 
-/** */
+/** Parameters for the anime query. */
 export interface AnimeQueryParams {
 
   /** The number of results returned per page. */
@@ -10,12 +10,12 @@ export interface AnimeQueryParams {
   /** Requested page. */
   readonly page: number;
 
-  /** Sorting. */
-  readonly sort?: AnimeSort;
+  /**  Sort settings. */
+  readonly sort: AnimeSort;
 
-  /** Sorting. */
-  readonly search?: string;
+  /** Search query. */
+  readonly search: string;
 
-  /** Sorting. */
-  readonly type?: AnimeType;
+  /** Types settings. */
+  readonly types: AnimeType[] | '';
 }
