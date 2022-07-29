@@ -1,0 +1,45 @@
+.anime {
+  width: 65%;
+  margin: auto;
+}
+
+.anime__management {
+  display: flex;
+  justify-content: space-between;
+}
+
+.anime__table {
+  width: 100%;
+}
+
+.mat-cell:first-child,
+.mat-header-cell:first-child {
+  width: 150px;
+  text-align: center;
+  padding: 10px 25px;
+}
+
+.anime__image {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.anime__title-japanese {
+  font-size: 0.8em;
+  color: var(--accent-color-3);
+}
+
+.mat-form-field {
+  width: 25%;
+}
+
+.anime__search {
+  box-sizing: border-box;
+  padding: 0 5px;
+}
+
+.loading-layout {
+  margin: auto;
+  margin-top: 15%;
+  width: 65%;
+}
