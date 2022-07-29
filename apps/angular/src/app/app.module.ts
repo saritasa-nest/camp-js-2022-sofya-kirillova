@@ -9,6 +9,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { httpInterceptorProviders } from '../core/interceptors/httpInterceptorProviders';
 
+import { FormatDatePipe } from './../shared/pipes/formatDate';
 import { SharedModule } from './../shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,7 +17,7 @@ import { AnimeComponent } from './features/anime/anime.component';
 
 /** App module. */
 @NgModule({
-  declarations: [AppComponent, AnimeComponent],
+  declarations: [AppComponent, AnimeComponent, FormatDatePipe],
   imports: [
     BrowserModule,
     SharedModule,

@@ -1,4 +1,3 @@
-import { formatDate } from '@js-camp/core/utils/formatDate';
 import { Component } from '@angular/core';
 import { Anime } from '@js-camp/core/models/anime';
 import { Observable } from 'rxjs';
@@ -11,16 +10,15 @@ import { AnimeService } from './../../../core/services/anime.service';
   templateUrl: './anime.component.html',
   styleUrls: ['./anime.component.css'],
 })
-
 export class AnimeComponent {
   /** Displayed columns. */
   public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'] as const;
 
-  /** Data for a table with anime.  */
+  /** Data for a table with anime. */
   public readonly animeTable$: Observable<readonly Anime[]>;
 
-  public constructor(private readonly animeServer: AnimeService) {
-    this.animeTable$ = this.animeServer.getAnime();
+  public constructor(animeServer: AnimeService) {
+    this.animeTable$ = animeServer.getAnime();
   }
 
   /**
@@ -30,13 +28,5 @@ export class AnimeComponent {
    */
   public trackAnime(_index: number, anime: Anime): Anime['id'] {
     return anime.id;
-  }
-
-  /**
-   * The function formats date to 'dd.mm.yyyy' or 'no date'.
-   * @param date Date.
-   */
-  public wrapperFormatDate(date: Date | null): string {
-    return formatDate(date);
   }
 }
