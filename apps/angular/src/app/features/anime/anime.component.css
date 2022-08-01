@@ -3,6 +3,11 @@
   margin: auto;
 }
 
+.anime__management {
+  display: flex;
+  justify-content: space-between;
+}
+
 .anime__table {
   width: 100%;
 }
@@ -17,6 +22,8 @@
 .mat-cell:first-child,
 .mat-header-cell:first-child {
   width: 150px;
+  text-align: center;
+  padding: 10px 25px;
 }
 
 .anime__image {

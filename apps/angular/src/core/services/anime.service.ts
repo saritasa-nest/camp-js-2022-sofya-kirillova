@@ -1,3 +1,4 @@
+
 import { AnimeListMapper } from '@js-camp/core/mappers/animeLIst.mapper';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
