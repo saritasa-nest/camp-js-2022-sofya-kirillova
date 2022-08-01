@@ -1,6 +1,7 @@
 .anime {
   width: 65%;
   margin: auto;
+  margin-top: 25px;
 }
 
 .anime__management {
@@ -40,6 +41,6 @@
 
 .loading-layout {
   margin: auto;
-  margin-top: 15%;
-  width: 65%;
+  height: 10px;
+  border-top: 3px solid white;
 }

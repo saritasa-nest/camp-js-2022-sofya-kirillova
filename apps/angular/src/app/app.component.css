@@ -1,0 +1,11 @@
+.mat-toolbar-single-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: inherit;
+  padding: 0 5px;
+}

@@ -1,7 +1,7 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Anime, AnimeType } from '@js-camp/core/models/anime';
-import { Observable, map, switchMap, timer } from 'rxjs';
+import { Observable, map, switchMap, BehaviorSubject, tap, debounceTime } from 'rxjs';
 
 import { Sort } from '@angular/material/sort';
 
@@ -26,6 +26,8 @@ const defaultAnimeParams = {
   direction: Direction.Ascending,
 };
 
+const fetchDelayInMilliseconds = 500;
+
 /** Anime Component. */
 @Component({
   selector: 'camp-anime',
@@ -49,28 +51,34 @@ export class AnimeComponent {
   /** Displayed columns. */
   public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'] as const;
 
-  /** Anime sort displayed.. */
+  /** Anime sort displayed. */
   public readonly sortedData: readonly Order[] = ['titleEnglish', 'status', 'airedStart'];
 
-  /** Data for a table with anime.  */
+  /** Data for a table with anime. */
   public readonly anime$: Observable<readonly Anime[]>;
 
-  /** Count of anime in the database.  */
+  /** Count of anime in the database. */
   public animeCount = 0;
 
-  /** Current page.  */
+  /** Current page. */
   public pageIndex = defaultAnimeParams.pageIndex;
 
+  /** Whether books are loading or not. */
+  public isLoading$ = new BehaviorSubject<boolean>(false);
+
   public constructor(
-    private animeServer: AnimeService,
-    private router: Router,
+    private readonly animeService: AnimeService,
+    private readonly router: Router,
     route: ActivatedRoute,
   ) {
     this.router.navigate([], {
       queryParams: { ...defaultAnimeParams },
     });
     this.anime$ = route.queryParams.pipe(
+      debounceTime(fetchDelayInMilliseconds),
+      tap(() => this.isLoading$.next(true)),
       switchMap(res => this.getAnime(res)),
+      tap(() => this.isLoading$.next(false)),
     );
   }
 
@@ -129,7 +137,6 @@ export class AnimeComponent {
   }
 
   private getAnime(param: Params): Observable<readonly Anime[]> {
-    const fetchDelayInMilliseconds = 500;
     const animeQueryParams: AnimeQueryParams = {
       limit: param['pageSize'],
       page: this.pageIndex,
@@ -140,9 +147,7 @@ export class AnimeComponent {
       search: param['search'] ?? '',
       types: param['types'] ?? '',
     };
-
-    return timer(fetchDelayInMilliseconds).pipe(
-      switchMap(() => this.animeServer.fetchAnime(animeQueryParams)),
+    return this.animeService.fetchAnime(animeQueryParams).pipe(
       map(res => {
           this.animeCount = res.count;
           return res.results;

@@ -1,5 +1,10 @@
-<div *ngIf="anime$ | async as anime; else loading" class="anime">
+<div class="loading-layout">
+  <div *ngIf="isLoading$ | async">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</div>
 
+<div #anime class="anime">
   <div class="anime__management">
 
     <mat-form-field appearance="fill">
@@ -14,7 +19,7 @@
     </mat-form-field>
   </div>
 
-  <table class="anime__table" matSort (matSortChange)="applySort($event)" mat-table [dataSource]="anime"
+  <table class="anime__table" matSort (matSortChange)="applySort($event)" mat-table [dataSource]="anime$"
     [trackBy]="trackAnime" matSortActive="titleEnglish" matSortDirection="asc" aria-label="Anime table">
 
     <ng-container matColumnDef="image">
@@ -56,15 +61,8 @@
     </tr>
   </table>
 
-
   <mat-paginator [length]="animeCount" (page)="applyPagination($event)" [pageIndex]="pageIndex"
     [pageSizeOptions]="[25, 50, 100, 250]" aria-label="Select page of anime">
   </mat-paginator>
 
 </div>
-
-<ng-template #loading>
-  <div class="loading-layout">
-    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-  </div>
-</ng-template>
