@@ -13,6 +13,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
+import { DatePipe } from '@angular/common';
+
 import { httpInterceptorProviders } from '../core/interceptors/httpInterceptorProviders';
 
 import { FormatDatePipe } from '../shared/pipes/formatDate';
@@ -37,7 +39,7 @@ import { AnimeComponent } from './features/anime/anime.component';
     ReactiveFormsModule,
     MatProgressBarModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
