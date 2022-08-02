@@ -1,26 +1,27 @@
 <div class="loading-layout">
-  <div *ngIf="isLoading$ | async">
+  <div *ngIf="(isLoading$ | async)">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
 </div>
 
-<div #anime class="anime">
-  <div class="anime__management">
+<div class="anime">
 
+  <form [formGroup]="myForm" novalidate class="anime__management">
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
-      <mat-select (selectionChange)="applyType($event)" multiple>
+      <mat-select formControlName="types" multiple>
         <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="standard">
-      <input class="anime__search" matInput (keyup)="applySearch($event)" placeholder="Search" #input>
+      <input class="anime__search" formControlName="search" matInput placeholder="Search" #input>
     </mat-form-field>
-  </div>
+  </form>
 
-  <table class="anime__table" matSort (matSortChange)="applySort($event)" mat-table [dataSource]="anime$"
-    [trackBy]="trackAnime" matSortActive="titleEnglish" matSortDirection="asc" aria-label="Anime table">
+  <table #table *ngIf="anime$ as anime" class="anime__table" matSort (matSortChange)="applySort($event)" mat-table
+    [dataSource]="anime" [trackBy]="trackAnime" matSortActive="titleEnglish" matSortDirection="asc"
+    aria-label="Anime table">
 
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef></th>
@@ -59,9 +60,10 @@
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" colspan="5">No anime for this request</td>
     </tr>
+
   </table>
 
-  <mat-paginator [length]="animeCount" (page)="applyPagination($event)" [pageIndex]="pageIndex"
+  <mat-paginator [length]="animeCount" (page)="applyPagination($event)" [pageIndex]="pagination$.value.pageIndex"
     [pageSizeOptions]="[25, 50, 100, 250]" aria-label="Select page of anime">
   </mat-paginator>
 

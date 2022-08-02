@@ -31,7 +31,6 @@ export class AnimeService {
     const types = params.types !== '' ?
       params.types.map(type => AnimeMapper.toDtoMapType[type]).join(',') :
       '';
-
     const url = new HttpParams()
       .set('limit', params.limit)
       .set('offset', params.page * params.limit)
