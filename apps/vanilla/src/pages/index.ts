@@ -1,4 +1,4 @@
-import { AnimeSort } from '@js-camp/core/models/animeSort';
+import { AnimeSort as Order } from '@js-camp/core/models/animeSort';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 
 import { getAnimeList } from '../requests/animeList';
@@ -11,7 +11,7 @@ const paginationContainer = document.querySelector<HTMLDivElement>('.anime__pagi
 const sortContainer = document.querySelector<HTMLSelectElement>('.anime__sort');
 const pageSize = 30;
 let currentPage = 1;
-let sortOrder: AnimeSort = 'titleEng';
+let sortOrder: Order = 'titleEnglish';
 
 /**  Render sorting, anime table and pagination. */
 async function renderAnime(): Promise<void> {
@@ -46,7 +46,7 @@ function setCurrentPage(page: number): void {
  * Set the anime sorting order.
  * @param order Anime sorting order.
  */
-function setSortOrder(order: AnimeSort): void {
+function setSortOrder(order: Order): void {
   sortOrder = order;
   renderAnime();
 }

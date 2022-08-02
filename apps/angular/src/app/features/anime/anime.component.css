@@ -1,0 +1,19 @@
+.anime__management {
+  display: flex;
+  justify-content: space-between;
+}
+
+.anime__table {
+  width: 65%;
+  margin: auto;
+}
+
+.anime__image {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.anime__title-japanese {
+  font-size: 0.8em;
+  color: var(--accent-color-3);
+}
