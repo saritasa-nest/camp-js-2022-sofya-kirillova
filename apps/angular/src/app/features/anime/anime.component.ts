@@ -17,8 +17,8 @@ export class AnimeComponent {
   /** Data for a table with anime. */
   public readonly animeTable$: Observable<readonly Anime[]>;
 
-  public constructor(animeServer: AnimeService) {
-    this.animeTable$ = animeServer.getAnime();
+  public constructor(animeService: AnimeService) {
+    this.animeTable$ = animeService.getAnime();
   }
 
   /**

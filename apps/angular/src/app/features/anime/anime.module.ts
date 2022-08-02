@@ -5,7 +5,7 @@ import { MatTableModule } from '@angular/material/table';
 
 import { RouterModule, Routes } from '@angular/router';
 
-import { FormatDatePipe } from './../../../shared/pipes/formatDate';
+import { FormatDatePipe } from '../../../shared/pipes/format-date.pipe';
 
 import { AnimeComponent } from './anime.component';
 
