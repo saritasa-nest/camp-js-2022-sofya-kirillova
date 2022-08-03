@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Anime, AnimeType } from '@js-camp/core/models/anime';
 import { Observable, map, switchMap, timer } from 'rxjs';
 
-import { Sort } from '@angular/material/sort';
+import {  } from '@angular/material/sort';
 
 import { PageEvent } from '@angular/material/paginator';
 
