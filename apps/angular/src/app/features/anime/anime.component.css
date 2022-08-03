@@ -1,0 +1,40 @@
+.anime {
+  width: 65%;
+  margin: auto;
+  margin-top: 25px;
+}
+
+.anime__management {
+  display: flex;
+  justify-content: space-between;
+}
+
+.anime__table {
+  width: 100%;
+}
+
+.anime__image {
+  max-width: 150px;
+  max-height: 150px;
+}
+
+.anime__title-japanese {
+  font-size: 0.8em;
+  color: var(--accent-color-3);
+}
+
+.anime__filter {
+  width: 25%;
+}
+
+.anime__search {
+  box-sizing: border-box;
+  padding: 0 5px;
+  width: 25%;
+}
+
+.loading-layout {
+  margin: auto;
+  height: 10px;
+  border-top: 3px solid white;
+}

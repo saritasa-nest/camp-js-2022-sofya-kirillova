@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts", "../../libs", "src/pages/constants.env"],
+  "include": ["**/*.ts", "../../libs"],
   "compilerOptions": {
     "types": ["node"]
   }
