@@ -6,20 +6,21 @@
 
 <div class="anime">
 
-  <form [formGroup]="myForm" novalidate class="anime__management">
+  <div class="anime__management">
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
-      <mat-select formControlName="types" multiple>
+      <mat-select [formControl]="filterFormControl" multiple>
         <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="standard">
-      <input class="anime__search" formControlName="search" matInput placeholder="Search" #input>
+      <input class="anime__search" [formControl]="searchFormControl" matInput placeholder="Search" #input>
     </mat-form-field>
-  </form>
+  </div>
 
-  <table #table *ngIf="anime$ as anime" class="anime__table" matSort (matSortChange)="applySort($event)" mat-table
+  <table [matSortActive]="sort$.value.active"
+  [matSortDirection]="sort$.value.direction" #table *ngIf="anime$ as anime" class="anime__table" matSort (matSortChange)="handleSortChange($event)" mat-table
     [dataSource]="anime" [trackBy]="trackAnime" matSortActive="titleEnglish" matSortDirection="asc"
     aria-label="Anime table">
 
@@ -63,7 +64,7 @@
 
   </table>
 
-  <mat-paginator [length]="animeCount" (page)="applyPagination($event)" [pageIndex]="pagination$.value.pageIndex"
+  <mat-paginator [length]="animeCount" (page)="handlePaginationChange($event)" [pageIndex]="pageIndex$.value"
     [pageSizeOptions]="[25, 50, 100, 250]" aria-label="Select page of anime">
   </mat-paginator>
 
