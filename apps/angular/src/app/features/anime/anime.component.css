@@ -13,13 +13,6 @@
   width: 100%;
 }
 
-.mat-cell:first-child,
-.mat-header-cell:first-child {
-  width: 150px;
-  text-align: center;
-  padding: 10px 25px;
-}
-
 .anime__image {
   max-width: 150px;
   max-height: 150px;
@@ -30,13 +23,14 @@
   color: var(--accent-color-3);
 }
 
-.mat-form-field {
+.anime__filter {
   width: 25%;
 }
 
 .anime__search {
   box-sizing: border-box;
   padding: 0 5px;
+  width: 25%;
 }
 
 .loading-layout {

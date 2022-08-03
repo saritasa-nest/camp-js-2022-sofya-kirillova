@@ -1,28 +1,28 @@
 <div class="loading-layout">
-  <div *ngIf="(isLoading$ | async)">
+  <div *ngIf="isLoading$ | async">
     <mat-progress-bar mode="indeterminate"></mat-progress-bar>
   </div>
 </div>
 
-<div class="anime">
-
+<div #anime class="anime">
   <div class="anime__management">
-    <mat-form-field appearance="fill">
+
+    <mat-form-field class="anime__filter" appearance="fill">
       <mat-label>Type</mat-label>
-      <mat-select [formControl]="filterFormControl" multiple>
+      <mat-select [value]="defaultAnimeParams.types" (selectionChange)="handleFilterChange($event)" multiple>
         <mat-option *ngFor="let type of typeList" [value]="type">{{type}}</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <mat-form-field appearance="standard">
-      <input class="anime__search" [formControl]="searchFormControl" matInput placeholder="Search" #input>
+    <mat-form-field class="anime__search" appearance="standard">
+      <input [value]="defaultAnimeParams.search" class="anime__search" matInput (keyup)="handleSearchChange($event)"
+        placeholder="Search" #input>
     </mat-form-field>
   </div>
 
-  <table [matSortActive]="sort$.value.active"
-  [matSortDirection]="sort$.value.direction" #table *ngIf="anime$ as anime" class="anime__table" matSort (matSortChange)="handleSortChange($event)" mat-table
-    [dataSource]="anime" [trackBy]="trackAnime" matSortActive="titleEnglish" matSortDirection="asc"
-    aria-label="Anime table">
+  <table [matSortActive]="defaultAnimeParams.sort.ordering" [matSortDirection]="defaultAnimeParams.sort.direction"
+    class="anime__table" matSort (matSortChange)="handleSortChange($event)" mat-table [dataSource]="anime$"
+    [trackBy]="trackAnime" matSortActive="titleEnglish" matSortDirection="asc" aria-label="Anime table">
 
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef></th>
@@ -61,11 +61,11 @@
     <tr class="mat-row" *matNoDataRow>
       <td class="mat-cell" colspan="5">No anime for this request</td>
     </tr>
-
   </table>
 
-  <mat-paginator [length]="animeCount" (page)="handlePaginationChange($event)" [pageIndex]="pageIndex$.value"
-    [pageSizeOptions]="[25, 50, 100, 250]" aria-label="Select page of anime">
+  <mat-paginator [length]="animeCount" (page)="handlePaginationChange($event)" [pageIndex]="pageIndex"
+    [pageSize]='defaultAnimeParams.pagination.pageSize' [pageSizeOptions]="[25, 50, 100, 250]"
+    aria-label="Select page of anime">
   </mat-paginator>
 
 </div>
