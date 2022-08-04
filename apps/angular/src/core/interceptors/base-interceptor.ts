@@ -3,18 +3,20 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest } from '@angular/c
 
 import { Observable } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { AppConfigService } from '../services/app-config.service';
 
 /** Interceptor to add the Api-Key. */
 @Injectable()
 export class ApiKeyInterceptor implements HttpInterceptor {
+
+  public constructor(private readonly config: AppConfigService) {}
 
   /** @inheritDoc */
   public intercept(req: HttpRequest<unknown>, next: HttpHandler):
     Observable<HttpEvent<unknown>> {
     const newRequest = req.clone({
       headers: req.headers
-        .set('Api-Key', environment.apiKey),
+        .set('Api-Key', this.config.apiKey),
     });
     return next.handle(newRequest);
   }
@@ -24,11 +26,13 @@ export class ApiKeyInterceptor implements HttpInterceptor {
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {
 
+  public constructor(private readonly config: AppConfigService) {}
+
   /** @inheritDoc */
   public intercept(req: HttpRequest<unknown>, next: HttpHandler):
     Observable<HttpEvent<unknown>> {
     const newRequest = req.clone({
-      url: environment.apiUrl + req.url,
+      url: this.config.apiUrl + req.url,
     });
     return next.handle(newRequest);
   }
