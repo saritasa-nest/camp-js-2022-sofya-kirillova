@@ -1,0 +1,18 @@
+.registration {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: var(--width-input-field);
+  max-width: 80%;
+}
+
+.registration__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+.registration__submit {
+  align-self: flex-end;
+  width: var(--width-button-form);
+}

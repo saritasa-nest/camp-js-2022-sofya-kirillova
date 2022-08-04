@@ -1,0 +1,18 @@
+.authorization {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: var(--width-input-field);
+  max-width: 80%;
+}
+
+.authorization__form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 25px;
+}
+
+.authorization__submit {
+  align-self: flex-end;
+  width: var(--width-button-form);
+}
