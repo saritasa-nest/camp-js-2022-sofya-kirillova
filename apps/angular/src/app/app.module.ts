@@ -6,7 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { DatePipe } from '@angular/common';
 
-import { httpInterceptorProviders } from '../core/interceptors/httpInterceptorProviders';
+import { httpInterceptorProviders } from '../core/interceptors/http-interceptor.provider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

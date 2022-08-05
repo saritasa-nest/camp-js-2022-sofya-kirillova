@@ -1,5 +1,5 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Anime, AnimeType } from '@js-camp/core/models/anime';
 import { Observable, map, switchMap, BehaviorSubject, tap, debounceTime } from 'rxjs';
 
@@ -38,9 +38,7 @@ const fetchDelayInMilliseconds = 500;
   selector: 'camp-anime',
   templateUrl: './anime.component.html',
   styleUrls: ['./anime.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class AnimeComponent {
 
   /** Anime types displayed. */

@@ -1,4 +1,4 @@
-.mat-toolbar-single-row {
+.header__toolbar {
   display: flex;
   justify-content: space-between;
   padding: 0 50px;
