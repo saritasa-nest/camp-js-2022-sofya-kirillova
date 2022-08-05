@@ -6,7 +6,7 @@ export namespace TokenMapper {
 
   /**
    * Maps dto to model.
-   * @param dto Anime dto.
+   * @param dto Token dto.
    */
   export function fromDto(dto: TokenDto): Token {
 
@@ -14,5 +14,17 @@ export namespace TokenMapper {
       refresh: dto.refresh,
       access: dto.access,
     });
+  }
+
+  /**
+   * Maps dto to model.
+   * @param dto Token dto.
+   */
+  export function toDto(dto: Token): TokenDto {
+
+    return {
+      refresh: dto.refresh,
+      access: dto.access,
+    };
   }
 }

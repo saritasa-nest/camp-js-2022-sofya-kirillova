@@ -26,8 +26,8 @@ export class LoginComponent {
   ) {
 
     this.authorizationForm = formBuilder.group({
-      email: ['1@mail.ru', [Validators.required, Validators.email]],
-      password: ['rfrytffr2001', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
   }
 
@@ -43,6 +43,8 @@ export class LoginComponent {
           // console.log(errorMessage);
           if (errorMessage !== null) {
             this.router.navigate(['/']);
+          } else {
+            console.log('error');
           }
         }),
       )

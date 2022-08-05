@@ -1,4 +1,3 @@
-
 /** Token  DTO. */
 export interface TokenDto {
 

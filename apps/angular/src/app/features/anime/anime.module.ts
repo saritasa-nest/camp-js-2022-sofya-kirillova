@@ -11,15 +11,25 @@ import { MatTableModule } from '@angular/material/table';
 
 import { RouterModule, Routes } from '@angular/router';
 
+import { UnauthorizedGuard } from '../../../core/guards/unauthorized.guard';
+
 import { FormatDatePipe } from './../../../shared/pipes/formatDate';
 
 import { AnimeComponent } from './anime.component';
+import { AnimeDetailedComponent } from './anime-detailed/anime-detailed.component';
 
-const routes: Routes = [{ path: '', component: AnimeComponent }];
+const routes: Routes = [
+  { path: '', component: AnimeComponent },
+  {
+    path: 'anime-detailed',
+    canActivate: [UnauthorizedGuard],
+    component: AnimeDetailedComponent,
+  },
+];
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeComponent, FormatDatePipe],
+  declarations: [AnimeComponent, FormatDatePipe, AnimeDetailedComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -32,4 +42,4 @@ const routes: Routes = [{ path: '', component: AnimeComponent }];
     MatProgressBarModule,
   ],
 })
-export class AnimeModule { }
+export class AnimeModule {}

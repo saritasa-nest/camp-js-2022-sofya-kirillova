@@ -11,7 +11,7 @@ import { Direction, Order } from '@js-camp/core/models/animeSort';
 
 import { MatSelectChange } from '@angular/material/select';
 
-import { AnimeQueryParams } from './../../../core/interfaces/AnimeQueryOptions';
+import { AnimeQueryParams } from '../../../core/services/interfaces/AnimeQueryOptions';
 
 import { AnimeService } from './../../../core/services/anime.service';
 

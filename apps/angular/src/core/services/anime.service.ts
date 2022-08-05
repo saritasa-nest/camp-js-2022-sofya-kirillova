@@ -11,7 +11,7 @@ import { Anime } from '@js-camp/core/models/anime';
 
 import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
 
-import { AnimeQueryParams } from '../interfaces/AnimeQueryOptions';
+import { AnimeQueryParams } from './interfaces/AnimeQueryOptions';
 
 /** Anime service. */
 @Injectable({
