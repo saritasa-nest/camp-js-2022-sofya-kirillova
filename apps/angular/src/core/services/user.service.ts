@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, first, map, mapTo, Observable, switchMap, switchMapTo, shareReplay, throwError, of, filter } from 'rxjs';
+import { catchError,tap, first, map, mapTo, Observable, switchMap, switchMapTo, shareReplay, throwError, of, filter } from 'rxjs';
 
 import { User } from '@js-camp/core/models/user';
 
@@ -47,7 +47,9 @@ export class UserService {
    */
   public register(userData: RegistrationData): Observable<void> {
     return this.authService.register(userData).pipe(
+      tap(()=> {console.log(8778)}),
       switchMap(token => this.tokenStorage.saveToken(token)),
+      tap(() => {console.log(this.isAuthorized$)}),
       switchMapTo(this.isAuthorized$),
       filter(isAuthorized => isAuthorized),
       switchMap(() => this.redirectAfterAuthorization()),
@@ -83,12 +85,12 @@ export class UserService {
 
   /** Update user secret, supposed to be called when user data is outdated. */
   public refreshSecret(): Observable<void> {
-    return this.tokenStorage.currentToken$.pipe(
+    return this.tokenStorage.getToken().pipe(
       first(),
       switchMap(secret =>
         secret != null ?
           this.authService.refreshToken(secret) :
-          throwError(() => new AppError('Unauthorized'))),
+          throwError(() => new Error('Unauthorized'))),
 
       // In case token is invalid clear the storage and redirect to login page
       catchError((error: unknown) =>
@@ -104,16 +106,19 @@ export class UserService {
   }
 
   private initCurrentUserStream(): Observable<User | null> {
-    return this.tokenStorage.currentToken$.pipe(
+    return this.tokenStorage.getToken().pipe(
+      tap(() => {console.log(45)}),
       switchMap(secret => (secret ? this.getCurrentUser() : of(null))),
-      shareReplay({ bufferSize: 1, refCount: false }),
     );
   }
 
-  private getCurrentUser(): Observable<User> {
+  private getCurrentUser(): Observable<User | null> {
     return this.http
       .get<UserDto>('/users/profile/')
-      .pipe(map(user => UserMapper.fromDto(user)));
+      .pipe(
+        map(user => UserMapper.fromDto(user)),
+        // catchError((error)=> {console.log(3564); return of(null)})
+    );
   }
 
   private async navigateToAuthPage(): Promise<void> {

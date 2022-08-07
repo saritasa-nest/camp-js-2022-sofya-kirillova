@@ -26,8 +26,8 @@ export class LoginComponent {
   ) {
 
     this.authorizationForm = formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
+      email: ['1@mail.ru', [Validators.required, Validators.email]],
+      password: ['rfrytffr2001', [Validators.required]],
     });
   }
 

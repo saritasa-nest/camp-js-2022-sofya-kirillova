@@ -9,7 +9,6 @@ export namespace TokenMapper {
    * @param dto Token dto.
    */
   export function fromDto(dto: TokenDto): Token {
-
     return new Token({
       refresh: dto.refresh,
       access: dto.access,

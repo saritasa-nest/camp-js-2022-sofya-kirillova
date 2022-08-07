@@ -95,6 +95,7 @@ export class AuthService {
     headers: HttpHeaders,
     token: Token,
   ): HttpHeaders {
-    return headers.set('Authorization', `${AUTH_PREFIX} ${token.access}`);
+    console.log(787)
+    return headers.set('Authorization', `${token.access}`);
   }
 }

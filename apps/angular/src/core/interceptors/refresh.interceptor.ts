@@ -1,45 +1,60 @@
-import { Injectable } from '@angular/core';
 import {
-  HttpRequest,
-  HttpHandler,
   HttpEvent,
+  HttpHandler,
   HttpInterceptor,
-  HttpErrorResponse,
+  HttpRequest,
 } from '@angular/common/http';
-import { catchError, Observable, switchMap, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { first, map, switchMap } from 'rxjs/operators';
 
-import { UserService } from '../services/user.service';
 import { AppConfigService } from '../services/app-config.service';
+import { AuthService } from '../services/auth.service';
+import { TokenStorageService } from '../services/token-storage.service';
 
-/** Interceptor to refreshing token. */
+/** Interceptor to add access token to requests using Authorization HTTP header. */
 @Injectable()
 export class RefreshInterceptor implements HttpInterceptor {
-
-  private refreshTokenRequest$: Observable<void> | null = null;
-
   public constructor(
-    private readonly appConfig: AppConfigService,
-    private readonly userService: UserService,
+    private readonly appConfigService: AppConfigService,
+    private readonly userSecretStorage: TokenStorageService,
+    private readonly authService: AuthService,
   ) {}
 
-  /** @inheritdoc */
-  public intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    return next.handle(request).pipe(
-      catchError((error: unknown) => {
-        if (error instanceof HttpErrorResponse && (error.status !== 401 || !this.shouldRefreshToken(request.url))) {
-          return throwError(() => error);
-        }
+  /**
+   * Appends bearer token.
+   * @inheritdoc
+   */
+  public intercept(
+    req: HttpRequest<unknown>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<unknown>> {
+    if (this.shouldInterceptToken(req.url)) {
+      const userSecret$ = this.userSecretStorage.getToken().pipe(first());
 
-        this.refreshTokenRequest$ ??= this.userService.refreshSecret();
+      return userSecret$.pipe(
+        map(userSecret =>
+          userSecret ?
+            req.clone({
+                headers: this.authService.appendAuthorizationHeader(
+                  req.headers,
+                  userSecret,
+                ),
+            }) :
+            req),
+        switchMap(newReq => next.handle(newReq)),
+      );
+    }
 
-        return this.refreshTokenRequest$.pipe(
-          switchMap(() => next.handle(request)),
-        );
-      }),
-    );
+    // Do nothing.
+    return next.handle(req);
   }
 
-  private shouldRefreshToken(url: string): boolean {
-    return !url.startsWith(new URL('auth', this.appConfig.apiUrl).toString());
+  /**
+   * Checks if a request is for authorization or refresh token.
+   * @param url - Request url.
+   */
+  private shouldInterceptToken(url: string): boolean {
+    return url.startsWith(this.appConfigService.apiUrl);
   }
 }

@@ -13,7 +13,7 @@ const TOKEN_STORAGE_KEY = 'token';
 })
 export class TokenStorageService {
   /** Token info for current user. */
-  public readonly currentToken$: Observable<Token | null>;
+  private readonly currentToken$: Observable<Token | null>;
 
   /** Current user Token. */
   private readonly currentTokenValue$ =
@@ -37,6 +37,13 @@ export class TokenStorageService {
       tap(() => this.currentTokenValue$.next(token)),
       mapTo(token),
     );
+  }
+
+  /**
+   * Gets current token.
+   */
+  public getToken(): Observable<Token | null> {
+    return this.currentToken$;
   }
 
   /** Removes current Token. */
