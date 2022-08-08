@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { tap } from 'rxjs';
+
+import { UserService } from '../core/services/user.service';
 
 /** App component. */
 @Component({
@@ -6,4 +9,11 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {}
+export class AppComponent {
+
+  public constructor(
+    public readonly userService: UserService,
+  ) {
+    // this.isAuthorized = userService.isAuthorized$;
+  }
+}

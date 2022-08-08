@@ -1,5 +1,5 @@
 import { Router, ActivatedRoute } from '@angular/router';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
 import { tap } from 'rxjs';
@@ -27,6 +27,7 @@ export class RegisterComponent {
     formBuilder: FormBuilder,
     private readonly userService: UserService,
     private readonly router: Router,
+    private readonly cdr: ChangeDetectorRef,
   ) {
 
     this.registrationForm = formBuilder.group({
@@ -64,9 +65,15 @@ export class RegisterComponent {
     })
       .pipe(
         tap(errorMessage => {
-          console.log(errorMessage);
           if (errorMessage !== null) {
-            this.router.navigate(['/']);
+            const errors = Object.entries(errorMessage.data).reduce((body, error) => {
+              if (error[1] !== null) {
+                body.push(...error[1]);
+              }
+              return body;
+            }, [] as string[]);
+            this.registrationForm.setErrors({ data: errors.join(' ') });
+            this.cdr.markForCheck();
           }
         }),
       )

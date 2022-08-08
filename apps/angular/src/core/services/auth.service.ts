@@ -13,7 +13,7 @@ import { catchHttpErrorResponse } from '../utils/catch-http-error-response';
 
 import { LoginData, RegistrationData } from './interfaces/auth.interface';
 
-const AUTH_PREFIX = 'Token';
+const AUTH_PREFIX = 'Bearer';
 
 /** Auth service. */
 @Injectable({
@@ -95,7 +95,6 @@ export class AuthService {
     headers: HttpHeaders,
     token: Token,
   ): HttpHeaders {
-    console.log(787)
-    return headers.set('Authorization', `${token.access}`);
+    return headers.set('Authorization', `${AUTH_PREFIX} ${token.access}`);
   }
 }

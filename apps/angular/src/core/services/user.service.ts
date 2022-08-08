@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { catchError,tap, first, map, mapTo, Observable, switchMap, switchMapTo, shareReplay, throwError, of, filter } from 'rxjs';
+import { catchError, tap, first, map, mapTo, Observable, switchMap, switchMapTo, throwError, of } from 'rxjs';
 
 import { User } from '@js-camp/core/models/user';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 import { UserDto } from '@js-camp/core/dtos/user.dto';
 
@@ -11,7 +11,9 @@ import { UserMapper } from '@js-camp/core/mappers/user.mapper';
 
 import { Router } from '@angular/router';
 
-import { AppError } from '@js-camp/core/models/app-error';
+import { FieldErrorMapper } from '@js-camp/core/mappers/fieldError.mapper';
+
+import { FieldError } from '@js-camp/core/models/fieldError';
 
 import { filterNull } from '../utils/filter-null';
 
@@ -45,14 +47,17 @@ export class UserService {
    *
    * @param userData
    */
-  public register(userData: RegistrationData): Observable<void> {
+  public register(userData: RegistrationData): Observable<null | FieldError> {
     return this.authService.register(userData).pipe(
-      tap(()=> {console.log(8778)}),
       switchMap(token => this.tokenStorage.saveToken(token)),
-      tap(() => {console.log(this.isAuthorized$)}),
-      switchMapTo(this.isAuthorized$),
-      filter(isAuthorized => isAuthorized),
       switchMap(() => this.redirectAfterAuthorization()),
+      map(() => null),
+      catchError((error: unknown) => {
+        if (error instanceof HttpErrorResponse) {
+          return of(FieldErrorMapper.fromDto(error.error));
+        }
+          throw error;
+      }),
     );
   }
 
@@ -60,12 +65,17 @@ export class UserService {
    *
    * @param userData
    */
-  public login(userData: LoginData): Observable<void> {
+  public login(userData: LoginData): Observable<null | FieldError> {
     return this.authService.login(userData).pipe(
       switchMap(token => this.tokenStorage.saveToken(token)),
-      switchMapTo(this.isAuthorized$),
-      filter(isAuthorized => isAuthorized),
       switchMap(() => this.redirectAfterAuthorization()),
+      map(() => null),
+      catchError((error: unknown) => {
+        if (error instanceof HttpErrorResponse) {
+          return of(FieldErrorMapper.fromDto(error.error));
+        }
+          throw error;
+      }),
     );
   }
 
@@ -107,7 +117,6 @@ export class UserService {
 
   private initCurrentUserStream(): Observable<User | null> {
     return this.tokenStorage.getToken().pipe(
-      tap(() => {console.log(45)}),
       switchMap(secret => (secret ? this.getCurrentUser() : of(null))),
     );
   }
@@ -117,8 +126,9 @@ export class UserService {
       .get<UserDto>('/users/profile/')
       .pipe(
         map(user => UserMapper.fromDto(user)),
+
         // catchError((error)=> {console.log(3564); return of(null)})
-    );
+      );
   }
 
   private async navigateToAuthPage(): Promise<void> {

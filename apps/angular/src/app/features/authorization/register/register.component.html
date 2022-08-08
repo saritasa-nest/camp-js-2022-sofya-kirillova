@@ -25,15 +25,6 @@
         [attr.aria-label]="'isHiddenPassword password'" [attr.aria-pressed]="isHiddenPassword">
         <mat-icon>{{isHiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
-      <!-- <mat-error class="form-hint" *ngIf="registrationForm.get('password')">
-        <span>Password must be: </span>
-        <ul>
-          <li>Min 8 character</li>
-          <li>Min 1 lowercase character</li>
-          <li>Min 1 uppercase character</li>
-          <li>Min 1 number</li>
-        </ul>
-      </mat-error> -->
     </mat-form-field>
 
 
@@ -46,6 +37,14 @@
       </button>
       <mat-error *ngIf="registrationForm.get('confirmPassword')">Passwords don't match</mat-error>
     </mat-form-field>
+
+    <mat-error *ngIf="registrationForm.hasError('data')">{{
+      registrationForm.getError("data")
+    }}</mat-error>
+    <!-- <div *ngFor="let error of registrationForm.controls.error()" [value]="error">
+
+    </div> -->
+    <!-- <mat-option *ngFor="let type of typeList" [value]="type">{{ -->
 
     <button (click)="register()" [disabled]="registrationForm.invalid" class="registration__submit" type="button" mat-raised-button
       color="primary">Registration</button>

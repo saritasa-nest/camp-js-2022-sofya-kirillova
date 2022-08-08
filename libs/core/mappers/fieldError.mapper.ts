@@ -10,14 +10,14 @@ export namespace FieldErrorMapper {
   export function fromDto(dto: FieldErrorDto): FieldError {
     return new FieldError({
       data: {
-        email: dto.data?.email,
-        firstName: dto.data?.first_name,
-        lastName: dto.data?.last_name,
-        password: dto.data?.password,
-        nonFieldErrors: dto.data?.non_field_errors,
+        email: dto.data.email ?? null,
+        firstName: dto.data.first_name ?? null,
+        lastName: dto.data.last_name ?? null,
+        password: dto.data.password ?? null,
+        nonFieldErrors: dto.data.non_field_errors ?? null,
       },
       detail: dto.detail,
-      code: dto.code,
+      code: dto.code ?? null,
     });
   }
 }

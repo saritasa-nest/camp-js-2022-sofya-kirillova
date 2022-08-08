@@ -1,11 +1,35 @@
-<header>
+<header *ngIf="userService.isAuthorized$ | async; else unAuthorized">
   <mat-toolbar color="primary">
-    <a routerLink="/" >Anime is life</a>
-      <a class="nav__link" routerLink="/anime-detailed" routerLinkActive="nav__link_active">Details</a>
+    <a routerLink="/">Anime is life</a>
+    <a
+      class="nav__link"
+      routerLink="/anime-detailed"
+      routerLinkActive="nav__link_active"
+      >Details</a
+    >
     <nav class="nav">
-      <a class="nav__link" routerLink="/authorization/login" routerLinkActive="nav__link_active">Login</a>
-      <a class="nav__link" routerLink="/authorization/register" routerLinkActive="nav__link_active">Register</a>
+      <a
+        class="nav__link"
+        routerLink="/authorization/login"
+        routerLinkActive="nav__link_active"
+        >Login</a
+      >
+      <a
+        class="nav__link"
+        routerLink="/authorization/register"
+        routerLinkActive="nav__link_active"
+        >Register</a
+      >
     </nav>
   </mat-toolbar>
 </header>
+<ng-template #unAuthorized>
+  <header>
+    <mat-toolbar color="primary">
+      <a routerLink="/">Anime is life</a>
+      <span>Welcome</span>
+    </mat-toolbar>
+  </header> </ng-template
+>
+
 <router-outlet></router-outlet>
