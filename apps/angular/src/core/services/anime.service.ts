@@ -26,7 +26,7 @@ export class AnimeService {
    */
   public fetchAnime(params: AnimeQueryParams): Observable<Pagination<Anime>> {
     const additionalSortingParameter = 'id';
-    const types = params.types !== [] ?
+    const types = params.types.length > 0 ?
       params.types.map(type => AnimeMapper.toDtoMapType[type]).join(',') :
       '';
     const httpParams = new HttpParams()

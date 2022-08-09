@@ -13,6 +13,16 @@
   width: 100%;
 }
 
+.anime__header-image {
+  width: 150px;
+}
+
+.anime__header-type,
+.anime__header-status,
+.anime__header-airing {
+  width: 10%;
+}
+
 .anime__image {
   max-width: 150px;
   max-height: 150px;

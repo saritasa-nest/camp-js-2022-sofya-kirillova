@@ -25,13 +25,11 @@ enum NameAnimeParams {
   Types = 'types',
 }
 
-type ParamToUrl = {
-  [key in NameAnimeParams]?: string | null | number;
-};
+type ParamToUrl = Partial<Record<NameAnimeParams, string | null | number>>;
 
 const firstPage = 0;
 
-const fetchDelayInMilliseconds = 500;
+const FETCH_DELAY_IN_MILLISECONDS = 500;
 
 /** Anime Component. */
 @Component({
@@ -59,7 +57,7 @@ export class AnimeComponent {
     },
     sort: {
       ordering: this.route.snapshot.queryParamMap.get(NameAnimeParams.Ordering) ?? 'titleEnglish',
-      direction: this.route.snapshot.queryParamMap.get(NameAnimeParams.SortingDirection) as SortDirection ?? 'asc',
+      direction: this.route.snapshot.queryParamMap.get(NameAnimeParams.SortingDirection) as SortDirection ?? Direction.Ascending,
     },
     search: this.route.snapshot.queryParamMap.get(NameAnimeParams.Search) ?? '',
     types: this.route.snapshot.queryParamMap.get(NameAnimeParams.Types)?.split(',') as AnimeType[] ?? [] as AnimeType[],
@@ -74,14 +72,14 @@ export class AnimeComponent {
   /** Data for a table with anime. */
   public readonly anime$: Observable<readonly Anime[]>;
 
-  /** Count of anime in the database. */
+  /** Count of anime with specified parameters. */
   public animeCount = 0;
 
   /** Current page. */
   public pageIndex = this.defaultAnimeParams.pagination.pageIndex;
 
   /** Whether books are loading or not. */
-  public isLoading$ = new BehaviorSubject<boolean>(false);
+  public readonly isLoading$ = new BehaviorSubject<boolean>(false);
 
   public constructor(
     private readonly animeService: AnimeService,
@@ -89,7 +87,7 @@ export class AnimeComponent {
     private readonly route: ActivatedRoute,
   ) {
     this.anime$ = route.queryParams.pipe(
-      debounceTime(fetchDelayInMilliseconds),
+      debounceTime(FETCH_DELAY_IN_MILLISECONDS),
       tap(() => this.isLoading$.next(true)),
       switchMap(res => this.getAnime(res)),
       tap(() => this.isLoading$.next(false)),
