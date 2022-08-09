@@ -17,9 +17,9 @@ import { TokenStorageService } from '../services/token-storage.service';
 export class AuthInterceptor implements HttpInterceptor {
   public constructor(
     private readonly appConfigService: AppConfigService,
-    private readonly userSecretStorage: TokenStorageService,
+    private readonly userTokenStorage: TokenStorageService,
     private readonly authService: AuthService,
-  ) {}
+  ) { }
 
   /**
    * Appends bearer token.
@@ -30,30 +30,24 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     if (this.shouldInterceptToken(req.url)) {
-      const userSecret$ = this.userSecretStorage.getToken().pipe(first());
+      const userToken$ = this.userTokenStorage.getToken().pipe(first());
 
-      return userSecret$.pipe(
-        map(userSecret =>
-          userSecret ?
+      return userToken$.pipe(
+        map(userToken =>
+          userToken ?
             req.clone({
-                headers: this.authService.appendAuthorizationHeader(
-                  req.headers,
-                  userSecret,
-                ),
+              headers: this.authService.appendAuthorizationHeader(
+                req.headers,
+                userToken,
+              ),
             }) :
             req),
         switchMap(newReq => next.handle(newReq)),
       );
     }
-
-    // Do nothing.
     return next.handle(req);
   }
 
-  /**
-   * Checks if a request is for authorization or refresh token.
-   * @param url - Request url.
-   */
   private shouldInterceptToken(url: string): boolean {
     return url.startsWith(this.appConfigService.apiUrl);
   }

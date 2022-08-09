@@ -18,7 +18,7 @@ export interface FieldErrorDto {
 
     /** Errors not related to the field. */
     readonly non_field_errors?: [string];
-  };
+  } | null;
 
   /** General information about the error. */
   readonly detail: string;

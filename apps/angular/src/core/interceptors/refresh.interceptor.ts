@@ -12,11 +12,9 @@ import { switchMap } from 'rxjs/operators';
 import { AppConfigService } from '../services/app-config.service';
 import { UserService } from '../services/user.service';
 
-/** Interceptor to add access token to requests using Authorization HTTP header. */
+/** Interceptor handles requests with outdated tokens. */
 @Injectable()
 export class RefreshInterceptor implements HttpInterceptor {
-
-  private refreshTokenRequest$: Observable<void> | null = null;
 
   public constructor(
     private readonly appConfigService: AppConfigService,
@@ -24,7 +22,7 @@ export class RefreshInterceptor implements HttpInterceptor {
   ) { }
 
   /**
-   * Appends bearer token.
+   * Refreshes a token.
    * @inheritdoc
    */
   public intercept(
@@ -34,25 +32,19 @@ export class RefreshInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((error: unknown) => {
         if (error instanceof HttpErrorResponse && (error.status !== 401 || this.shouldInterceptToken(req.url))) {
-          console.log('true')
           return throwError(() => error);
         }
 
-        this.refreshTokenRequest$ ??= this.userService.refreshSecret();
-
-        return this.refreshTokenRequest$.pipe(
+        return this.userService.refreshToken().pipe(
           switchMap(() => next.handle(req)),
         );
       }),
     );
   }
 
-  /**
-   * Checks if a request is for authorization or refresh token.
-   * @param url - Request url.
-   */
   private shouldInterceptToken(url: string): boolean {
-    console.log(url.startsWith(new URL('auth', this.appConfigService.apiUrl).toString()));
-    return !url.startsWith(new URL('auth', this.appConfigService.apiUrl).toString());
+    return url.startsWith(
+      new URL('auth', this.appConfigService.apiUrl).toString(),
+    );
   }
 }

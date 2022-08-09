@@ -1,11 +1,10 @@
-import { Router } from '@angular/router';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { tap } from 'rxjs';
 
 import { UserService } from '../../../../core/services/user.service';
 
-/** Login Component. */
+/** Login component. */
 @Component({
   selector: 'camp-login',
   templateUrl: './login.component.html',
@@ -13,30 +12,38 @@ import { UserService } from '../../../../core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  /** */
-  public readonly authorizationForm: FormGroup;
+  /** Login form.  */
+  public readonly loginForm: FormGroup;
 
-  /** */
+  /** Is the password hidden. */
   public isHiddenPassword = true;
 
   public constructor(
     formBuilder: FormBuilder,
-    private readonly router: Router,
     private readonly userService: UserService,
+    private readonly cdr: ChangeDetectorRef,
   ) {
 
-    this.authorizationForm = formBuilder.group({
-      email: ['1@mail.ru', [Validators.required, Validators.email]],
-      password: ['rfrytffr2001', [Validators.required]],
+    this.loginForm = formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
   }
 
-  /** */
+  /** Handle 'submit' of the login form. */
   public login(): void {
-    const registrationData = this.authorizationForm.value;
+    const authorizationData = this.loginForm.value;
     this.userService.login({
-      email: registrationData.email,
-      password: registrationData.password,
-    }).subscribe();
+      email: authorizationData.email,
+      password: authorizationData.password,
+    }).pipe(
+      tap(errorMessage => {
+        if (errorMessage !== null) {
+          this.loginForm.setErrors({ detail: (errorMessage.detail) });
+          this.cdr.markForCheck();
+        }
+      }),
+    )
+      .subscribe();
   }
 }

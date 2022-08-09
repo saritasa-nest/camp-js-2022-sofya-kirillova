@@ -1,94 +1,81 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { map, Observable, throwError } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 import { Token } from '@js-camp/core/models/token';
 import { TokenDto } from '@js-camp/core/dtos/token.dto';
 import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
 
-import { AppError } from '@js-camp/core/models/app-error';
-
-import { catchHttpErrorResponse } from '../utils/catch-http-error-response';
-
 import { LoginData, RegistrationData } from './interfaces/auth.interface';
 
 const AUTH_PREFIX = 'Bearer';
 
-/** Auth service. */
+/** Stateless service for handling the authorization requests. */
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
+  private readonly registerUrl: string;
+
+  private readonly loginUrl: string;
+
+  private readonly refreshTokenUrl: string;
+
   public constructor(
     private readonly http: HttpClient,
-  ) { }
-
-  /**
-   * Verify account registration.
-   * @param verificationToken Account verification token.
-   */
-  public verifyAccount(
-    verificationToken: string,
-  ): Observable<Token> {
-    const TOKEN_SEPARATOR = '-';
-    const [uid, ...tokenTail] = verificationToken.split(TOKEN_SEPARATOR);
-
-    return this.http.post<TokenDto>('auth/token/verify/', {
-      uid,
-      token: tokenTail.join(TOKEN_SEPARATOR),
-    })
-      .pipe(
-        map(dto => TokenMapper.fromDto(dto)),
-        catchHttpErrorResponse(error => throwError(() => new AppError(error.error.detail))),
-      );
+  ) {
+    this.registerUrl = 'auth/register/';
+    this.loginUrl = 'auth/login/';
+    this.refreshTokenUrl = 'auth/token/refresh//';
   }
 
   /**
-   * Refresh user's secret.
-   * @param secret Secret data.
-   */
-  public refreshToken(
-    secret: Token,
-  ): Observable<Token> {
-    return this.http.post<TokenDto>(
-      '/auth/token/refresh/',
-      TokenMapper.toDto(secret),
-    )
-      .pipe(
-        map(refreshedSecret => TokenMapper.fromDto({
-          ...secret,
-          ...refreshedSecret,
-        })),
-      );
-  }
-
-  /**
-   *
-   * @param userData
+   * Register a user.
+   * @param userData Register data.
    */
   public register(userData: RegistrationData): Observable<Token> {
-    return this.http.post<TokenDto>('/auth/register/', userData)
+    return this.http.post<TokenDto>(this.registerUrl, userData)
       .pipe(
         map(TokenMapper.fromDto),
       );
   }
 
   /**
-   *
-   * @param userData
+   * Login a user.
+   * @param userData Login data.
    */
   public login(userData: LoginData): Observable<Token> {
-    return this.http.post<TokenDto>('/auth/login/', userData)
+    return this.http.post<TokenDto>(this.loginUrl, userData)
       .pipe(
         map(TokenMapper.fromDto),
+      );
+  }
+
+  /**
+   * Refresh user's token.
+   * @param token Token data.
+   */
+  public refreshToken(
+    token: Token,
+  ): Observable<Token> {
+    return this.http.post<TokenDto>(
+      this.refreshTokenUrl,
+      TokenMapper.toDto(token),
+    )
+      .pipe(
+        map(refreshedToken => TokenMapper.fromDto({
+          ...token,
+          ...refreshedToken,
+        })),
       );
   }
 
   /**
    * Appends authorization header to a list of `headers`.
    * @param headers Headers list.
-   * @param token User secret.
+   * @param token User token.
    */
   public appendAuthorizationHeader(
     headers: HttpHeaders,

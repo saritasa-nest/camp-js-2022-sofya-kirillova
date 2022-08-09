@@ -39,7 +39,7 @@ export class AnimeService {
       .set('search', params.search)
       .set('type__in', types);
 
-    return this.http.get<PaginationDto<AnimeDto>>(`/anime/anime/`, { params: url })
+    return this.http.get<PaginationDto<AnimeDto>>(`anime/anime/`, { params: url })
       .pipe(
         map(response => AnimeListMapper.fromDto(response)),
       );

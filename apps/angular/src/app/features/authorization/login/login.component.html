@@ -1,23 +1,48 @@
 <div class="authorization">
   <h1>Authorization</h1>
-  <form class="authorization__form" [formGroup]="authorizationForm">
-
+  <form
+    class="authorization__form"
+    [formGroup]="loginForm"
+    (ngSubmit)="login()"
+  >
     <mat-form-field appearance="fill">
       <mat-label>Enter your email</mat-label>
-      <input matInput placeholder="pat@example.com" formControlName="email">
-      <mat-error *ngIf="authorizationForm.get('email')">Incorrect e-mail</mat-error>
+      <input matInput placeholder="pat@example.com" formControlName="email" />
+      <mat-error *ngIf="loginForm.get('email')">Incorrect e-mail</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Enter your password</mat-label>
-      <input formControlName="password" matInput [type]="isHiddenPassword ? 'password' : 'text'">
-      <button type="button" mat-icon-button matSuffix (click)="isHiddenPassword = !isHiddenPassword"
-        [attr.aria-label]="'isHiddenPassword password'" [attr.aria-pressed]="isHiddenPassword">
-        <mat-icon>{{isHiddenPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <input
+        formControlName="password"
+        matInput
+        [type]="isHiddenPassword ? 'password' : 'text'"
+      />
+      <button
+        type="button"
+        mat-icon-button
+        matSuffix
+        (click)="isHiddenPassword = !isHiddenPassword"
+        [attr.aria-label]="'isHiddenPassword password'"
+        [attr.aria-pressed]="isHiddenPassword"
+      >
+        <mat-icon>{{
+          isHiddenPassword ? "visibility_off" : "visibility"
+        }}</mat-icon>
       </button>
     </mat-form-field>
 
-    <button (click)="login()" [disabled]="authorizationForm.invalid" class="authorization__submit" type="button" mat-raised-button
-      color="primary">Login</button>
+    <mat-error *ngIf="loginForm.hasError('detail')">{{
+      loginForm.getError("detail")
+    }}</mat-error>
+    <button
+      type="submit"
+      [disabled]="loginForm.invalid"
+      class="authorization__submit"
+      mat-raised-button
+      color="primary"
+    >
+      Login
+    </button>
   </form>
 </div>

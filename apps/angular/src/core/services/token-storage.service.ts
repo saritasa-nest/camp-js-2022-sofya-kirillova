@@ -12,10 +12,8 @@ const TOKEN_STORAGE_KEY = 'token';
   providedIn: 'root',
 })
 export class TokenStorageService {
-  /** Token info for current user. */
   private readonly currentToken$: Observable<Token | null>;
 
-  /** Current user Token. */
   private readonly currentTokenValue$ =
     new ReplaySubject<Token | null>(1);
 
@@ -48,7 +46,6 @@ export class TokenStorageService {
 
   /** Removes current Token. */
   public removeToken(): Observable<void> {
-    console.log(65575)
     return defer(() =>
       this.storageService.remove(TOKEN_STORAGE_KEY)).pipe(tap(() => this.currentTokenValue$.next(null)));
   }

@@ -1,4 +1,3 @@
-import { Router, ActivatedRoute } from '@angular/router';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 
@@ -6,7 +5,7 @@ import { tap } from 'rxjs';
 
 import { UserService } from '../../../../core/services/user.service';
 
-/** Register Component. */
+/** Register component. */
 @Component({
   selector: 'camp-register',
   templateUrl: './register.component.html',
@@ -14,49 +13,56 @@ import { UserService } from '../../../../core/services/user.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterComponent {
-  /** */
-  public readonly registrationForm: FormGroup;
+  /** Register form. */
+  public readonly registerForm: FormGroup;
 
-  /** */
+  /** Is the password hidden. */
   public isHiddenPassword = true;
 
-  /** */
+  /** Is the confirmation password hidden. */
   public isHiddenConfirmPassword = true;
 
   public constructor(
     formBuilder: FormBuilder,
     private readonly userService: UserService,
-    private readonly router: Router,
     private readonly cdr: ChangeDetectorRef,
   ) {
 
-    this.registrationForm = formBuilder.group({
-      email: ['1@mail.ru', [Validators.required, Validators.email]],
-      firstName: ['1', [Validators.required]],
-      lastName: ['1', [Validators.required]],
-      password: ['rfrytffr2001', [Validators.required]],
-      confirmPassword: ['rfrytffr2001', [Validators.required, this.comparePasswords]],
+    this.registerForm = formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      password: ['', [Validators.required, this.restartPasswordComparison]],
+      confirmPassword: ['', [Validators.required, this.comparePasswords]],
     });
   }
 
-  private comparePasswords(control: FormControl): ValidationErrors | null {
-    const pass = control.root.get('password');
-    const rePass = control.root.get('confirmPassword');
+  private restartPasswordComparison(control: FormControl): void {
+    const passwordControl = control.root.get('password');
+    const confirmPasswordControl = control.root.get('confirmPassword');
+    if (!passwordControl || !confirmPasswordControl || confirmPasswordControl.value === '') {
+      return;
+    }
+    confirmPasswordControl.setErrors({ noPasswordMatch: true });
+  }
 
-    if (!pass || !rePass) {
+  private comparePasswords(control: FormControl): ValidationErrors | null {
+    const passwordControl = control.root.get('password');
+    const confirmPasswordControl = control.root.get('confirmPassword');
+
+    if (!passwordControl || !confirmPasswordControl || confirmPasswordControl.value === '') {
       return null;
     }
 
-    const passVal = pass.value;
-    const rePassVal = rePass.value;
+    const password = passwordControl.value;
+    const confirmPassword = confirmPasswordControl.value;
 
-    const result = passVal === rePassVal ? null : { noPasswordMatch: true };
-    return result;
+    return password === confirmPassword ? null : { noPasswordMatch: true };
   }
 
-  /** */
+  /** Handle 'submit' of the register form. */
   public register(): void {
-    const registrationData = this.registrationForm.value;
+    const registrationData = this.registerForm.value;
     this.userService.register({
       email: registrationData.email,
       firstName: registrationData.firstName,
@@ -72,7 +78,7 @@ export class RegisterComponent {
               }
               return body;
             }, [] as string[]);
-            this.registrationForm.setErrors({ data: errors.join(' ') });
+            this.registerForm.setErrors({ data: errors.join(' ') });
             this.cdr.markForCheck();
           }
         }),

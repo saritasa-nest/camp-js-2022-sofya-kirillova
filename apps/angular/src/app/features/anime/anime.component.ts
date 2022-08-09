@@ -26,7 +26,7 @@ const defaultAnimeParams = {
   direction: Direction.Ascending,
 };
 
-/** Anime Component. */
+/** Anime component. */
 @Component({
   selector: 'camp-anime',
   templateUrl: './anime.component.html',

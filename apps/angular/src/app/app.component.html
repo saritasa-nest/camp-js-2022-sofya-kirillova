@@ -1,4 +1,6 @@
-<header *ngIf="(userService.isAuthorized$ | async) === false; else unAuthorized">
+<header
+  *ngIf="(userService.isAuthorized$ | async) === false; else unAuthorized"
+>
   <mat-toolbar color="primary">
     <a routerLink="/">Anime is life</a>
     <a
@@ -29,7 +31,7 @@
       <a routerLink="/">Anime is life</a>
       <span>Welcome {{ userName$ | async }}</span>
     </mat-toolbar>
-  </header> </ng-template
->
+  </header>
+</ng-template>
 
 <router-outlet></router-outlet>
