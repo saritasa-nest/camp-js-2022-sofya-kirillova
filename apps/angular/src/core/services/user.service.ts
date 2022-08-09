@@ -3,7 +3,7 @@ import { catchError, first, map, mapTo, Observable, switchMap, throwError, of, s
 
 import { User } from '@js-camp/core/models/user';
 
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import { UserDto } from '@js-camp/core/dtos/user.dto';
 
@@ -15,10 +15,11 @@ import { FieldErrorMapper } from '@js-camp/core/mappers/fieldError.mapper';
 
 import { FieldError } from '@js-camp/core/models/fieldError';
 
+import { catchHttpErrorResponse } from '../utils/catch-http-error-response';
+
 import { LoginData, RegistrationData } from './interfaces/auth.interface';
 import { AuthService } from './auth.service';
 import { TokenStorageService } from './token-storage.service';
-import { catchHttpErrorResponse } from '../utils/catch-http-error-response';
 
 /** Stateful service for storing/managing information about the current user. */
 @Injectable({
