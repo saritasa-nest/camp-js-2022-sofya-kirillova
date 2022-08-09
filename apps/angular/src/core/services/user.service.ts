@@ -18,6 +18,7 @@ import { FieldError } from '@js-camp/core/models/fieldError';
 import { LoginData, RegistrationData } from './interfaces/auth.interface';
 import { AuthService } from './auth.service';
 import { TokenStorageService } from './token-storage.service';
+import { catchHttpErrorResponse } from '../utils/catch-http-error-response';
 
 /** Stateful service for storing/managing information about the current user. */
 @Injectable({
@@ -53,12 +54,7 @@ export class UserService {
       switchMap(token => this.tokenStorage.saveToken(token)),
       switchMap(() => this.redirectAfterAuthorization()),
       map(() => null),
-      catchError((error: unknown) => {
-        if (error instanceof HttpErrorResponse) {
-          return of(FieldErrorMapper.fromDto(error.error));
-        }
-        throw error;
-      }),
+      catchHttpErrorResponse(error => of(FieldErrorMapper.fromDto(error.error))),
     );
   }
 
@@ -71,12 +67,7 @@ export class UserService {
       switchMap(token => this.tokenStorage.saveToken(token)),
       switchMap(() => this.redirectAfterAuthorization()),
       map(() => null),
-      catchError((error: unknown) => {
-        if (error instanceof HttpErrorResponse) {
-          return of(FieldErrorMapper.fromDto(error.error));
-        }
-        throw error;
-      }),
+      catchHttpErrorResponse(error => of(FieldErrorMapper.fromDto(error.error))),
     );
   }
 

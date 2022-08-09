@@ -2,9 +2,13 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component } from '@angular/core';
 import { Anime, AnimeType } from '@js-camp/core/models/anime';
 import { Observable, map, switchMap, BehaviorSubject, tap, debounceTime } from 'rxjs';
+
 import { Sort, SortDirection } from '@angular/material/sort';
+
 import { PageEvent } from '@angular/material/paginator';
+
 import { Direction, Order } from '@js-camp/core/models/animeSort';
+
 import { MatSelectChange } from '@angular/material/select';
 
 import { AnimeQueryParams } from './../../../core/services/interfaces/AnimeQueryOptions';
@@ -146,7 +150,7 @@ export class AnimeComponent {
         direction: param[NameAnimeParams.SortingDirection] === 'desc' ? Direction.Descending : Direction.Ascending,
       },
       search: param[NameAnimeParams.Search] ?? '',
-      types: [param[NameAnimeParams.Types]] ?? '',
+      types: [param[NameAnimeParams.Types]],
     };
     return this.animeService.fetchAnime(animeQueryParams).pipe(
       map(res => {

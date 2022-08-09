@@ -28,7 +28,7 @@ export class AuthService {
   ) {
     this.registerUrl = 'auth/register/';
     this.loginUrl = 'auth/login/';
-    this.refreshTokenUrl = 'auth/token/refresh//';
+    this.refreshTokenUrl = 'auth/token/refresh/';
   }
 
   /**
