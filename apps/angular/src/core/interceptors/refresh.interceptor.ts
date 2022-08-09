@@ -1,25 +1,27 @@
 import {
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { first, map, switchMap } from 'rxjs/operators';
+import { Observable, catchError, throwError } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AppConfigService } from '../services/app-config.service';
-import { AuthService } from '../services/auth.service';
-import { TokenStorageService } from '../services/token-storage.service';
+import { UserService } from '../services/user.service';
 
 /** Interceptor to add access token to requests using Authorization HTTP header. */
 @Injectable()
 export class RefreshInterceptor implements HttpInterceptor {
+
+  private refreshTokenRequest$: Observable<void> | null = null;
+
   public constructor(
     private readonly appConfigService: AppConfigService,
-    private readonly userSecretStorage: TokenStorageService,
-    private readonly authService: AuthService,
-  ) {}
+    private readonly userService: UserService,
+  ) { }
 
   /**
    * Appends bearer token.
@@ -29,25 +31,20 @@ export class RefreshInterceptor implements HttpInterceptor {
     req: HttpRequest<unknown>,
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
-    if (this.shouldInterceptToken(req.url)) {
-      const userSecret$ = this.userSecretStorage.getToken().pipe(first());
+    return next.handle(req).pipe(
+      catchError((error: unknown) => {
+        if (error instanceof HttpErrorResponse && (error.status !== 401 || this.shouldInterceptToken(req.url))) {
+          console.log('true')
+          return throwError(() => error);
+        }
 
-      return userSecret$.pipe(
-        map(userSecret =>
-          userSecret ?
-            req.clone({
-                headers: this.authService.appendAuthorizationHeader(
-                  req.headers,
-                  userSecret,
-                ),
-            }) :
-            req),
-        switchMap(newReq => next.handle(newReq)),
-      );
-    }
+        this.refreshTokenRequest$ ??= this.userService.refreshSecret();
 
-    // Do nothing.
-    return next.handle(req);
+        return this.refreshTokenRequest$.pipe(
+          switchMap(() => next.handle(req)),
+        );
+      }),
+    );
   }
 
   /**
@@ -55,6 +52,7 @@ export class RefreshInterceptor implements HttpInterceptor {
    * @param url - Request url.
    */
   private shouldInterceptToken(url: string): boolean {
-    return url.startsWith(this.appConfigService.apiUrl);
+    console.log(url.startsWith(new URL('auth', this.appConfigService.apiUrl).toString()));
+    return !url.startsWith(new URL('auth', this.appConfigService.apiUrl).toString());
   }
 }

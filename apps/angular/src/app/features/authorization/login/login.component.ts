@@ -37,17 +37,6 @@ export class LoginComponent {
     this.userService.login({
       email: registrationData.email,
       password: registrationData.password,
-    })
-      .pipe(
-        tap(errorMessage => {
-          // console.log(errorMessage);
-          if (errorMessage !== null) {
-            this.router.navigate(['/']);
-          } else {
-            console.log('error');
-          }
-        }),
-      )
-      .subscribe();
+    }).subscribe();
   }
 }

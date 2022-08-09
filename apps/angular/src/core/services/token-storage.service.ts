@@ -48,6 +48,7 @@ export class TokenStorageService {
 
   /** Removes current Token. */
   public removeToken(): Observable<void> {
+    console.log(65575)
     return defer(() =>
       this.storageService.remove(TOKEN_STORAGE_KEY)).pipe(tap(() => this.currentTokenValue$.next(null)));
   }

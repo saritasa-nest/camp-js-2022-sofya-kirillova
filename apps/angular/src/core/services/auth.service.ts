@@ -56,11 +56,10 @@ export class AuthService {
       TokenMapper.toDto(secret),
     )
       .pipe(
-        map(refreshedSecret =>
-          TokenMapper.fromDto({
-            ...secret,
-            ...refreshedSecret,
-          })),
+        map(refreshedSecret => TokenMapper.fromDto({
+          ...secret,
+          ...refreshedSecret,
+        })),
       );
   }
 

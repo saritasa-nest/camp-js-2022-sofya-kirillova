@@ -56,7 +56,7 @@ export class UserService {
         if (error instanceof HttpErrorResponse) {
           return of(FieldErrorMapper.fromDto(error.error));
         }
-          throw error;
+        throw error;
       }),
     );
   }
@@ -74,43 +74,33 @@ export class UserService {
         if (error instanceof HttpErrorResponse) {
           return of(FieldErrorMapper.fromDto(error.error));
         }
-          throw error;
+        throw error;
       }),
-    );
-  }
-
-  /**
-   * Verify account registration.
-   * @param verificationToken Account verification token.
-   */
-  public verifyAccount(verificationToken: string): Observable<void> {
-    return this.authService.verifyAccount(verificationToken).pipe(
-      switchMap(secret => this.tokenStorage.saveToken(secret)),
-      switchMapTo(this.currentUser$),
-      filterNull(),
-      first(),
-      mapTo(void 0),
     );
   }
 
   /** Update user secret, supposed to be called when user data is outdated. */
   public refreshSecret(): Observable<void> {
+    console.log(7678);
     return this.tokenStorage.getToken().pipe(
-      first(),
       switchMap(secret =>
         secret != null ?
           this.authService.refreshToken(secret) :
           throwError(() => new Error('Unauthorized'))),
 
       // In case token is invalid clear the storage and redirect to login page
-      catchError((error: unknown) =>
+      catchError(() =>
         this.tokenStorage
           .removeToken()
           .pipe(
+            tap(() => {
+              console.log('remove');
+            }),
             switchMapTo(this.navigateToAuthPage()),
-            switchMapTo(throwError(() => error)),
           )),
-      switchMap(newSecret => this.tokenStorage.saveToken(newSecret)),
+      switchMap(newToken => newToken ?
+        this.tokenStorage.saveToken(newToken) :
+        of(null)),
       mapTo(void 0),
     );
   }
@@ -126,13 +116,11 @@ export class UserService {
       .get<UserDto>('/users/profile/')
       .pipe(
         map(user => UserMapper.fromDto(user)),
-
-        // catchError((error)=> {console.log(3564); return of(null)})
       );
   }
 
   private async navigateToAuthPage(): Promise<void> {
-    await this.router.navigate(['/login']);
+    await this.router.navigate(['/authorization/login']);
   }
 
   private async redirectAfterAuthorization(): Promise<void> {
