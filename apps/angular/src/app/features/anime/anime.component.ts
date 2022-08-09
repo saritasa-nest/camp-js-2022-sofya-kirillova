@@ -27,7 +27,7 @@ enum NameAnimeParams {
 
 type ParamToUrl = Partial<Record<NameAnimeParams, string | null | number>>;
 
-const firstPage = 0;
+const FIRST_PAGE = 0;
 
 const FETCH_DELAY_IN_MILLISECONDS = 500;
 
@@ -52,7 +52,7 @@ export class AnimeComponent {
   /** Default anim params. */
   public readonly defaultAnimeParams = {
     pagination: {
-      pageIndex: Number(this.route.snapshot.queryParamMap.get(NameAnimeParams.PageIndex)) ?? firstPage,
+      pageIndex: Number(this.route.snapshot.queryParamMap.get(NameAnimeParams.PageIndex)) ?? FIRST_PAGE,
       pageSize: Number(this.route.snapshot.queryParamMap.get(NameAnimeParams.PageSize)) ?? 25,
     },
     sort: {
@@ -99,7 +99,7 @@ export class AnimeComponent {
    * @param event Search event.
    */
   public handleSearchChange(event: Event): void {
-    this.pageIndex = firstPage;
+    this.pageIndex = FIRST_PAGE;
     const filterValue = (event.target as HTMLInputElement).value;
     this.addParametersToUrl({ search: filterValue });
   }
@@ -118,7 +118,7 @@ export class AnimeComponent {
    * @param sort Sort event.
    */
   public handleSortChange(sort: Sort): void {
-    this.pageIndex = firstPage;
+    this.pageIndex = FIRST_PAGE;
     this.addParametersToUrl({ ordering: sort.active, direction: sort.direction });
   }
 
@@ -127,7 +127,7 @@ export class AnimeComponent {
    * @param types Filter by types event.
    */
   public handleFilterChange(types: MatSelectChange): void {
-    this.pageIndex = firstPage;
+    this.pageIndex = FIRST_PAGE;
     const type = types.value as AnimeType[];
     this.addParametersToUrl({ types: type.join(',') });
   }
