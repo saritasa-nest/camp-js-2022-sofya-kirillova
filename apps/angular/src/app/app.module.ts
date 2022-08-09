@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { httpInterceptorProviders } from '../core/interceptors/httpInterceptorProviders';
+import { DatePipe } from '@angular/common';
+
+import { httpInterceptorProviders } from '../core/interceptors/http-interceptor.provider';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +21,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     MatToolbarModule,
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

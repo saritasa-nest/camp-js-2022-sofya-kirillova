@@ -13,7 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { UnauthorizedGuard } from '../../../core/guards/unauthorized.guard';
 
-import { FormatDatePipe } from './../../../shared/pipes/formatDate';
+import { FormatDatePipe } from '../../../shared/pipes/format-date.pipe';
 
 import { AnimeComponent } from './anime.component';
 import { AnimeDetailedComponent } from './anime-detailed/anime-detailed.component';

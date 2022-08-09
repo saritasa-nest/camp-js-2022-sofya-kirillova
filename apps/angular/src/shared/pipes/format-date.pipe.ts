@@ -1,22 +1,20 @@
+import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
 /** Format date pipe. */
 @Pipe({ name: 'formatDate' })
 export class FormatDatePipe implements PipeTransform {
+  public constructor(private datePipe: DatePipe) {}
 
   /**
    * The function formats date to 'dd.mm.yyyy' or 'no date'.
-   * @param date Date.
+   * @param value Date.
    */
-  public transform(date: Date | null): string {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    };
+  public transform(value: Date | null): string | null {
+    const date = this.datePipe.transform(value, 'dd.MM.yyyy');
     if (date === null) {
       return 'No date';
     }
-    return date.toLocaleString('ru', options);
+    return date;
   }
 }

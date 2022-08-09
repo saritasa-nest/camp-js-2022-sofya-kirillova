@@ -1,7 +1,6 @@
-.mat-toolbar-single-row {
+.header__toolbar {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 25px;
   padding: 0 50px;
 }
 

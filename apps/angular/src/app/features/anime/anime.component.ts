@@ -1,39 +1,38 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Anime, AnimeType } from '@js-camp/core/models/anime';
-import { Observable, map, switchMap, timer } from 'rxjs';
-
-import { Sort } from '@angular/material/sort';
-
+import { Observable, map, switchMap, BehaviorSubject, tap, debounceTime } from 'rxjs';
+import { Sort, SortDirection } from '@angular/material/sort';
 import { PageEvent } from '@angular/material/paginator';
-
 import { Direction, Order } from '@js-camp/core/models/animeSort';
-
 import { MatSelectChange } from '@angular/material/select';
 
-import { AnimeQueryParams } from '../../../core/services/interfaces/AnimeQueryOptions';
+import { AnimeQueryParams } from './../../../core/services/interfaces/AnimeQueryOptions';
 
 import { AnimeService } from './../../../core/services/anime.service';
 
-interface ParamToUrl {
-  [key: string]: string | null | number;
+/** Name of Anime Parameters. */
+enum NameAnimeParams {
+  Ordering = 'ordering',
+  SortingDirection = 'direction',
+  PageIndex = 'pageIndex',
+  PageSize = 'pageSize',
+  Search = 'search',
+  Types = 'types',
 }
 
-const defaultAnimeParams = {
-  pageIndex: 0,
-  pageSize: 25,
-  ordering: 'titleEnglish',
-  direction: Direction.Ascending,
-};
+type ParamToUrl = Partial<Record<NameAnimeParams, string | null | number>>;
 
-/** Anime component. */
+const FIRST_PAGE = 0;
+
+const FETCH_DELAY_IN_MILLISECONDS = 500;
+
+/** Anime Component. */
 @Component({
   selector: 'camp-anime',
   templateUrl: './anime.component.html',
   styleUrls: ['./anime.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class AnimeComponent {
 
   /** Anime types displayed. */
@@ -46,77 +45,87 @@ export class AnimeComponent {
     AnimeType.Music,
   ];
 
+  /** Default anim params. */
+  public readonly defaultAnimeParams = {
+    pagination: {
+      pageIndex: Number(this.route.snapshot.queryParamMap.get(NameAnimeParams.PageIndex)) ?? FIRST_PAGE,
+      pageSize: Number(this.route.snapshot.queryParamMap.get(NameAnimeParams.PageSize)) ?? 25,
+    },
+    sort: {
+      ordering: this.route.snapshot.queryParamMap.get(NameAnimeParams.Ordering) ?? 'titleEnglish',
+      direction: this.route.snapshot.queryParamMap.get(NameAnimeParams.SortingDirection) as SortDirection ?? Direction.Ascending,
+    },
+    search: this.route.snapshot.queryParamMap.get(NameAnimeParams.Search) ?? '',
+    types: this.route.snapshot.queryParamMap.get(NameAnimeParams.Types)?.split(',') as AnimeType[] ?? [] as AnimeType[],
+  } as const;
+
   /** Displayed columns. */
   public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'] as const;
 
-  /** Anime sort displayed.. */
+  /** Anime sort displayed. */
   public readonly sortedData: readonly Order[] = ['titleEnglish', 'status', 'airedStart'];
 
-  /** Data for a table with anime.  */
+  /** Data for a table with anime. */
   public readonly anime$: Observable<readonly Anime[]>;
 
-  /** Count of anime in the database.  */
+  /** Count of anime with specified parameters. */
   public animeCount = 0;
 
-  /** Current page.  */
-  public pageIndex = defaultAnimeParams.pageIndex;
+  /** Current page. */
+  public pageIndex = this.defaultAnimeParams.pagination.pageIndex;
+
+  /** Whether books are loading or not. */
+  public readonly isLoading$ = new BehaviorSubject<boolean>(false);
 
   public constructor(
-    private animeServer: AnimeService,
-    private router: Router,
-    route: ActivatedRoute,
+    private readonly animeService: AnimeService,
+    private readonly router: Router,
+    private readonly route: ActivatedRoute,
   ) {
-    this.router.navigate([], {
-      queryParams: { ...defaultAnimeParams },
-    });
     this.anime$ = route.queryParams.pipe(
+      debounceTime(FETCH_DELAY_IN_MILLISECONDS),
+      tap(() => this.isLoading$.next(true)),
       switchMap(res => this.getAnime(res)),
+      tap(() => this.isLoading$.next(false)),
     );
   }
 
   /**
-   * Apply search to anime table.
+   * Handle search to anime table.
    * @param event Search event.
    */
-  public applySearch(event: Event): void {
-    this.pageIndex = 0;
+  public handleSearchChange(event: Event): void {
+    this.pageIndex = FIRST_PAGE;
     const filterValue = (event.target as HTMLInputElement).value;
     this.addParametersToUrl({ search: filterValue });
   }
 
   /**
-   * Apply pagination to anime table.
+   * Handle pagination to anime table.
    * @param page Paginator event.
    */
-  public applyPagination(page: PageEvent): void {
+  public handlePaginationChange(page: PageEvent): void {
     this.pageIndex = page.pageIndex;
     this.addParametersToUrl({ pageIndex: page.pageIndex, pageSize: page.pageSize });
   }
 
   /**
-   * Apply sort to anime table.
+   * Handle sort to anime table.
    * @param sort Sort event.
    */
-  public applySort(sort: Sort): void {
-    this.pageIndex = 0;
-    switch (sort.direction) {
-      case 'desc':
-        this.addParametersToUrl({ ordering: sort.active, direction: Direction.Descending });
-        break;
-      case 'asc':
-      default:
-        this.addParametersToUrl({ ordering: sort.active, direction: Direction.Ascending });
-        break;
-    }
+  public handleSortChange(sort: Sort): void {
+    this.pageIndex = FIRST_PAGE;
+    this.addParametersToUrl({ ordering: sort.active, direction: sort.direction });
   }
 
   /**
-   * Apply filtering by types to the anime table.
+   * Handle filtering by types to the anime table.
    * @param types Filter by types event.
    */
-  public applyType(types: MatSelectChange): void {
-    this.pageIndex = 0;
-    this.addParametersToUrl({ types: types.value });
+  public handleFilterChange(types: MatSelectChange): void {
+    this.pageIndex = FIRST_PAGE;
+    const type = types.value as AnimeType[];
+    this.addParametersToUrl({ types: type.join(',') });
   }
 
   private addParametersToUrl(params: ParamToUrl): void {
@@ -129,24 +138,21 @@ export class AnimeComponent {
   }
 
   private getAnime(param: Params): Observable<readonly Anime[]> {
-    const fetchDelayInMilliseconds = 500;
     const animeQueryParams: AnimeQueryParams = {
-      limit: param['pageSize'],
-      page: this.pageIndex,
+      limit: param[NameAnimeParams.PageSize],
+      page: param[NameAnimeParams.PageIndex],
       sort: {
-        order: param['ordering'],
-        direction: param['direction'],
+        order: param[NameAnimeParams.Ordering],
+        direction: param[NameAnimeParams.SortingDirection] === 'desc' ? Direction.Descending : Direction.Ascending,
       },
-      search: param['search'] ?? '',
-      types: param['types'] ?? '',
+      search: param[NameAnimeParams.Search] ?? '',
+      types: [param[NameAnimeParams.Types]] ?? '',
     };
-
-    return timer(fetchDelayInMilliseconds).pipe(
-      switchMap(() => this.animeServer.fetchAnime(animeQueryParams)),
+    return this.animeService.fetchAnime(animeQueryParams).pipe(
       map(res => {
-          this.animeCount = res.count;
-          return res.results;
-        }),
+        this.animeCount = res.count;
+        return res.results;
+      }),
     );
   }
 
