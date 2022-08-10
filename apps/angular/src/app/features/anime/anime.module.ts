@@ -9,14 +9,26 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 
+import { UnauthorizedGuard } from './../../../core/guards/unauthorized.guard';
+
 import { FormatDatePipe } from './../../../shared/pipes/formatDate';
 import { AnimeComponent } from './anime.component';
+import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 
-const routes: Routes = [{ path: '', component: AnimeComponent }];
+export const ANIME_ID_ROUTE_PARAM = 'animeId';
+
+const routes: Routes = [
+  { path: '', component: AnimeComponent },
+  {
+    path: `:${ANIME_ID_ROUTE_PARAM}`,
+    canActivate: [UnauthorizedGuard],
+    component: AnimeDetailsComponent,
+  },
+];
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeComponent, FormatDatePipe],
+  declarations: [AnimeComponent, FormatDatePipe, AnimeDetailsComponent],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,

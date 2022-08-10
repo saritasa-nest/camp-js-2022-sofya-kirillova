@@ -49,11 +49,14 @@
     <ng-container matColumnDef="image">
       <th class="anime__header-image" mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let anime">
-        <img
-          class="anime__image"
-          [src]="anime.image"
-          alt="image of anime {{ anime.titleEnglish || anime.titleJapanese }}"
-        />
+        <a [routerLink]="anime.id.toString()"
+          ><img
+            class="anime__image"
+            [src]="anime.image"
+            alt="image of anime {{
+              anime.titleEnglish || anime.titleJapanese
+            }}"
+        /></a>
       </td>
     </ng-container>
 
@@ -67,8 +70,10 @@
         Name
       </th>
       <td mat-cell *matCellDef="let anime">
-        <p>{{ anime.titleEnglish }}</p>
-        <p class="anime__title-japanese">{{ anime.titleJapanese }}</p>
+        <a [routerLink]="anime.id.toString()"
+          ><p>{{ anime.titleEnglish }}</p>
+          <p class="anime__title-japanese">{{ anime.titleJapanese }}</p></a
+        >
       </td>
     </ng-container>
 

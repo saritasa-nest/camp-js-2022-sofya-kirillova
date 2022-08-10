@@ -21,13 +21,13 @@ export namespace AnimeCommonMapper {
     });
   }
 
-  const fromDtoMapStatus: Readonly<Record<AnimeStatusDto, AnimeStatus>> = {
+  export const fromDtoMapStatus: Readonly<Record<AnimeStatusDto, AnimeStatus>> = {
     [AnimeStatusDto.Airing]: 'On air',
     [AnimeStatusDto.Finished]: 'Finished',
     [AnimeStatusDto.NotYetAired]: 'Not yet aired',
   };
 
-  const fromDtoMapType: Readonly<Record<AnimeTypeDto, AnimeType>> = {
+  export const fromDtoMapType: Readonly<Record<AnimeTypeDto, AnimeType>> = {
     [AnimeTypeDto.Tv]: AnimeType.Tv,
     [AnimeTypeDto.Ova]: AnimeType.Ova,
     [AnimeTypeDto.Movie]: AnimeType.Movie,
