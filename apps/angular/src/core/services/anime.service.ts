@@ -51,10 +51,8 @@ export class AnimeService {
    * @param id Anime id.
    */
   public fetchAnimeById(id: number): Observable<AnimeFull> {
-    const url = new HttpParams()
-      .set('id', id);
 
-    return this.http.get<AnimeFullDto>(`anime/anime/`, { params: url })
+    return this.http.get<AnimeFullDto>(`anime/anime/${id}/`)
       .pipe(
         map(response => AnimeFullMapper.fromDto(response)),
       );

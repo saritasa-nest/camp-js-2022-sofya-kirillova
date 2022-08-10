@@ -1,7 +1,42 @@
-<!-- <div *ngIf="anime$ | async as anime; else loading">
-  <img [src]="anime.image">
+<div class="loading-layout">
+  <ng-template class="loading-layout" #loading>
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </ng-template>
 </div>
-
-<ng-template #loading>
-  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-</ng-template> -->
+<div class="anime" *ngIf="anime$ | async as anime; else loading">
+  <img
+    class="anime__image"
+    [src]="anime.image"
+    alt="image of anime {{ anime.titleEnglish || anime.titleJapanese }}"
+  />
+  <div>
+    <div>
+      <p class="anime__title-english">{{ anime.titleEnglish }}</p>
+      <p class="anime__title-japanese">{{ anime.titleJapanese }}</p>
+    </div>
+    <div class="anime__detail">
+      <span class="anime__title-details">Aired</span>
+      <span>{{anime.airingStart | formatDate}} to {{anime.airingFinish | formatDate}}</span>
+    </div>
+    <div class="anime__detail">
+      <span class="anime__title-details">Type</span>
+      <span>{{anime.type}}</span>
+    </div>
+    <div class="anime__detail">
+      <span class="anime__title-details">Status</span>
+      <span>{{anime.status}}</span>
+    </div>
+    <div class="anime__detail">
+      <span class="anime__title-details">Studios</span>
+      <span>{{joinSeparatedBySpace(anime.studiosData)}}</span>
+    </div>
+    <div class="anime__detail">
+      <span class="anime__title-details">Genres</span>
+      <span>{{joinSeparatedBySpace(anime.genresData)}}</span>
+    </div>
+    <div class="anime__detail">
+      <span class="anime__title-details">Synopsis</span>
+      <span>{{anime.synopsis}}</span>
+    </div>
+  </div>
+</div>

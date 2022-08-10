@@ -1,0 +1,5 @@
+.loading-layout {
+  margin: auto;
+  height: 10px;
+  border-top: 3px solid var(--primary-contrast-color);
+}

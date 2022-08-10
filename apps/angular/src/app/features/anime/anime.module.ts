@@ -8,10 +8,12 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
+import { MatGridListModule } from '@angular/material/grid-list';
+
+import { FormatDatePipe } from './../../../shared/pipes/format-date.pipe';
 
 import { UnauthorizedGuard } from './../../../core/guards/unauthorized.guard';
 
-import { FormatDatePipe } from './../../../shared/pipes/formatDate';
 import { AnimeComponent } from './anime.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
 
@@ -39,6 +41,7 @@ const routes: Routes = [
     MatSelectModule,
     ReactiveFormsModule,
     MatProgressBarModule,
+    MatGridListModule,
   ],
 })
 export class AnimeModule {}

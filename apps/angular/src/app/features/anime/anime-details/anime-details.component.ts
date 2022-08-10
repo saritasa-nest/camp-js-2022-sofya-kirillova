@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { AnimeFull } from '@js-camp/core/models/animeFull';
 import { Observable, map, switchMap } from 'rxjs';
 
+import { Studio } from '@js-camp/core/models/studio';
+import { Genre } from '@js-camp/core/models/genre';
+
 import { ANIME_ID_ROUTE_PARAM } from '../anime.module';
 
 import { AnimeService } from './../../../../core/services/anime.service';
@@ -15,6 +18,9 @@ import { AnimeService } from './../../../../core/services/anime.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnimeDetailsComponent {
+
+  /** Separator. */
+  public separator = ' ';
 
   /** Anime information. */
   public readonly anime$: Observable<AnimeFull>;
@@ -31,4 +37,11 @@ export class AnimeDetailsComponent {
     );
   }
 
+  /**
+   * Join array studios or genres separated by spaces.
+   * @param array Array studios or genres.
+   */
+  public joinSeparatedBySpace(array: Studio[] | Genre[]): string {
+    return array.map(element => element.name).join(this.separator);
+  }
 }
