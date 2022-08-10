@@ -6,10 +6,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { map, Observable } from 'rxjs';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
-import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
-import { Anime } from '@js-camp/core/models/anime';
+import { AnimeCommonDto } from '@js-camp/core/dtos/animeCommon.dto';
+import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 
-import { AnimeMapper } from '@js-camp/core/mappers/anime.mapper';
+import { AnimeCommonMapper } from '@js-camp/core/mappers/animeCommon.mapper';
 
 import { AnimeQueryParams } from './interfaces/AnimeQueryOptions';
 
@@ -26,10 +26,10 @@ export class AnimeService {
    * Get Anime.
    * @param params Anime Parameters.
    */
-  public fetchAnime(params: AnimeQueryParams): Observable<Pagination<Anime>> {
+  public fetchAnime(params: AnimeQueryParams): Observable<Pagination<AnimeCommon>> {
     const additionalSortingParameter = 'id';
     const types = params.types.length > 0 ?
-      params.types.map(type => AnimeMapper.toDtoMapType[type]).join(',') :
+      params.types.map(type => AnimeCommonMapper.toDtoMapType[type]).join(',') :
       '';
 
     const url = new HttpParams()
@@ -39,7 +39,7 @@ export class AnimeService {
       .set('search', params.search)
       .set('type__in', types);
 
-    return this.http.get<PaginationDto<AnimeDto>>(`anime/anime/`, { params: url })
+    return this.http.get<PaginationDto<AnimeCommonDto>>(`anime/anime/`, { params: url })
       .pipe(
         map(response => AnimeListMapper.fromDto(response)),
       );

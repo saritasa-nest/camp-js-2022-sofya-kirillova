@@ -1,6 +1,6 @@
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component } from '@angular/core';
-import { Anime, AnimeType } from '@js-camp/core/models/anime';
+import { AnimeCommon, AnimeType } from '@js-camp/core/models/animeCommon';
 import { Observable, map, switchMap, BehaviorSubject, tap, debounceTime } from 'rxjs';
 
 import { Sort, SortDirection } from '@angular/material/sort';
@@ -70,7 +70,7 @@ export class AnimeComponent {
   public readonly sortedData: readonly Order[] = ['titleEnglish', 'status', 'airedStart'];
 
   /** Data for a table with anime. */
-  public readonly anime$: Observable<readonly Anime[]>;
+  public readonly anime$: Observable<readonly AnimeCommon[]>;
 
   /** Count of anime with specified parameters. */
   public animeCount = 0;
@@ -141,7 +141,7 @@ export class AnimeComponent {
     });
   }
 
-  private getAnime(param: Params): Observable<readonly Anime[]> {
+  private getAnime(param: Params): Observable<readonly AnimeCommon[]> {
     const animeQueryParams: AnimeQueryParams = {
       limit: param[NameAnimeParams.PageSize],
       page: param[NameAnimeParams.PageIndex],
@@ -165,7 +165,7 @@ export class AnimeComponent {
    * @param _index Index.
    * @param anime Anime to track.
    */
-  public trackAnime(_index: number, anime: Anime): Anime['id'] {
+  public trackAnime(_index: number, anime: AnimeCommon): AnimeCommon['id'] {
     return anime.id;
   }
 }

@@ -1,9 +1,9 @@
-import { AnimeDto } from '../dtos/anime.dto';
+import { AnimeCommonDto } from '../dtos/animeCommon.dto';
 import { PaginationDto } from '../dtos/pagination.dto';
-import { Anime } from '../models/anime';
+import { AnimeCommon } from '../models/animeCommon';
 import { Pagination } from '../models/pagination';
 
-import { AnimeMapper } from './anime.mapper';
+import { AnimeCommonMapper } from './animeCommon.mapper';
 
 export namespace AnimeListMapper {
 
@@ -11,9 +11,9 @@ export namespace AnimeListMapper {
    * Maps dto to model.
    * @param dto Pagination dto.
    */
-  export function fromDto(dto: PaginationDto<AnimeDto>): Pagination<Anime> {
-    const results = dto.results.map(anime => AnimeMapper.fromDto(anime));
-    return new Pagination<Anime>({
+  export function fromDto(dto: PaginationDto<AnimeCommonDto>): Pagination<AnimeCommon> {
+    const results = dto.results.map(anime => AnimeCommonMapper.fromDto(anime));
+    return new Pagination<AnimeCommon>({
       count: dto.count,
       results,
     });

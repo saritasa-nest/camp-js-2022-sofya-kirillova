@@ -1,15 +1,15 @@
-import { AnimeDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/anime.dto';
-import { Anime, AnimeStatus, AnimeType } from '../models/anime';
+import { AnimeCommonDto, AnimeStatusDto, AnimeTypeDto } from '../dtos/animeCommon.dto';
+import { AnimeCommon, AnimeStatus, AnimeType } from '../models/animeCommon';
 
-export namespace AnimeMapper {
+export namespace AnimeCommonMapper {
 
   /**
    * Maps dto to model.
    * @param dto Anime dto.
    */
-  export function fromDto(dto: AnimeDto): Anime {
+  export function fromDto(dto: AnimeCommonDto): AnimeCommon {
 
-    return new Anime({
+    return new AnimeCommon({
       id: dto.id,
       image: dto.image,
       titleEnglish: dto.title_eng,

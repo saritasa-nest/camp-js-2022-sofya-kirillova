@@ -1,4 +1,4 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { AnimeCommon } from '@js-camp/core/models/anime';
 import { assertNonNull } from '@js-camp/core/utils/assertNonNull';
 import { formatDate } from '@js-camp/core/utils/formatDate';
 
@@ -6,7 +6,7 @@ import { formatDate } from '@js-camp/core/utils/formatDate';
  * Outputs a table with anime.
  * @param animeData Anime data.
  */
-export function renderAnimeTable(animeData: readonly Anime[]): void {
+export function renderAnimeTable(animeData: readonly AnimeCommon[]): void {
   const animeContainer = document.querySelector('.anime__tbody');
   assertNonNull(animeContainer);
   const allAnimeContent = animeData.reduce((body, current) => {

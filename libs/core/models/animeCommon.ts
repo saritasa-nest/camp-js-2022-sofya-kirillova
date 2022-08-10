@@ -15,7 +15,7 @@ export enum AnimeType {
 }
 
 /** Anime. */
-export class Anime extends Immerable {
+export class AnimeCommon extends Immerable {
   /** Anime ID. */
   public readonly id: number;
 
@@ -53,4 +53,4 @@ export class Anime extends Immerable {
   }
 }
 
-type InitArgsAnime = OmitImmerable<Anime>;
+type InitArgsAnime = OmitImmerable<AnimeCommon>;

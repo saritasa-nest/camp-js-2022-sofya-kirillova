@@ -1,4 +1,4 @@
-import { AnimeType } from '@js-camp/core/models/anime';
+import { AnimeType } from '@js-camp/core/models/animeCommon';
 import { AnimeSort } from '@js-camp/core/models/animeSort';
 
 /** Parameters for the anime query. */
