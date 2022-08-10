@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 /** App-specific implementation of app config. */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AppConfigService {
 
   /** API base URL. */

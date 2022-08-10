@@ -1,5 +1,7 @@
 import { AnimeSortDto } from '../dtos/animeSort';
-import { AnimeSort, Order } from '../models/animeSort';
+import { AnimeSort, Direction, Order } from '../models/animeSort';
+
+import { DirectionDto } from './../dtos/animeSort';
 
 export namespace AnimeSortMapper {
 
@@ -8,13 +10,18 @@ export namespace AnimeSortMapper {
    * @param item Anime Sort class.
    */
   export function toDto(item: AnimeSort): AnimeSortDto {
-    const sort = item.direction + toDtoMap[item.order] as AnimeSortDto;
+    const sort = toDtoMapDirection[item.direction] + toDtoMapOrder[item.order] as AnimeSortDto;
     return sort;
   }
 
-  const toDtoMap: Readonly<Record<Order, AnimeSortDto>> = {
+  const toDtoMapOrder: Readonly<Record<Order, AnimeSortDto>> = {
     titleEnglish: 'title_eng',
     airedStart: 'aired__startswith',
     status: 'status',
+  };
+
+  const toDtoMapDirection: Readonly<Record<Direction, DirectionDto>> = {
+    [Direction.Ascending]: DirectionDto.Ascending,
+    [Direction.Descending]: DirectionDto.Descending,
   };
 }
