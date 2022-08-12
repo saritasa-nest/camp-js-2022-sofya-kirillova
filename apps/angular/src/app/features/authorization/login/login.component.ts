@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { tap } from 'rxjs';
 
-import { UserService } from '../../../../core/services/user.service';
+import { UserService } from '../../../../core/services/user/user.service';
 
 /** Login component. */
 @Component({

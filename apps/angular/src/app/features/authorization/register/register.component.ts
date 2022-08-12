@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } fro
 
 import { tap } from 'rxjs';
 
-import { UserService } from '../../../../core/services/user.service';
+import { UserService } from '../../../../core/services/user/user.service';
 
 /** Register component. */
 @Component({

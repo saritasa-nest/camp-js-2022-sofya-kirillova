@@ -1,6 +1,6 @@
 import { AnimeSortMapper } from '@js-camp/core/mappers/animeSort.mapper';
 import { Pagination } from '@js-camp/core/models/pagination';
-import { AnimeListMapper } from '@js-camp/core/mappers/animeLIst.mapper';
+import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
@@ -9,10 +9,10 @@ import { AnimeCommonDto } from '@js-camp/core/dtos/animeCommon.dto';
 import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { AnimeCommonMapper } from '@js-camp/core/mappers/animeCommon.mapper';
 import { AnimeFullMapper } from '@js-camp/core/mappers/animeFull.mapper';
-import { AnimeFull } from '@js-camp/core/models/animeFull';
-import { AnimeFullDto } from '@js-camp/core/dtos/animeFull.dto';
+import { AnimeCreate, AnimeFull } from '@js-camp/core/models/animeFull';
+import { AnimeCreateDto, AnimeFullDto } from '@js-camp/core/dtos/animeFull.dto';
 
-import { AnimeQueryParams } from './interfaces/AnimeQueryOptions';
+import { AnimeQueryParams } from '../interfaces/AnimeQueryOptions';
 
 /** Anime service. */
 @Injectable({
@@ -42,7 +42,7 @@ export class AnimeService {
 
     return this.http.get<PaginationDto<AnimeCommonDto>>(`anime/anime/`, { params: url })
       .pipe(
-        map(response => AnimeListMapper.fromDto(response)),
+        map(response => PaginationMapper.fromDto(response, AnimeCommonMapper.fromDto)),
       );
   }
 
@@ -56,5 +56,11 @@ export class AnimeService {
       .pipe(
         map(response => AnimeFullMapper.fromDto(response)),
       );
+  }
+
+  /** */
+  public createAnime(anime: AnimeCreate): Observable<unknown> {
+    const q = AnimeFullMapper.toDto(anime);
+    return this.http.post<AnimeCreateDto>(`anime/anime/`, { ...q });
   }
 }

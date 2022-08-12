@@ -8,7 +8,7 @@ import { Genre } from '@js-camp/core/models/genre';
 
 import { ANIME_ID_ROUTE_PARAM } from '../anime.module';
 
-import { AnimeService } from './../../../../core/services/anime.service';
+import { AnimeService } from '../../../../core/services/anime/anime.service';
 
 /** Page with information about anime. */
 @Component({

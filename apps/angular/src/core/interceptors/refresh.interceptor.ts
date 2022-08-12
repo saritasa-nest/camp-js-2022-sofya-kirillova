@@ -10,7 +10,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { AppConfigService } from '../services/app-config.service';
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/user/user.service';
 
 /** Interceptor handles requests with outdated tokens. */
 @Injectable()

@@ -9,6 +9,15 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule, Routes } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+
+// import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 import { FormatDatePipe } from './../../../shared/pipes/format-date.pipe';
 
@@ -16,21 +25,34 @@ import { UnauthorizedGuard } from './../../../core/guards/unauthorized.guard';
 
 import { AnimeComponent } from './anime.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
+import { EditAnimeComponent } from './edit-anime/edit-anime.component';
 
 export const ANIME_ID_ROUTE_PARAM = 'animeId';
 
 const routes: Routes = [
-  { path: '', component: AnimeComponent },
+  { path: '', component: EditAnimeComponent },
+
+  { path: 'ani', component: AnimeComponent },
   {
     path: `:${ANIME_ID_ROUTE_PARAM}`,
     canActivate: [UnauthorizedGuard],
     component: AnimeDetailsComponent,
   },
+  {
+    path: `:${ANIME_ID_ROUTE_PARAM}/edit`,
+    canActivate: [UnauthorizedGuard],
+    component: EditAnimeComponent,
+  },
 ];
 
 /** Anime module. */
 @NgModule({
-  declarations: [AnimeComponent, FormatDatePipe, AnimeDetailsComponent],
+  declarations: [
+    AnimeComponent,
+    FormatDatePipe,
+    AnimeDetailsComponent,
+    EditAnimeComponent,
+  ],
   imports: [
     RouterModule.forChild(routes),
     CommonModule,
@@ -42,6 +64,13 @@ const routes: Routes = [
     ReactiveFormsModule,
     MatProgressBarModule,
     MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
+    ScrollingModule,
+    MatChipsModule,
+    MatAutocompleteModule,
+    MatIconModule,
   ],
 })
 export class AnimeModule {}

@@ -1,6 +1,6 @@
 import { AnimeCommonDto } from '@js-camp/core/dtos/animeCommon.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
-import { AnimeListMapper } from '@js-camp/core/mappers/animeLIst.mapper';
+import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeSortMapper } from '@js-camp/core/mappers/animeSort.mapper';
 
 import { AnimeCommon } from '@js-camp/core/models/anime';
@@ -28,5 +28,5 @@ export async function getAnimeList(paginationConfig: PaginationConfig): Promise<
     `/anime/anime/?${url}`,
   );
   const { data } = response;
-  return AnimeListMapper.fromDto(data);
+  return PaginationMapper.fromDto(data);
 }

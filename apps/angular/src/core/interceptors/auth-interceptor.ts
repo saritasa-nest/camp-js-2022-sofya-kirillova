@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
 
 import { AppConfigService } from '../services/app-config.service';
-import { AuthService } from '../services/auth.service';
-import { TokenStorageService } from '../services/token-storage.service';
+import { AuthService } from '../services/user/auth.service';
+import { TokenStorageService } from '../services/user/token-storage.service';
 
 /** Interceptor to add access token to requests using Authorization HTTP header. */
 @Injectable()

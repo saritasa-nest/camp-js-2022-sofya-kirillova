@@ -15,11 +15,13 @@ import { FieldErrorMapper } from '@js-camp/core/mappers/fieldError.mapper';
 
 import { FieldError } from '@js-camp/core/models/fieldError';
 
-import { catchHttpErrorResponse } from '../utils/catch-http-error-response';
+import { catchHttpErrorResponse } from '../../utils/catch-http-error-response';
 
-import { LoginData, RegistrationData } from './interfaces/auth.interface';
-import { AuthService } from './auth.service';
+import { LoginData, RegistrationData } from '../interfaces/auth.interface';
+
 import { TokenStorageService } from './token-storage.service';
+
+import { AuthService } from './auth.service';
 
 /** Stateful service for storing/managing information about the current user. */
 @Injectable({

@@ -9,7 +9,7 @@ import { AppConfigService } from '../services/app-config.service';
 @Injectable()
 export class ApiKeyInterceptor implements HttpInterceptor {
 
-  public constructor(private readonly config: AppConfigService) {}
+  public constructor(private readonly config: AppConfigService) { }
 
   /** @inheritDoc */
   public intercept(req: HttpRequest<unknown>, next: HttpHandler):
@@ -26,14 +26,17 @@ export class ApiKeyInterceptor implements HttpInterceptor {
 @Injectable()
 export class UrlInterceptor implements HttpInterceptor {
 
-  public constructor(private readonly config: AppConfigService) {}
+  public constructor(private readonly config: AppConfigService) { }
 
   /** @inheritDoc */
   public intercept(req: HttpRequest<unknown>, next: HttpHandler):
     Observable<HttpEvent<unknown>> {
-    const newRequest = req.clone({
-      url: this.config.apiUrl + req.url,
-    });
-    return next.handle(newRequest);
+    if (!req.url.startsWith(this.config.apiUrl)) {
+      const newRequest = req.clone({
+        url: this.config.apiUrl + req.url,
+      });
+      return next.handle(newRequest);
+    }
+    return next.handle(req);
   }
 }

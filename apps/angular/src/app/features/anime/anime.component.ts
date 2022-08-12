@@ -11,9 +11,9 @@ import { Direction, Order } from '@js-camp/core/models/animeSort';
 
 import { MatSelectChange } from '@angular/material/select';
 
-import { AnimeQueryParams } from './../../../core/services/interfaces/AnimeQueryOptions';
+import { AnimeService } from '../../../core/services/anime/anime.service';
 
-import { AnimeService } from './../../../core/services/anime.service';
+import { AnimeQueryParams } from './../../../core/services/interfaces/AnimeQueryOptions';
 
 /** Name of Anime Parameters. */
 enum NameAnimeParams {

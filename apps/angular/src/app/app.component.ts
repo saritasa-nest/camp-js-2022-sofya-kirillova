@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
-import { UserService } from '../core/services/user.service';
+import { UserService } from '../core/services/user/user.service';
 
 /** App component. */
 @Component({

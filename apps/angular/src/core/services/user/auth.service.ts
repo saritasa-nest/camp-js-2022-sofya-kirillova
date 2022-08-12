@@ -7,7 +7,7 @@ import { Token } from '@js-camp/core/models/token';
 import { TokenDto } from '@js-camp/core/dtos/token.dto';
 import { TokenMapper } from '@js-camp/core/mappers/token.mapper';
 
-import { LoginData, RegistrationData } from './interfaces/auth.interface';
+import { LoginData, RegistrationData } from './../interfaces/auth.interface';
 
 const AUTH_PREFIX = 'Bearer';
 

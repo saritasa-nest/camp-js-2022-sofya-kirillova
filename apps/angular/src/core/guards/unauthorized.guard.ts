@@ -3,7 +3,7 @@ import { CanActivate, CanLoad, Router, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
 
-import { UserService } from '../services/user.service';
+import { UserService } from '../services/user/user.service';
 
 /** Guard prevents user from accessing if a user is not logged in. */
 @Injectable({

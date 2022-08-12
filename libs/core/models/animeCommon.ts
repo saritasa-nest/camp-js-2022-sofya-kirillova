@@ -1,10 +1,13 @@
 import { Immerable, OmitImmerable } from './immerable';
 
 /** Available anime statuses. */
-export type AnimeStatus = 'On air' | 'Finished' | 'Not yet aired';
+export enum AnimeStatus {
+  Airing = 'On air',
+  Finished = 'Finished',
+  NotYetAired = 'Not yet aired',
+}
 
 /** Available anime types. */
-// export type AnimeType = 'TV' | 'OVA' | 'Movie' | 'Special' | 'ONA' | 'Music';
 export enum AnimeType {
   Tv = 'TV',
   Ova = 'OVA',

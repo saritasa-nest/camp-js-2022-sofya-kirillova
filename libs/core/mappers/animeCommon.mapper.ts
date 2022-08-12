@@ -22,9 +22,15 @@ export namespace AnimeCommonMapper {
   }
 
   export const fromDtoMapStatus: Readonly<Record<AnimeStatusDto, AnimeStatus>> = {
-    [AnimeStatusDto.Airing]: 'On air',
-    [AnimeStatusDto.Finished]: 'Finished',
-    [AnimeStatusDto.NotYetAired]: 'Not yet aired',
+    [AnimeStatusDto.Airing]: AnimeStatus.Airing,
+    [AnimeStatusDto.Finished]: AnimeStatus.Finished,
+    [AnimeStatusDto.NotYetAired]: AnimeStatus.NotYetAired,
+  };
+
+  export const toDtoMapStatus: Readonly<Record<AnimeStatus, AnimeStatusDto>> = {
+    [AnimeStatus.Airing]: AnimeStatusDto.Airing,
+    [AnimeStatus.Finished]: AnimeStatusDto.Finished,
+    [AnimeStatus.NotYetAired]: AnimeStatusDto.NotYetAired,
   };
 
   export const fromDtoMapType: Readonly<Record<AnimeTypeDto, AnimeType>> = {

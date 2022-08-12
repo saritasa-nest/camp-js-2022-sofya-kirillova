@@ -1,0 +1,167 @@
+<div class="anime">
+  <h1>Editing or adding anime</h1>
+  <form class="anime__form" [formGroup]="animeForm" (ngSubmit)="createAnime()">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter title english</mat-label>
+      <input matInput formControlName="titleEnglish" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter title japanese</mat-label>
+      <input matInput formControlName="titleJapanese" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select type</mat-label>
+      <mat-select formControlName="type" matSelect>
+        <mat-option *ngFor="let type of typeList" [value]="type">{{
+          type
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select status</mat-label>
+      <mat-select formControlName="status" matSelect>
+        <mat-option *ngFor="let status of statusList" [value]="status">{{
+          status
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input formControlName="airingStart" matStartDate />
+        <input formControlName="airingFinish" matEndDate />
+      </mat-date-range-input>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select season</mat-label>
+      <mat-select formControlName="season" matSelect>
+        <mat-option *ngFor="let season of seasonList" [value]="season">{{
+          season
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select source</mat-label>
+      <mat-select formControlName="source" matSelect>
+        <mat-option *ngFor="let source of sourceList" [value]="source">{{
+          source
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select rating</mat-label>
+      <mat-select formControlName="rating" matSelect>
+        <mat-option *ngFor="let rating of ratingList" [value]="rating">{{
+          rating
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select genres</mat-label>
+      <mat-select formControlName="genres" matSelect multiple>
+        <mat-option
+          *ngFor="let genre of genresList$ | async as genres"
+          [value]="genre.id"
+          >{{ genre.name }}</mat-option
+        >
+        <span #span (click)="genreLoading()">Upload more</span>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-form-field appearance="fill">
+      <mat-label>Select studios</mat-label>
+      <mat-select
+        formControlName="studios"
+        (keydown.escape)="$event.stopPropagation()"
+        matSelect
+        multiple
+      >
+        <mat-form-field class="anime__search" appearance="standard">
+          <input
+            autocomplete="off"
+            type="search"
+            class="anime__search"
+            matInput
+            (keyup)="handleSearchChange($event)"
+            placeholder="Search"
+            #input
+          />
+        </mat-form-field>
+
+        <mat-option
+          *ngFor="let studio of studioList$ | async as studios"
+          [value]="studio.id"
+          >{{ studio.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field> -->
+
+    <mat-form-field appearance="fill">
+      <mat-label>Select synopsis</mat-label>
+      <textarea matInput formControlName="synopsis"></textarea>
+    </mat-form-field>
+
+    <mat-slide-toggle color="primary" matChecked formControlName="airing"
+      >Airing</mat-slide-toggle
+    >
+
+    <button
+      type="submit"
+      [disabled]="animeForm.invalid"
+      class="anime__submit"
+      mat-raised-button
+      color="primary"
+    >
+      Login
+    </button>
+
+    <mat-form-field appearance="fill" class="edit__field">
+      <mat-label>Select studios</mat-label>
+      <mat-chip-list formControlName="studios" #studioList>
+        <mat-chip
+          *ngFor="let studio of studios"
+          (removed)="removeStudio(studio.id)"
+        >
+          {{ studio.name }}
+          <button type="button" matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+
+        <input
+          [formControl]="searchStudio"
+          matInput
+          placeholder="Add studio"
+          [matAutocomplete]="studioAutocomplete"
+          [matChipInputFor]="studioList"
+          [value]="searchStudio.value"
+        />
+        <mat-autocomplete
+          #studioAutocomplete="matAutocomplete"
+          cdkVirtualScrollingElement
+        >
+          <mat-option class="highlighted"
+            ><mat-icon>control_point</mat-icon> Add new studio</mat-option
+          >
+          <mat-option
+            (click)="addStudio(studio)"
+            *ngFor="let studio of studioList$ | async"
+            [value]="studio"
+          >
+            {{ studio.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-chip-list>
+    </mat-form-field>
+  </form>
+</div>

@@ -1,0 +1,18 @@
+.anime {
+  width: var(--width-main-content);
+  margin: auto;
+  margin-top: 25px;
+}
+
+.anime__form {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.anime__submit {
+  align-self: flex-end;
+}
+
+.single-autocomplete {
+  height: 200px !important;
+}
