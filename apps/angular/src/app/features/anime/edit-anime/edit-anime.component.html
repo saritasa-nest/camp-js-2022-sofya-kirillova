@@ -69,42 +69,26 @@
     <mat-form-field appearance="fill">
       <mat-label>Select genres</mat-label>
       <mat-select formControlName="genres" matSelect multiple>
+        <mat-option (click)="openDialogGenre()"  class="highlighted">
+          <mat-icon>control_point</mat-icon> Add new studio
+        
+      </mat-option>
         <mat-option
           *ngFor="let genre of genresList$ | async as genres"
           [value]="genre.id"
           >{{ genre.name }}</mat-option
         >
-        <span #span (click)="genreLoading()">Upload more</span>
+
+        <ng-template #loadingGenre>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </ng-template>
+        <ng-container
+          *ngIf="(isGenreLoading$ | async) === false; else loadingGenre"
+        >
+          <span (click)="genreLoading()">Upload more</span>
+        </ng-container>
       </mat-select>
     </mat-form-field>
-
-    <!-- <mat-form-field appearance="fill">
-      <mat-label>Select studios</mat-label>
-      <mat-select
-        formControlName="studios"
-        (keydown.escape)="$event.stopPropagation()"
-        matSelect
-        multiple
-      >
-        <mat-form-field class="anime__search" appearance="standard">
-          <input
-            autocomplete="off"
-            type="search"
-            class="anime__search"
-            matInput
-            (keyup)="handleSearchChange($event)"
-            placeholder="Search"
-            #input
-          />
-        </mat-form-field>
-
-        <mat-option
-          *ngFor="let studio of studioList$ | async as studios"
-          [value]="studio.id"
-          >{{ studio.name }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field> -->
 
     <mat-form-field appearance="fill">
       <mat-label>Select synopsis</mat-label>
@@ -150,9 +134,10 @@
           #studioAutocomplete="matAutocomplete"
           cdkVirtualScrollingElement
         >
-          <mat-option class="highlighted"
-            ><mat-icon>control_point</mat-icon> Add new studio</mat-option
-          >
+          <mat-option (click)="openDialogStudio()"  class="highlighted">
+              <mat-icon>control_point</mat-icon> Add new studio
+            
+          </mat-option>
           <mat-option
             (click)="addStudio(studio)"
             *ngFor="let studio of studioList$ | async"

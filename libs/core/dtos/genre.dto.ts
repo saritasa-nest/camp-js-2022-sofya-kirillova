@@ -1,3 +1,11 @@
+/** Available genre type. */
+export enum GenreTypeDto {
+  Genres = 'GENRES',
+  ExplicitGenres = 'EXPLICIT_GENRES',
+  Themes = 'THEMES',
+  Demographics = 'DEMOGRAPHICS',
+}
+
 /** Genre DTO. */
 export interface GenreDto {
 
@@ -7,4 +15,9 @@ export interface GenreDto {
   /** Name. */
   readonly name: string;
 
+  /** Type. */
+  readonly type: GenreTypeDto;
+
 }
+
+export type GenreCreateDto = Omit<GenreDto, 'id'>;

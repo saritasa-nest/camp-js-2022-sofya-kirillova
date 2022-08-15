@@ -1,18 +1,29 @@
-import { map, Observable, startWith, switchMap, scan, tap, merge, concat, forkJoin, reduce } from 'rxjs';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ViewChild } from '@angular/core';
+import { map, Observable, startWith, switchMap, scan, mapTo, tap, merge, concat, forkJoin, reduce, BehaviorSubject, first, mergeMap } from 'rxjs';
+import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, ViewChild } from '@angular/core';
 import { AnimeType, AnimeStatus } from '@js-camp/core/models/animeCommon';
 import { AnimeSeason, AnimeSource, AnimeRating, AnimeCreate } from '@js-camp/core/models/animeFull';
 import { Genre } from '@js-camp/core/models/genre';
 import { Studio } from '@js-camp/core/models/studio';
 
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 import { GenreService } from '../../../../core/services/anime/genre.service';
+
+import { GenreType, GenreCreate } from './../../../../../../../libs/core/models/genre';
 
 import { AnimeService } from './../../../../core/services/anime/anime.service';
 
 import { StudioService } from './../../../../core/services/anime/studio.service';
 
+// import { DialogAddStudioComponent } from './dialog-add-studio/dialog-add-studio.component';
+
 // const RELOAD_TOP_SCROLL_POSITION = 100;
+
+interface GenreData {
+  type: GenreType;
+  name: string;
+}
 
 interface AnimeFormControl {
 
@@ -92,6 +103,9 @@ export class EditAnimeComponent {
   /** Anime studios. */
   public studioList$: Observable<readonly Studio[]>;
 
+  /** Whether books are loading or not. */
+  public readonly isGenreLoading$ = new BehaviorSubject<boolean>(false);
+
   /** Count of anime with specified parameters. */
   public typeNextUrl: string | undefined;
 
@@ -105,6 +119,7 @@ export class EditAnimeComponent {
   public searchStudio = new FormControl('');
 
   public constructor(
+    public dialog: MatDialog,
     private readonly genreService: GenreService,
     private readonly studioService: StudioService,
     private readonly animeService: AnimeService,
@@ -112,14 +127,12 @@ export class EditAnimeComponent {
   ) {
 
     this.genresList$ = this.genreService.fetchGenres(this.genreNextUrl).pipe(
-
-      // tap(()=>{console.log(7)}),
+      tap(() => this.isGenreLoading$.next(true)),
       map(res => {
         this.genreNextUrl = res.next;
         return res.results;
       }),
-      tap(() =>
-        this.cdr.markForCheck()),
+      tap(() => this.isGenreLoading$.next(false)),
     );
     this.studioList$ = this.studioService.fetchStudios().pipe(
       map(res => {
@@ -156,14 +169,56 @@ export class EditAnimeComponent {
           }),
         );
       }),
-
     );
+  }
+
+  /** */
+  public openDialogStudio(): void {
+    const dialogRef = this.dialog.open(DialogAddStudioComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined && result !== '') {
+        this.createStudio(result);
+      }
+    });
+  }
+
+  /** */
+  public openDialogGenre(): void {
+    const dialogRef = this.dialog.open(
+      DialogAddGenreComponent,
+      { data: { name: '', type: GenreType.Genres } as GenreData },
+    );
+    console.log(dialogRef);
+    dialogRef.afterClosed().subscribe((result: GenreCreate) => {
+      if (result.name !== undefined && result.name !== '') {
+        this.createGenre(result);
+        this.genreLoading();
+      }
+    });
   }
 
   /** */
   public createAnime(): void {
     this.animeService.createAnime(this.animeForm.value as AnimeCreate).subscribe();
   }
+
+  /** */
+  public createGenre(genreData: GenreCreate): void {
+    this.genreService.createGenre(genreData).pipe(
+      tap(newGenre => this.addStudio(newGenre)),
+    )
+      .subscribe();
+  }
+
+  /** */
+  public createStudio(name: string): void {
+    this.studioService.create(name).pipe(
+      tap(newStudio => this.addStudio(newStudio)),
+    )
+      .subscribe();
+  }
+
+  // this.addStudio({ id, name })
 
   /**
    * Remove studio by id.
@@ -179,35 +234,73 @@ export class EditAnimeComponent {
    * @param studio New studio.
    */
   public addStudio(studio: Studio): void {
+    this.searchStudio.setValue('');
     if (this.studios.some(({ id }) => studio.id === id)) {
       return;
     }
     this.studios.push(studio);
-    this.searchStudio.setValue('');
   }
 
   /** */
   public genreLoading(): void {
     const nextGenresList$ = this.genreService.fetchGenres(this.genreNextUrl).pipe(
+      tap(() => this.isGenreLoading$.next(true)),
       map(res => {
         this.genreNextUrl = res.next;
         return res.results;
       }),
     );
-
     this.genresList$ = forkJoin(
-      [this.genresList$,
-      nextGenresList$,]
+      [
+        this.genresList$,
+        nextGenresList$,
+      ],
     ).pipe(
       map(genres => genres.flat(1)),
+      tap(() => this.isGenreLoading$.next(false)),
     );
+    this.isGenreLoading$.next(false);
   }
 }
 
-// this.genresList$ = this.genreService.fetchGenres(this.genreNextUrl).pipe(
-//   map(res => {
-//     this.genreNextUrl = res.next;
-//     return res.results;
-//   }),
-//   scan((acc, val) => [...acc, ...val], [] as Genre[]),
-// );()
+/** */
+@Component({
+  selector: 'camp-dialog-add-studio',
+  templateUrl: './dialog-add-studio.component.html',
+
+  // styleUrls: ['./dialog-add-studio.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogAddStudioComponent {
+
+  public constructor(public dialogRef: MatDialogRef<DialogAddStudioComponent>,
+    @Inject(MAT_DIALOG_DATA) public studioName: string) { }
+
+  /** */
+  public onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
+/** */
+@Component({
+  selector: 'camp-dialog-add-genre',
+  templateUrl: './dialog-add-genre.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogAddGenreComponent {
+
+  /** Anime rating. */
+  public readonly typeList: readonly GenreType[] = Object.values(GenreType);
+
+  public constructor(public dialogRef: MatDialogRef<DialogAddGenreComponent>,
+    @Inject(MAT_DIALOG_DATA) public genreData: GenreData) {
+    console.log(this.typeList);
+
+  }
+
+  /** */
+  public onNoClick(): void {
+    this.dialogRef.close();
+  }
+}

@@ -5,8 +5,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, Observable, scan } from 'rxjs';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
 
-import { Genre } from '@js-camp/core/models/genre';
+import { Genre, GenreCreate } from '@js-camp/core/models/genre';
 import { PaginationMapper } from '@js-camp/core/mappers/pagination.mapper';
+import { GenreDto } from '@js-camp/core/dtos/genre.dto';
 
 /** Genre service. */
 @Injectable({
@@ -19,14 +20,13 @@ export class GenreService {
 
   /**  */
   public fetchGenres(next: string | undefined): Observable<Pagination<Genre>> {
-    console.log(2, next)
     if (next === undefined) {
-      return this.http.get<PaginationDto<Genre>>(`anime/genres/`)
+      return this.http.get<PaginationDto<GenreDto>>(`anime/genres/`)
         .pipe(
           map(response => PaginationMapper.fromDto(response, GenreMapper.fromDto)),
         );
     }
-    return this.http.get<PaginationDto<Genre>>(next)
+    return this.http.get<PaginationDto<GenreDto>>(next)
       .pipe(
         map(response => PaginationMapper.fromDto(response, GenreMapper.fromDto)),
       );
@@ -34,8 +34,11 @@ export class GenreService {
   }
 
   /**  */
-  public createGenre(): Observable<unknown> {
-    const urlParams = new HttpParams();
-    return this.http.post<PaginationDto<Genre>>(`anime/genres/`, { urlParams });
+  public createGenre(params: GenreCreate): Observable<Genre> {
+    const genreDto = GenreMapper.toDto(params);
+    return this.http.post<GenreDto>(`anime/genres/`, { ...genreDto })
+      .pipe(
+        map(response => GenreMapper.fromDto(response)),
+      );
   }
 }

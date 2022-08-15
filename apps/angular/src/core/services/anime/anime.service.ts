@@ -60,7 +60,7 @@ export class AnimeService {
 
   /** */
   public createAnime(anime: AnimeCreate): Observable<unknown> {
-    const q = AnimeFullMapper.toDto(anime);
-    return this.http.post<AnimeCreateDto>(`anime/anime/`, { ...q });
+    const animeDto = AnimeFullMapper.toDto(anime);
+    return this.http.post<AnimeCreateDto>(`anime/anime/`, { ...animeDto });
   }
 }

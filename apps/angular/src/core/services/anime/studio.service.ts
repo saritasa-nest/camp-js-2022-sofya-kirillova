@@ -1,3 +1,5 @@
+import { StudioDto } from './../../../../../../libs/core/dtos/studio.dto';
+import { GenreMapper } from '@js-camp/core/mappers/genre.mapper';
 import { Pagination } from '@js-camp/core/models/pagination';
 import { Studio } from '@js-camp/core/models/studio';
 import { Injectable } from '@angular/core';
@@ -28,9 +30,14 @@ export class StudioService {
   }
 
   /**  */
-  public create(): Observable<unknown> {
-    const urlParams = new HttpParams();
-    return this.http.post<PaginationDto<Studio>>(`anime/studios/`, { urlParams });
+  public create(name: string): Observable<Studio> {
+    return this.http.post<StudioDto>(`anime/studios/`, { name })
+      .pipe(
+        map(response => StudioMapper.fromDto(response)),
+      );
   }
 
 }
+
+// const animeDto = AnimeFullMapper.toDto(anime);
+// return this.http.post<AnimeCreateDto>(`anime/anime/`, { ...animeDto });

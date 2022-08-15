@@ -16,3 +16,13 @@
 .single-autocomplete {
   height: 200px !important;
 }
+
+.anime__genre {
+  width: 50%;
+}
+
+.genre__add {
+  font-size: initial;
+  background-color: initial;
+  border: none;
+}

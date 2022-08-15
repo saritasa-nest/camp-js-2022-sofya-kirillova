@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Add studio</h1>
+  <mat-form-field appearance="fill">
+    <mat-label>Name studio</mat-label>
+    <input [(ngModel)]="studioName" matInput>
+  </mat-form-field>
+<div mat-dialog-actions>
+  <button type="button" (click)="onNoClick()" mat-button>Close</button>
+  <button type="button" mat-button [mat-dialog-close]="studioName" cdkFocusInitial>Ok</button>
+</div>

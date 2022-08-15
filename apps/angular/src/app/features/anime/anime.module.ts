@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -16,8 +16,11 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
 
 // import { SelectAutocompleteModule } from 'mat-select-autocomplete';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 import { FormatDatePipe } from './../../../shared/pipes/format-date.pipe';
 
@@ -25,7 +28,7 @@ import { UnauthorizedGuard } from './../../../core/guards/unauthorized.guard';
 
 import { AnimeComponent } from './anime.component';
 import { AnimeDetailsComponent } from './anime-details/anime-details.component';
-import { EditAnimeComponent } from './edit-anime/edit-anime.component';
+import { DialogAddStudioComponent, EditAnimeComponent, DialogAddGenreComponent } from './edit-anime/edit-anime.component';
 
 export const ANIME_ID_ROUTE_PARAM = 'animeId';
 
@@ -52,6 +55,8 @@ const routes: Routes = [
     FormatDatePipe,
     AnimeDetailsComponent,
     EditAnimeComponent,
+    DialogAddStudioComponent,
+    DialogAddGenreComponent,
   ],
   imports: [
     RouterModule.forChild(routes),
@@ -71,6 +76,10 @@ const routes: Routes = [
     MatChipsModule,
     MatAutocompleteModule,
     MatIconModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    FormsModule,
+
   ],
 })
 export class AnimeModule {}

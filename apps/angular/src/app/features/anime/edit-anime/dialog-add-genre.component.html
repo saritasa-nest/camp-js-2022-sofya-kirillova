@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Add genre</h1>
+<mat-form-field appearance="fill">
+  <mat-label>Name genre</mat-label>
+  <input matInput [(ngModel)]="genreData.name"/>
+</mat-form-field>
+<mat-form-field appearance="fill">
+  <mat-label>Type genre</mat-label>
+  <mat-select [(value)]="genreData.type" matSelect>
+    <mat-option *ngFor="let type of typeList" [value]="type">{{
+      type
+    }}</mat-option>
+  </mat-select>
+</mat-form-field>
+<div mat-dialog-actions>
+  <button type="button" (click)="onNoClick()" mat-button>Close</button>
+  <button
+    type="button"
+    mat-button
+    [mat-dialog-close]="genreData"
+    cdkFocusInitial
+  >
+    Ok
+  </button>
+</div>
