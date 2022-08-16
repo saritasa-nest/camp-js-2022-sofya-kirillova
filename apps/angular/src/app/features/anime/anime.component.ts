@@ -16,7 +16,7 @@ import { AnimeQueryParams } from './../../../core/interfaces/AnimeQueryOptions';
 import { AnimeService } from './../../../core/services/anime.service';
 
 /** Name of Anime Parameters. */
-enum NameAnimeParams {
+enum AnimeParamName {
   Ordering = 'ordering',
   SortingDirection = 'direction',
   PageIndex = 'pageIndex',
@@ -25,11 +25,40 @@ enum NameAnimeParams {
   Types = 'types',
 }
 
-type ParamToUrl = Partial<Record<NameAnimeParams, string | null | number>>;
+type ParamToUrl = Partial<Record<AnimeParamName, string | null | number>>;
 
 const FIRST_PAGE = 0;
 
 const FETCH_DELAY_IN_MILLISECONDS = 500;
+
+interface AnimeParams {
+
+  /** Pagination options. */
+  readonly pagination: {
+
+    /** Current page. */
+    readonly pageIndex: number;
+
+    /** The number of anime returned per page. */
+    readonly pageSize: number;
+  };
+
+  /** Sorting options. */
+  readonly sort: {
+
+    /** Field by sort. */
+    readonly ordering: Order;
+
+    /** Ordering direction. */
+    readonly direction: SortDirection;
+  };
+
+  /** Search settings. */
+  readonly search: string;
+
+  /** Anime type. */
+  readonly types: readonly AnimeType[];
+}
 
 /** Anime Component. */
 @Component({
@@ -50,18 +79,7 @@ export class AnimeComponent {
   ];
 
   /** Default anim params. */
-  public readonly defaultAnimeParams = {
-    pagination: {
-      pageIndex: Number(this.route.snapshot.queryParamMap.get(NameAnimeParams.PageIndex)) ?? FIRST_PAGE,
-      pageSize: Number(this.route.snapshot.queryParamMap.get(NameAnimeParams.PageSize)) ?? 25,
-    },
-    sort: {
-      ordering: this.route.snapshot.queryParamMap.get(NameAnimeParams.Ordering) ?? 'titleEnglish',
-      direction: this.route.snapshot.queryParamMap.get(NameAnimeParams.SortingDirection) as SortDirection ?? Direction.Ascending,
-    },
-    search: this.route.snapshot.queryParamMap.get(NameAnimeParams.Search) ?? '',
-    types: this.route.snapshot.queryParamMap.get(NameAnimeParams.Types)?.split(',') as AnimeType[] ?? [] as AnimeType[],
-  } as const;
+  public readonly defaultAnimeParams: AnimeParams = this.setDefaultAnimeParams();
 
   /** Displayed columns. */
   public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'] as const;
@@ -143,14 +161,14 @@ export class AnimeComponent {
 
   private getAnime(param: Params): Observable<readonly Anime[]> {
     const animeQueryParams: AnimeQueryParams = {
-      limit: param[NameAnimeParams.PageSize],
-      page: param[NameAnimeParams.PageIndex],
+      limit: param[AnimeParamName.PageSize],
+      page: param[AnimeParamName.PageIndex],
       sort: {
-        order: param[NameAnimeParams.Ordering],
-        direction: param[NameAnimeParams.SortingDirection] === 'desc' ? Direction.Descending : Direction.Ascending,
+        order: param[AnimeParamName.Ordering],
+        direction: param[AnimeParamName.SortingDirection] === 'desc' ? Direction.Descending : Direction.Ascending,
       },
-      search: param[NameAnimeParams.Search] ?? '',
-      types: [param[NameAnimeParams.Types]] ?? '',
+      search: param[AnimeParamName.Search] ?? '',
+      types: [param[AnimeParamName.Types]] ?? '',
     };
     return this.animeService.fetchAnime(animeQueryParams).pipe(
       map(res => {
@@ -167,5 +185,22 @@ export class AnimeComponent {
    */
   public trackAnime(_index: number, anime: Anime): Anime['id'] {
     return anime.id;
+  }
+
+  private setDefaultAnimeParams(): AnimeParams {
+    const snapshot = this.route.snapshot.queryParamMap;
+    const defaultAnimeParams: AnimeParams = {
+      pagination: {
+        pageIndex: Number(snapshot.get(AnimeParamName.PageIndex)) ?? FIRST_PAGE,
+        pageSize: Number(snapshot.get(AnimeParamName.PageSize)) ?? 25,
+      },
+      sort: {
+        ordering: snapshot.get(AnimeParamName.Ordering) as Order ?? 'titleEnglish',
+        direction: snapshot.get(AnimeParamName.SortingDirection) as SortDirection ?? Direction.Ascending,
+      },
+      search: snapshot.get(AnimeParamName.Search) ?? '',
+      types: snapshot.get(AnimeParamName.Types)?.split(',') as AnimeType[] ?? [],
+    } as const;
+    return defaultAnimeParams;
   }
 }

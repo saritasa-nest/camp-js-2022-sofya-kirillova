@@ -14,9 +14,9 @@
         (selectionChange)="handleFilterChange($event)"
         multiple
       >
-        <mat-option *ngFor="let type of typeList" [value]="type">{{
-          type
-        }}</mat-option>
+        <mat-option *ngFor="let type of typeList" [value]="type">
+          {{ type }}
+        </mat-option>
       </mat-select>
     </mat-form-field>
 
@@ -48,7 +48,7 @@
   >
     <ng-container matColumnDef="image">
       <th class="anime__header-image" mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let anime">
+      <td class="anime__container-image" mat-cell *matCellDef="let anime">
         <img
           class="anime__image"
           [src]="anime.image"

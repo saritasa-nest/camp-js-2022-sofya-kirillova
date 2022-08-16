@@ -13,6 +13,6 @@ export type Order = 'titleEnglish' | 'airedStart' | 'status';
 
 /** Ordering direction. */
 export enum Direction {
-  Ascending = '',
-  Descending = '-',
+  Ascending = 'asc',
+  Descending = 'desc',
 }

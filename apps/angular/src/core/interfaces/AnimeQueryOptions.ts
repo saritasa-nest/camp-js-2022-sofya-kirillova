@@ -17,5 +17,5 @@ export interface AnimeQueryParams {
   readonly search: string;
 
   /** Types settings. */
-  readonly types: AnimeType[];
+  readonly types: readonly AnimeType[];
 }

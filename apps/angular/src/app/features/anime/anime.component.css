@@ -23,9 +23,16 @@
   width: 10%;
 }
 
+.anime__container-image {
+  width: 150px;
+  height: 150px;
+  padding-right: 25px;
+}
+
 .anime__image {
-  max-width: 150px;
-  max-height: 150px;
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 
 .anime__title-japanese {
