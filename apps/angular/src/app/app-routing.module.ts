@@ -7,8 +7,12 @@ const defaultLocationStrategy = { provide: LocationStrategy, useClass: PathLocat
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'anime',
     loadChildren: () => import('./features/anime/anime.module').then(m => m.AnimeModule),
+  },
+  {
+    path: '**',
+    redirectTo: 'anime',
   },
 ];
 
