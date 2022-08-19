@@ -7,9 +7,3 @@ export const selectGenres = createSelector(
   (state: RootState) => state.genres.genres,
   genres => genres,
 );
-
-/** Selects genres loading state. */
-export const selectAreGenresLoading = createSelector(
-  (state: RootState) => state.genres.isLoading,
-  isLoading => isLoading,
-);

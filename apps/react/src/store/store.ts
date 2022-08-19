@@ -3,11 +3,16 @@ import {
   TypedUseSelectorHook, useDispatch, useSelector,
 } from 'react-redux';
 
+import { userSlice, loginSlice, registerSlice } from './auth/slice';
+
 import { genresSlice } from './genre/slice';
 
 export const store = configureStore({
   reducer: {
     genres: genresSlice.reducer,
+    currentUser: userSlice.reducer,
+    login: loginSlice.reducer,
+    register: registerSlice.reducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware({
     // We need to disable this check to allow ES6 classes in Redux.

@@ -1,14 +1,16 @@
 import { FC } from 'react';
 import { Navigate, RouteObject, useRoutes } from 'react-router-dom';
 
-import { genresRoutes } from '../features/genres/routes';
+import { animeRoutes } from '../features/anime/routes';
+import { loginRoutes } from '../features/auth/routes';
 
 const routes: RouteObject[] = [
+  ...loginRoutes,
+  ...animeRoutes,
   {
     path: '*',
-    element: <Navigate to="/genres" />,
+    element: <Navigate to="anime" />,
   },
-  ...genresRoutes,
 ];
 
 /** Root router component. */
