@@ -1,6 +1,5 @@
 import { memo, FC, useEffect } from 'react';
 import { useFormik } from 'formik';
-
 import {
   Button,
   Grid,
@@ -10,12 +9,10 @@ import {
   TextField,
   Alert,
 } from '@mui/material';
-
 import { Login } from '@js-camp/core/models/auth';
 import { loginUser } from '@js-camp/react/store/auth/dispatchers';
 import { selectAuthorizedLogin, selectErrorLogin } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-
 import { useNavigate } from 'react-router-dom';
 
 import { LoginForm, loginFormSchema, initValues } from '../../components/LoginForm/formSettings';

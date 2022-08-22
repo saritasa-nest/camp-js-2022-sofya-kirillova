@@ -1,9 +1,7 @@
 import { memo, FC, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Button, Grid, Typography, Link, Box, TextField } from '@mui/material';
-
 import { Registration } from '@js-camp/core/models/auth';
-
 import { register } from '@js-camp/react/store/auth/dispatchers';
 import {
   selectErrorRegister,
@@ -11,8 +9,7 @@ import {
 } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { useNavigate } from 'react-router-dom';
-
-import { FieldError } from '@js-camp/core/models/fieldError';
+import { ErrorRegistration } from '@js-camp/core/models/errorRegistration';
 
 import {
   initValues,
@@ -26,18 +23,21 @@ import styles from './RegisterPage.module.css';
 const RegisterPageComponent: FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const error = useAppSelector(selectErrorRegister) as FieldError;
+  const errors = useAppSelector(selectErrorRegister)?.data as ErrorRegistration;
   const isRegistered = useAppSelector(selectRegisteredRegister);
-
   const handleRegister = (values: RegistrationForm): void => {
     dispatch(register(values as unknown as Registration));
   };
-  useEffect(() => {
-    if (error?.data) {
-      formik.setErrors(error.data);
-    }
 
-  }, [error]);
+  useEffect(() => {
+    if (errors) {
+      const errorFiltered = Object.entries(errors).reduce(
+        (body, [key, value]) => (value ? { ...body, [key]: value } : body), {},
+      );
+      formik.setErrors(errorFiltered);
+    }
+  }, [errors]);
+
   useEffect(() => {
     if (isRegistered === true) {
       navigate('/anime');
@@ -113,13 +113,8 @@ const RegisterPageComponent: FC = () => {
               variant="standard"
               onChange={formik.handleChange}
               value={formik.values.confirmPassword}
-              error={
-                formik.touched.confirmPassword &&
-                Boolean(formik.errors.confirmPassword)
-              }
-              helperText={
-                formik.touched.confirmPassword && formik.errors.confirmPassword
-              }
+              error={formik.touched.confirmPassword && Boolean(formik.errors.confirmPassword)}
+              helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
             />
             <Grid container justifyContent="space-around" alignItems="center">
               <Button variant="outlined" type="submit">

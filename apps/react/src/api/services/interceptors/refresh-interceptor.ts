@@ -1,7 +1,6 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 
 import { http } from '../..';
-
 import { CONFIG } from '../../config';
 import { TokenService } from '../tokenService';
 

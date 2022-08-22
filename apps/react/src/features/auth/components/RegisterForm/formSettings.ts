@@ -15,7 +15,7 @@ export const loginFormSchema: Yup.SchemaOf<RegistrationForm> = Yup.object().shap
   lastName: Yup.string().required('Last name is a required field'),
   firstName: Yup.string().required('First name is a required field'),
   password: Yup.string()
-    // .min(8, 'Too Short!')
+    .min(8, 'Too Short!')
     .required('Password is a required field'),
   confirmPassword: Yup.string()
     .oneOf([Yup.ref('password'), null], 'Passwords don\'t match')

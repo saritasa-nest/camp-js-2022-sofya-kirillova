@@ -7,10 +7,11 @@ import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { Login, Registration } from '@js-camp/core/models/auth';
 import { AuthMapper } from '@js-camp/core/mappers/auth.mapper';
 import { LoginDto, RegistrationDto } from '@js-camp/core/dtos/auth.dto';
-
-import { FieldError } from '@js-camp/core/models/fieldError';
-import { FieldErrorMapper } from '@js-camp/core/mappers/fieldError.mapper';
 import { AxiosError } from 'axios';
+import { ErrorBase } from '@js-camp/core/models/errorBase';
+import { ErrorRegistration } from '@js-camp/core/models/errorRegistration';
+import { ErrorBaseMapper } from '@js-camp/core/mappers/errorBase';
+import { ErrorRegistrationMapper } from '@js-camp/core/mappers/errorRegistration.mapper';
 
 import { http } from '..';
 
@@ -26,7 +27,7 @@ export namespace AuthService {
    * Login.
    * @param loginData Login data.
    */
-  export async function login(loginData: Login): Promise<FieldError | void> {
+  export async function login(loginData: Login): Promise<ErrorBase<ErrorRegistration> | void> {
     const loginDataDto: LoginDto = AuthMapper.toDtoLogin(loginData);
     try {
       const { data } = await http.post<TokenDto>(loginUrl, loginDataDto);
@@ -37,7 +38,7 @@ export namespace AuthService {
       if (!(error instanceof AxiosError) || error.response === undefined) {
         throw error;
       }
-      throw FieldErrorMapper.fromDto(error.response.data);
+      throw ErrorBaseMapper.fromDto(error.response.data, ErrorRegistrationMapper.fromDto);
     }
 
   }
@@ -46,7 +47,7 @@ export namespace AuthService {
    * Register.
    * @param registerData Register data.
    */
-  export async function register(registerData: Registration): Promise<FieldError | void> {
+  export async function register(registerData: Registration): Promise<ErrorBase<ErrorRegistration> | void> {
     const registerDataDto: RegistrationDto = AuthMapper.toDtoRegister(registerData);
     try {
       const { data } = await http.post<TokenDto>(registerUrl, registerDataDto);
@@ -57,7 +58,7 @@ export namespace AuthService {
       if (!(error instanceof AxiosError) || error.response === undefined) {
         throw error;
       }
-      throw FieldErrorMapper.fromDto(error.response.data);
+      throw ErrorBaseMapper.fromDto(error.response.data, ErrorRegistrationMapper.fromDto);
     }
   }
 

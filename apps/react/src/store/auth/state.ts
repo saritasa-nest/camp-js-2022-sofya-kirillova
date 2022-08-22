@@ -1,4 +1,5 @@
-import { FieldError } from '@js-camp/core/models/fieldError';
+import { ErrorBase } from '@js-camp/core/models/errorBase';
+import { ErrorRegistration } from '@js-camp/core/models/errorRegistration';
 import { User } from '@js-camp/core/models/user';
 
 /** User state. */
@@ -10,33 +11,33 @@ export interface UserState {
   /** Error. */
   readonly error?: string;
 
-  /** Whether the genres are loading or not. */
+  /** Whether the user is loading or not. */
   readonly isLoading: boolean;
 }
 
-/** User state. */
+/** Login state. */
 export interface LoginState {
 
-  /** User. */
+  /** Login. */
   readonly isAuthorized: boolean;
 
   /** Error. */
-  readonly error?: FieldError;
+  readonly error?: ErrorBase<ErrorRegistration>;
 
-  /** Whether the genres are loading or not. */
+  /** Whether login is in process or not. */
   readonly isLoading: boolean;
 }
 
-/** User state. */
+/** Register state. */
 export interface RegisterState {
 
-  /** User. */
+  /** Register. */
   readonly isRegistered: boolean;
 
   /** Error. */
-  readonly error?: FieldError;
+  readonly error?: ErrorBase<ErrorRegistration>;
 
-  /** Whether the genres are loading or not. */
+  /** Whether register is in process or not. */
   readonly isLoading: boolean;
 }
 

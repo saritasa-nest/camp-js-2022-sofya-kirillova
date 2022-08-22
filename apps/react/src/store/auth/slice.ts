@@ -1,4 +1,5 @@
-import { FieldError } from '@js-camp/core/models/fieldError';
+import { ErrorBase } from '@js-camp/core/models/errorBase';
+import { ErrorRegistration } from '@js-camp/core/models/errorRegistration';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { currentUser, loginUser, register } from './dispatchers';
@@ -37,7 +38,7 @@ export const loginSlice = createSlice({
       state.isLoading = false;
     })
     .addCase(loginUser.rejected, (state, action) => {
-      state.error = action.payload as FieldError;
+      state.error = action.payload as ErrorBase<ErrorRegistration>;
       state.isLoading = false;
     }),
 });
@@ -55,7 +56,7 @@ export const registerSlice = createSlice({
       state.isLoading = false;
     })
     .addCase(register.rejected, (state, action) => {
-      state.error = action.payload as FieldError;
+      state.error = action.payload as ErrorBase<ErrorRegistration>;
       state.isLoading = false;
     }),
 });

@@ -2,7 +2,6 @@ import axios, { AxiosInstance } from 'axios';
 
 import { addTokenBeforeRequest } from './services/interceptors/auth-interceptor.ts';
 import { refreshToken } from './services/interceptors/refresh-interceptor';
-
 import { CONFIG } from './config';
 
 export const http: AxiosInstance = axios.create({
