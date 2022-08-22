@@ -1,0 +1,1 @@
+export { AnimeShortPage } from './AnimeShort';

@@ -1,0 +1,22 @@
+.anime {
+  display: grid;
+  grid-template-columns: 100px auto 75px 125px;
+  box-sizing: border-box;
+}
+
+.anime__image {
+  height: 80px;
+  width: 80px;
+  object-fit: cover;
+  border-radius: 50px;
+}
+
+.anime__title-japanese {
+  font-size: 0.7em;
+  color: var(--accent-color-3);
+}
+
+.anime__separator {
+  height: 1px;
+  background-color: #757ce8;
+}

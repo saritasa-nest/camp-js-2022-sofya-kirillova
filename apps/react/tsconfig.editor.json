@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts", "../../libs", "src/components/Loading/Loading.tsx"],
+  "include": ["**/*.ts", "../../libs", "src/components/Loading/Loading.tsx", "src/features/anime/components/AnimeShort/AnimeShort.tsx"],
   "compilerOptions": {
     "types": ["node"]
   }

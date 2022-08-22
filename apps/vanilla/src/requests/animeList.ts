@@ -1,6 +1,6 @@
 import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { PaginationDto } from '@js-camp/core/dtos/pagination.dto';
-import { AnimeListMapper } from '@js-camp/core/mappers/animeLIst.mapper';
+import { AnimeListMapper } from '@js-camp/core/mappers/pagination.mapper';
 import { AnimeSortMapper } from '@js-camp/core/mappers/animeSort.mapper';
 
 import { Anime } from '@js-camp/core/models/anime';

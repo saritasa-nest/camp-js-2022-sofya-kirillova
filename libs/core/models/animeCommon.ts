@@ -1,0 +1,59 @@
+import { Immerable, OmitImmerable } from './immerable';
+
+/** Available anime statuses. */
+export enum AnimeStatus {
+  Airing = 'On air',
+  Finished = 'Finished',
+  NotYetAired = 'Not yet aired',
+}
+
+/** Available anime types. */
+export enum AnimeType {
+  Tv = 'TV',
+  Ova = 'OVA',
+  Movie = 'Movie',
+  Special = 'Special',
+  Ona = 'ONA',
+  Music = 'Music',
+}
+
+/** Anime. */
+export class AnimeCommon extends Immerable {
+  /** Anime ID. */
+  public readonly id: number;
+
+  /** Image of the anime. */
+  public readonly image: string;
+
+  /** English name of the anime. */
+  public readonly titleEnglish: string;
+
+  /** Japanese name of the anime. */
+  public readonly titleJapanese: string;
+
+  /** Type anime of the anime. */
+  public readonly type: AnimeType;
+
+  /** Status of the anime. */
+  public readonly status: AnimeStatus;
+
+  /** Start date of airing. */
+  public readonly airingStart: Date | null;
+
+  /** End date of airing. */
+  public readonly airingFinish: Date | null;
+
+  public constructor(data: InitArgsAnime) {
+    super();
+    this.id = data.id;
+    this.image = data.image;
+    this.titleEnglish = data.titleEnglish;
+    this.titleJapanese = data.titleJapanese;
+    this.type = data.type;
+    this.status = data.status;
+    this.airingStart = data.airingStart;
+    this.airingFinish = data.airingFinish;
+  }
+}
+
+type InitArgsAnime = OmitImmerable<AnimeCommon>;

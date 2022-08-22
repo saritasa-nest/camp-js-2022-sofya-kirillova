@@ -1,0 +1,1 @@
+export { AnimeDetailsPage } from './AnimeDetails';

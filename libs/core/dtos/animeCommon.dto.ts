@@ -16,7 +16,10 @@ export enum AnimeTypeDto {
 }
 
 /** Anime DTO. */
-export interface AnimeDto {
+export interface AnimeCommonDto {
+
+  /** Anime ID. */
+  readonly id: number;
 
   /** Image of the anime. */
   readonly image: string;
