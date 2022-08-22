@@ -3,7 +3,6 @@ import { TokenDto } from '@js-camp/core/dtos/token.dto';
 import { UserMapper } from '@js-camp/core/mappers/user.mapper';
 import { User } from '@js-camp/core/models/user';
 import { UserDto } from '@js-camp/core/dtos/user.dto';
-import { AnimeDto } from '@js-camp/core/dtos/anime.dto';
 import { Login, Registration } from '@js-camp/core/models/auth';
 import { AuthMapper } from '@js-camp/core/mappers/auth.mapper';
 import { LoginDto, RegistrationDto } from '@js-camp/core/dtos/auth.dto';
@@ -24,7 +23,7 @@ const currentUserUrl = 'users/profile/';
 export namespace AuthService {
 
   /**
-   * Login.
+   * Login a user.
    * @param loginData Login data.
    */
   export async function login(loginData: Login): Promise<ErrorBase<ErrorRegistration> | void> {
@@ -44,7 +43,7 @@ export namespace AuthService {
   }
 
   /**
-   * Register.
+   * Register a user.
    * @param registerData Register data.
    */
   export async function register(registerData: Registration): Promise<ErrorBase<ErrorRegistration> | void> {
@@ -62,19 +61,9 @@ export namespace AuthService {
     }
   }
 
-  /**
-   * User.
-   */
+  /** Fetches a list of genres.*/
   export async function getCurrentUser(): Promise<User> {
     const { data } = await http.get<UserDto>(currentUserUrl);
     return UserMapper.fromDto(data);
-  }
-
-  /**
-   * Login.
-   * @param loginData Login data.
-   */
-  export async function anime(): Promise<void> {
-    await http.get<AnimeDto>('anime/anime/');
   }
 }

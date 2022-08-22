@@ -8,7 +8,7 @@ import { LocalStorageService } from './local-storage';
 const url = 'auth/token/refresh/';
 export namespace TokenService {
 
-  /** Fetches a list of genres. */
+  /** Refreshes access token. */
   export async function refreshToken(): Promise<void> {
     const token = LocalStorageService.getSessionToken()?.refresh;
     const { data } = await http.post<TokenDto>(url, { refresh: token });
