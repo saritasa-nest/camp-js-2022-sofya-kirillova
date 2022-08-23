@@ -1,0 +1,1 @@
+export { AnimeListManagementPage } from './AnimeListManagement';

@@ -12,8 +12,7 @@ export const animeListSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(fetchAnimeList.fulfilled, (state, action) => {
-      animeAdapter.setAll(state as State, action.payload.results);
-      state.next = action.payload.next;
+      animeAdapter.addMany(state as State, action.payload.results);
       state.countAnime = action.payload.count;
       state.isLoading = false;
     })

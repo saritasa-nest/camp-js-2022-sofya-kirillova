@@ -2,13 +2,14 @@ import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { fetchAnimeList } from '@js-camp/react/store/anime/dispatchers';
 import { selectAnimeList } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { Grid, List } from '@mui/material';
+import { Grid, List, Paper } from '@mui/material';
 import { FC, memo, useCallback, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loading } from '../../../../components/Loading';
 import { AnimeDetailsPage } from '../../components/AnimeDetails';
 import { AnimeShortPage } from '../../components/AnimeShort/AnimeShort';
+import { AnimeListManagementPage } from '../../components/AnimeListManagement';
 
 import styles from './AnimePage.module.css';
 
@@ -29,13 +30,18 @@ const AnimePageComponent: FC = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={4}>
-        <List className={styles['anime-list']}>
+        {/* <List className={styles['anime-list']}> */}
+        <List className={styles['anime-list']}
+          id='scrollableDiv'
+        >
           <InfiniteScroll
             dataLength={animeList.length}
             next={getMoreAnime}
             hasMore={true}
-            loader={<Loading />}
+            loader={<h4>Loading...</h4>}
+            scrollableTarget="scrollableDiv"
           >
+            <AnimeListManagementPage />
             {animeList.map((anime: AnimeCommon) => (
               <AnimeShortPage key={anime.id} anime={anime} />
             ))}
