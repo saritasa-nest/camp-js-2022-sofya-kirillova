@@ -20,18 +20,20 @@ const AnimeShortPageComponent: FC<Props> = ({ anime }) => (
       alignItems="center"
     >
       <Grid>
-        <img className={styles['anime__image']} src={anime.image} />
+        <img
+          className={styles['anime__image']}
+          alt={`image of anime ${anime.titleEnglish || anime.titleJapanese}`}
+          src={anime.image}
+        />
       </Grid>
       <Grid>
         <p> {anime.titleEnglish} </p>
-        <p className={styles['anime__title-japanese']}> {anime.titleJapanese}</p>
+        <p className={styles['anime__title-japanese']}>
+          {anime.titleJapanese}
+        </p>
       </Grid>
-      <Grid textAlign="center">
-        {anime.type}
-      </Grid>
-      <Grid textAlign="center">
-        {anime.status}
-      </Grid>
+      <Grid textAlign="center">{anime.type}</Grid>
+      <Grid textAlign="center">{anime.status}</Grid>
     </Grid>
     <hr className={styles['anime__separator']} />
   </>

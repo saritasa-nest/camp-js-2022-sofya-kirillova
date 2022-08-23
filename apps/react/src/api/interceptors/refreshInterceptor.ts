@@ -1,8 +1,8 @@
 import { AxiosError, AxiosRequestConfig } from 'axios';
 
-import { http } from '../..';
-import { CONFIG } from '../../config';
-import { TokenService } from '../tokenService';
+import { http } from '..';
+import { CONFIG } from '../config';
+import { TokenService } from '../services/tokenService';
 
 /**
  * Interceptor to append token to requests.

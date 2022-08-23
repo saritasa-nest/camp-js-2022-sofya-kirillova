@@ -1,44 +1,28 @@
-import { Immerable, OmitImmerable } from './immerable';
-
 /** Data for user login. */
-export class Login extends Immerable {
+export interface Login {
 
   /** Email. */
-  public readonly email: string;
+  readonly email: string;
 
   /** Password. */
-  public readonly password: string;
-
-  public constructor(data: InitArgsLogin) {
-    super();
-    this.email = data.email;
-    this.password = data.password;
-  }
+  readonly password: string;
 }
 
 /** Data for user registration. */
-export class Registration extends Immerable {
+export interface Registration {
 
   /** Email. */
-  public readonly email: string;
+  readonly email: string;
 
   /** First name. */
-  public readonly firstName: string;
+  readonly firstName: string;
 
   /** Last name. */
-  public readonly lastName: string;
+  readonly lastName: string;
 
   /** Password. */
-  public readonly password: string;
+  readonly password: string;
 
-  public constructor(data: InitArgsRegistration) {
-    super();
-    this.email = data.email;
-    this.firstName = data.firstName;
-    this.lastName = data.lastName;
-    this.password = data.password;
-  }
+  /** Confirm password. */
+  readonly confirmPassword: string;
 }
-
-type InitArgsRegistration = OmitImmerable<Registration>;
-type InitArgsLogin = OmitImmerable<Login>;

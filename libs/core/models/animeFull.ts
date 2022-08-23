@@ -62,10 +62,10 @@ export class AnimeFull extends AnimeCommon {
   public readonly airing: boolean;
 
   /** List of studios creating on anime. */
-  public readonly studiosData: Studio[];
+  public readonly studiosData: readonly Studio[];
 
   /** List of anime genres. */
-  public readonly genresData: Genre[];
+  public readonly genresData: readonly Genre[];
 
   /** List of studios creating on anime. */
   public readonly studios: readonly number[];

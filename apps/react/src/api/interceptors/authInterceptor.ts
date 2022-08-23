@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
-import { CONFIG } from '../../config';
-import { LocalStorageService } from '../local-storage';
+import { CONFIG } from '../config';
+import { LocalStorageService } from '../services/local-storage';
 
 /**
  * Checks if a request should be intercepted.

@@ -6,7 +6,7 @@ export class Pagination<T> extends Immerable {
   public readonly count: number;
 
   /** Array of items requested. */
-  public readonly results: T[];
+  public readonly results: readonly T[];
 
   /** Next page of items. */
   public readonly next: string;

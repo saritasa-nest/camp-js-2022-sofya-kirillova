@@ -10,7 +10,6 @@ export namespace GenreMapper {
    * @param dto Genre dto.
    */
   export function fromDto(dto: GenreDto): Genre {
-    // console.log(fromDtoMapType[dto.type])
     return new Genre({
       id: dto.id,
       name: dto.name,

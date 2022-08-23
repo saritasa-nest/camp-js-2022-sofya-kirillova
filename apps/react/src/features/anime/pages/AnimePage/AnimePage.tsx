@@ -17,7 +17,6 @@ const AnimePageComponent: FC = () => {
   const dispatch = useAppDispatch();
   const animeList = useAppSelector(selectAnimeList);
 
-  /** TODO. */
   /** Gets more anime. */
   const getMoreAnime = useCallback(() => {
     dispatch(fetchAnimeList());

@@ -15,3 +15,9 @@ export const selectAnimeListLoading = createSelector(
   (state: RootState) => state.animeList.isLoading,
   isLoading => isLoading,
 );
+
+/** Selects all anime loading state. */
+export const selectAnimeNextUrl = createSelector(
+  (state: RootState) => state.animeList.next,
+  nextUrl => nextUrl,
+);
