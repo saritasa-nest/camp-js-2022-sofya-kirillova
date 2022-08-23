@@ -21,7 +21,7 @@ export const selectErrorLogin = createSelector(
 );
 
 /** Selects authorized login state. */
-export const selectAuthorizedLogin = createSelector(
+export const selectsLoginSubmitted = createSelector(
   (state: RootState) => state.login.isAuthorized,
   isAuthorized => isAuthorized,
 );
@@ -33,7 +33,7 @@ export const selectErrorRegister = createSelector(
 );
 
 /** Selects registered register state. */
-export const selectRegisteredRegister = createSelector(
+export const selectsRegisterSubmitted = createSelector(
   (state: RootState) => state.register.isRegistered,
   isRegistered => isRegistered,
 );

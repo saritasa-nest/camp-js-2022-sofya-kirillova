@@ -18,10 +18,10 @@ export const AuthGuard: FC = () => {
     }).toString(),
   };
 
-  if (isLoading) {
+  if (isLoading === true) {
     return <Loading />;
   }
-  if (!user) {
+  if (user === null) {
     return <Navigate to={redirect} replace />;
   }
   return <Outlet />;

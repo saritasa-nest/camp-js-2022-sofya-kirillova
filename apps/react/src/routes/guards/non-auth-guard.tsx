@@ -1,4 +1,4 @@
-import { currentUser } from '@js-camp/react/store/auth/dispatchers';
+import { fetchUser } from '@js-camp/react/store/auth/dispatchers';
 import { selectUser, selectUserLoading } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { FC, useEffect } from 'react';
@@ -10,12 +10,12 @@ export const NonAuthGuard: FC = () => {
   const isLoading = useAppSelector(selectUserLoading);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(currentUser());
+    dispatch(fetchUser());
   }, []);
 
   const user = useAppSelector(selectUser);
   const [search] = useSearchParams();
-  if (isLoading) {
+  if (isLoading === true) {
     return <Loading />;
   }
   if (user !== null) {

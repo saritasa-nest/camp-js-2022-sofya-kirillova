@@ -3,8 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AuthService } from '../../api/services/authService';
 
-export const currentUser = createAsyncThunk(
-  'auth/currentUser',
+export const fetchUser = createAsyncThunk(
+  'auth/fetch',
   () => AuthService.getCurrentUser(),
 );
 

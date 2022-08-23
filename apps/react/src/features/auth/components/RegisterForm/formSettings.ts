@@ -1,14 +1,15 @@
-
-import { Registration } from '@js-camp/core/models/auth';
 import * as Yup from 'yup';
+import { Registration } from '@js-camp/core/models/auth';
 
-/** Form data for registration. */
-export interface RegistrationForm extends Omit<Registration, '[immerable]'> {
+export const initValues: Registration = {
+  email: '',
+  firstName: '',
+  lastName: '',
+  password: '',
+  confirmPassword: '',
+};
 
-  /** Confirm password field. */
-  readonly confirmPassword: string;
-}
-export const loginFormSchema: Yup.SchemaOf<RegistrationForm> = Yup.object().shape({
+export const loginFormSchema: Yup.SchemaOf<Registration> = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email')
     .required('Email is a required field'),
@@ -21,10 +22,3 @@ export const loginFormSchema: Yup.SchemaOf<RegistrationForm> = Yup.object().shap
     .oneOf([Yup.ref('password'), null], 'Passwords don\'t match')
     .required('First name is a required field'),
 });
-export const initValues: RegistrationForm = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  password: '',
-  confirmPassword: '',
-};

@@ -2,7 +2,7 @@ import { ErrorBase } from '@js-camp/core/models/errorBase';
 import { ErrorRegistration } from '@js-camp/core/models/errorRegistration';
 import { createSlice } from '@reduxjs/toolkit';
 
-import { currentUser, loginUser, register } from './dispatchers';
+import { fetchUser, loginUser, register } from './dispatchers';
 import { initialLoginState, initialUserState, initialRegisterState } from './state';
 
 export const userSlice = createSlice({
@@ -10,14 +10,14 @@ export const userSlice = createSlice({
   initialState: initialUserState,
   reducers: {},
   extraReducers: builder => builder
-    .addCase(currentUser.pending, state => {
+    .addCase(fetchUser.pending, state => {
       state.isLoading = true;
     })
-    .addCase(currentUser.fulfilled, (state, action) => {
+    .addCase(fetchUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isLoading = false;
     })
-    .addCase(currentUser.rejected, (state, action) => {
+    .addCase(fetchUser.rejected, (state, action) => {
       if (action.error.message) {
         state.error = action.error.message;
       }
