@@ -1,4 +1,5 @@
-import { Login, Registration } from '@js-camp/core/models/auth';
+import { Login } from '@js-camp/core/models/login';
+import { Registration } from '@js-camp/core/models/register';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AuthService } from '../../api/services/authService';
