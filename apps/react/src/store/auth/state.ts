@@ -42,7 +42,7 @@ export interface RegisterState {
 }
 
 export const initialUserState: UserState = {
-  isLoading: false,
+  isLoading: true,
   user: null,
 };
 

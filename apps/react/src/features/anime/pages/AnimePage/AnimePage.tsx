@@ -1,9 +1,9 @@
 import { AnimeCommon } from '@js-camp/core/models/animeCommon';
-import { fetchAnimeList, fetchNextAnimeList } from '@js-camp/react/store/anime/dispatchers';
+import { fetchNextAnimeList } from '@js-camp/react/store/anime/dispatchers';
 import { selectAnimeList } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Grid, List } from '@mui/material';
-import { FC, memo, useCallback, useEffect } from 'react';
+import { FC, memo, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loading } from '../../../../components/Loading';
@@ -12,7 +12,6 @@ import { AnimeShortPage } from '../../components/AnimeShort/AnimeShort';
 import { AnimeListManagementPage } from '../../components/AnimeListManagement';
 
 import styles from './AnimePage.module.css';
-import { useSearchParams } from 'react-router-dom';
 
 /** Anime page component. */
 const AnimePageComponent: FC = () => {
@@ -23,7 +22,6 @@ const AnimePageComponent: FC = () => {
   const getMoreAnime = useCallback(() => {
     dispatch(fetchNextAnimeList());
   }, []);
-
 
   return (
     <Grid container spacing={3}>

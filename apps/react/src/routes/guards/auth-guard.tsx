@@ -1,19 +1,24 @@
+import { fetchUser } from '@js-camp/react/store/auth/dispatchers';
 import {
   selectUser,
   selectUserLoading,
 } from '@js-camp/react/store/auth/selectors';
-import { useAppSelector } from '@js-camp/react/store/store';
-import { FC } from 'react';
-import { Navigate, Outlet, To, useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
+import { FC, useEffect } from 'react';
+import { Navigate, Outlet, To } from 'react-router-dom';
 
 import { Loading } from '../../components/Loading';
 
 export const AuthGuard: FC = () => {
-  const [searchParams] = useSearchParams();
-
-  console.log(searchParams);
-  const isLoading = useAppSelector(selectUserLoading);
   const user = useAppSelector(selectUser);
+  const isLoading = useAppSelector(selectUserLoading);
+    const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, []);
+  if (isLoading) {
+    return <Loading/>;
+  }
   const redirect: To = {
     pathname: 'login',
     search: new URLSearchParams({
@@ -23,9 +28,6 @@ export const AuthGuard: FC = () => {
 
   if (user === null) {
     return <Navigate to={redirect} replace />;
-  }
-  if (isLoading === true) {
-    return <Loading />;
   }
   return <Outlet />;
 };

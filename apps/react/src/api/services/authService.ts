@@ -61,7 +61,7 @@ export namespace AuthService {
     }
   }
 
-  /** Fetches a list of genres.*/
+  /** Fetches a user.*/
   export async function getCurrentUser(): Promise<User> {
     const { data } = await http.get<UserDto>(currentUserUrl);
     return UserMapper.fromDto(data);

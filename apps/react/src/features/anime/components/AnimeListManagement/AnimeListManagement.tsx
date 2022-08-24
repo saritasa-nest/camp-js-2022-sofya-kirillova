@@ -27,27 +27,19 @@ const sortedData: readonly Order[] = [
 
 const typeList: readonly AnimeType[] = Object.values(AnimeType);
 
-/** Anime details description page component. */
+/** Anime list management page component. */
 const AnimeListManagementComponent: FC = () => {
-  const [searchParams] = useSearchParams();
-
   const [params, setParams] = useSearchParams();
   const dispatch = useAppDispatch();
-  console.log(params);
   const getDefaultAnimeParams = useRef<AnimeParams>({
-          ordering: searchParams.get('ordering') as Order ?? 'titleEnglish',
-          search: searchParams.get('search') ?? '',
-          types: searchParams.getAll('types') as AnimeType[] ?? [] as AnimeType[],
+    ordering: (params.get('ordering') as Order) ?? 'titleEnglish',
+    search: params.get('search') ?? '',
+    types: (params.getAll('types') as AnimeType[]) ?? ([] as AnimeType[]),
   });
 
-  // const getDefaultAnimeParams = (() => ({
-  //         ordering: searchParams.get('ordering') as Order ?? 'titleEnglish',
-  //         search: searchParams.get('search') ?? '',
-  //         types: searchParams.getAll('types') as AnimeType[] ?? [] as AnimeType[],
-  // }));
-
-  // const [params, setParams] = useSearchParams();
-  const [types, setTypes] = useState<string[]>(getDefaultAnimeParams.current.types);
+  const [types, setTypes] = useState<string[]>(
+    getDefaultAnimeParams.current.types,
+  );
   const handleChangeType = (event: SelectChangeEvent<typeof types>) => {
     const {
       target: { value },
@@ -55,7 +47,9 @@ const AnimeListManagementComponent: FC = () => {
     setTypes(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const [ordering, setOrdering] = useState(getDefaultAnimeParams.current.ordering);
+  const [ordering, setOrdering] = useState(
+    getDefaultAnimeParams.current.ordering,
+  );
   const handleChangeSort = (event: ChangeEvent<HTMLInputElement>) => {
     setOrdering(event.target.value as Order);
   };

@@ -4,20 +4,20 @@ import { AnimeSort, Order } from '@js-camp/core/models/animeSort';
 /** Parameters for the anime query. */
 export interface AnimeQueryParams {
 
-  /**  Sort settings. */
+  /**  Sort query. */
   readonly sort: AnimeSort;
 
   /** Search query. */
   readonly search: string;
 
-  /** Types settings. */
+  /** Types query. */
   readonly types: AnimeType[];
 }
 
 /** Parameters for the anime. */
 export interface AnimeParams {
 
-  /**  Sort settings. */
+  /**  Order settings. */
   ordering: Order;
 
   /** Search settings. */
