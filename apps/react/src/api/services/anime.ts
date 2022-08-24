@@ -21,11 +21,9 @@ export namespace AnimeService {
   /** Fetches a list of anime. */
   export async function fetchAnimeList(): Promise<Pagination<AnimeCommon>> {
     const nextUrl = useAppSelector(selectAnimeNextUrl).replace(CONFIG.apiUrl, '');
-    if (nextUrl === null) {
-      const { data } = await http.get<PaginationDto<AnimeCommonDto>>(nextUrl);
-      return PaginationMapper.fromDto(data, AnimeCommonMapper.fromDto);
-    }
-    const { data } = await http.get<PaginationDto<AnimeCommonDto>>(`${url}?ordering=id`);
+    const { data } = await http.get<PaginationDto<AnimeCommonDto>>(
+      nextUrl === null ? nextUrl : `${url}?ordering=id`,
+    );
     return PaginationMapper.fromDto(data, AnimeCommonMapper.fromDto);
   }
 

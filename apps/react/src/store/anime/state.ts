@@ -12,7 +12,7 @@ export interface AnimeState {
   readonly next: string;
 
   /** Number of anime. */
-  readonly countAnime: number;
+  readonly count: number;
 
   /** Error. */
   readonly error?: string;
@@ -24,7 +24,7 @@ export interface AnimeState {
 export const initialState = animeAdapter.getInitialState<AnimeState>({
   isLoading: false,
   next: '',
-  countAnime: 0,
+  count: 0,
 });
 
 export type State = typeof initialState;

@@ -18,5 +18,5 @@
 
 .anime__separator {
   height: 1px;
-  background-color: #757ce8;
+  background-color: var(--accent-color-1);
 }

@@ -15,7 +15,7 @@ function shouldInterceptToken(config: AxiosRequestConfig): boolean {
  * Interceptor to append token to requests.
  * @param config Axios config.
  */
-export const addTokenBeforeRequest = (config: AxiosRequestConfig): AxiosRequestConfig => {
+export function addTokenBeforeRequest(config: AxiosRequestConfig): AxiosRequestConfig {
   if (!shouldInterceptToken(config)) {
     return config;
   }
@@ -38,4 +38,4 @@ export const addTokenBeforeRequest = (config: AxiosRequestConfig): AxiosRequestC
       Authorization: `Bearer ${token.access}`,
     },
   };
-};
+}

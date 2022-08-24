@@ -18,7 +18,7 @@ export const AuthGuard: FC = () => {
     }).toString(),
   };
 
-  if (isLoading === true) {
+  if (isLoading) {
     return <Loading />;
   }
   if (user === null) {

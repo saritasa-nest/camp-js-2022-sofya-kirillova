@@ -33,9 +33,9 @@ export namespace AuthService {
     const loginDataDto: LoginDto = LoginMapper.toDtoLogin(loginData);
     try {
       const { data } = await http.post<TokenDto>(loginUrl, loginDataDto);
-      LocalStorageService.setLocalStorage(TokenMapper.fromDto(data));
+      LocalStorageService.setTokenLocalStorage(TokenMapper.fromDto(data));
     } catch (error: unknown) {
-      LocalStorageService.setLocalStorage(null);
+      LocalStorageService.setTokenLocalStorage(null);
 
       if (!(error instanceof AxiosError) || error.response === undefined) {
         throw error;
@@ -53,9 +53,9 @@ export namespace AuthService {
     const registerDataDto: RegistrationDto = RegisterMapper.toDtoRegister(registerData);
     try {
       const { data } = await http.post<TokenDto>(registerUrl, registerDataDto);
-      LocalStorageService.setLocalStorage(TokenMapper.fromDto(data));
+      LocalStorageService.setTokenLocalStorage(TokenMapper.fromDto(data));
     } catch (error: unknown) {
-      LocalStorageService.setLocalStorage(null);
+      LocalStorageService.setTokenLocalStorage(null);
 
       if (!(error instanceof AxiosError) || error.response === undefined) {
         throw error;

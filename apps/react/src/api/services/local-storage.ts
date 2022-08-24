@@ -8,7 +8,7 @@ export namespace LocalStorageService {
    * Saves session token into local storage.
    * @param token Token.
    */
-  export const setLocalStorage = (token?: Token | null): void => {
+  export const setTokenLocalStorage = (token?: Token | null): void => {
     if (!token || token === null) {
       localStorage.removeItem(KEY);
     }

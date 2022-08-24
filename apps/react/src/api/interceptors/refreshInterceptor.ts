@@ -8,7 +8,7 @@ import { TokenService } from '../services/tokenService';
  * Interceptor to append token to requests.
  * @param requestConfig Axios config.
  */
-export const refreshToken = async(requestConfig: AxiosRequestConfig): Promise<AxiosRequestConfig> => {
+export async function refreshToken(requestConfig: AxiosRequestConfig): Promise<AxiosRequestConfig> {
   if (!(requestConfig instanceof AxiosError)) {
     throw requestConfig;
   }
@@ -20,9 +20,14 @@ export const refreshToken = async(requestConfig: AxiosRequestConfig): Promise<Ax
 
   const response = await http(requestUrl);
   return response;
+}
 
-};
-
-const shouldInterceptToken = (url: string): boolean => url.startsWith(
-  new URL('auth', CONFIG.apiUrl).toString(),
-);
+/**
+ * Checks if a request should be intercepted.
+ * @param url - Request config.
+ */
+function shouldInterceptToken(url: string): boolean {
+  return url.startsWith(
+    new URL('auth', CONFIG.apiUrl).toString(),
+  );
+}
