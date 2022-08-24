@@ -2,7 +2,6 @@ import { memo, FC, useEffect } from 'react';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
 import { Button, Grid, Typography, Link } from '@mui/material';
 import { TextField } from 'formik-mui';
-import { Registration as RegistrationData } from '@js-camp/core/models/auth';
 import { register } from '@js-camp/react/store/auth/dispatchers';
 import {
   selectErrorRegister,
@@ -11,6 +10,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { useNavigate } from 'react-router-dom';
 import { ErrorRegistration } from '@js-camp/core/models/errorRegistration';
+import { Registration } from '@js-camp/core/models/register';
 
 import {
   initValues,
@@ -26,7 +26,7 @@ const RegisterPageComponent: FC = () => {
   const errors = useAppSelector(selectErrorRegister)?.data as ErrorRegistration;
   const isRegistered = useAppSelector(selectsRegisterSubmitted);
 
-  const handleRegister = async(values: RegistrationData): Promise<void> => {
+  const handleRegister = async(values: Registration): Promise<void> => {
     await dispatch(register(values));
     formik.setSubmitting(false);
   };
@@ -47,7 +47,7 @@ const RegisterPageComponent: FC = () => {
     }
   }, [isRegistered]);
 
-  const formik = useFormik<RegistrationData>({
+  const formik = useFormik<Registration>({
     validationSchema: loginFormSchema,
     initialValues: initValues,
     onSubmit: handleRegister,

@@ -7,7 +7,6 @@ import {
 } from 'formik';
 import { Button, Grid, Typography, Link, Alert } from '@mui/material';
 import { TextField } from 'formik-mui';
-import { Login as LoginData } from '@js-camp/core/models/auth';
 import { loginUser } from '@js-camp/react/store/auth/dispatchers';
 import {
   selectsLoginSubmitted,
@@ -15,6 +14,7 @@ import {
 } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { useNavigate } from 'react-router-dom';
+import { Login } from '@js-camp/core/models/login';
 
 import {
   loginFormSchema,
@@ -30,7 +30,7 @@ const LoginPageComponent: FC = () => {
   const error = useAppSelector(selectErrorLogin);
   const isAuthorized = useAppSelector(selectsLoginSubmitted);
 
-  const handleUserLogin = async(values: LoginData): Promise<void> => {
+  const handleUserLogin = async(values: Login): Promise<void> => {
     await dispatch(loginUser(values));
     formik.setSubmitting(false);
   };
@@ -41,7 +41,7 @@ const LoginPageComponent: FC = () => {
     }
   }, [isAuthorized]);
 
-  const formik = useFormik<LoginData>({
+  const formik = useFormik<Login>({
     validationSchema: loginFormSchema,
     initialValues: initValues,
     onSubmit: handleUserLogin,

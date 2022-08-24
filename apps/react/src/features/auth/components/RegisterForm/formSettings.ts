@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { Registration } from '@js-camp/core/models/auth';
+import { Registration } from '@js-camp/core/models/register';
 
 export const initValues: Registration = {
   email: '',
