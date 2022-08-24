@@ -13,6 +13,8 @@ import { AnimeListManagementPage } from '../../components/AnimeListManagement';
 
 import styles from './AnimePage.module.css';
 
+const SCROLL_THRESHOLD = '500px';
+
 /** Anime page component. */
 const AnimePageComponent: FC = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +27,7 @@ const AnimePageComponent: FC = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={4}>
+      <Grid className={styles['dashboard-Anime-films']} item xs={4} sx={{ maxHeight: '100vh' }}>
         <List className={styles['anime-list']}
           id='scrollableDiv'
         >
@@ -34,6 +36,7 @@ const AnimePageComponent: FC = () => {
             next={getMoreAnime}
             hasMore={true}
             loader={<Loading />}
+            scrollThreshold={SCROLL_THRESHOLD}
             scrollableTarget="scrollableDiv"
           >
             <AnimeListManagementPage />
