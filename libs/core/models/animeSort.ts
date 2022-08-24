@@ -2,7 +2,7 @@
 export interface AnimeSort {
 
   /** Ordering direction. */
-  readonly direction: Direction;
+  readonly direction?: Direction;
 
   /** Field by sort. */
   readonly order: Order;

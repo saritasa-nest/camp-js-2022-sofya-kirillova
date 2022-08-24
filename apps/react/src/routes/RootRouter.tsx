@@ -5,12 +5,12 @@ import { animeRoutes } from '../features/anime/routes';
 import { loginRoutes } from '../features/auth/routes';
 
 const routes: RouteObject[] = [
+  ...animeRoutes,
+  ...loginRoutes,
   {
     path: '*',
     element: <Navigate to="/anime" />,
   },
-  ...loginRoutes,
-  ...animeRoutes,
 ];
 
 /** Root router component. */

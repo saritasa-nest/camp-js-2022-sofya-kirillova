@@ -10,27 +10,44 @@ import {
   SelectChangeEvent,
   TextField,
 } from '@mui/material';
-import React, { FC, memo } from 'react';
+import { ChangeEvent, FC, memo, useEffect, useRef, useState } from 'react';
 import { Order } from '@js-camp/core/models/animeSort';
 import { AnimeType } from '@js-camp/core/models/animeCommon';
+import { useSearchParams } from 'react-router-dom';
+import { fetchAnimeList } from '@js-camp/react/store/anime/dispatchers';
+import { useAppDispatch } from '@js-camp/react/store/store';
+
+import { AnimeQueryParams, AnimeParams } from '../../../../model/AnimeParams';
+
+const sortedData: readonly Order[] = [
+  'titleEnglish',
+  'status',
+  'airedStart',
+] as const;
+
+const typeList: readonly AnimeType[] = Object.values(AnimeType);
 
 /** Anime details description page component. */
 const AnimeListManagementComponent: FC = () => {
-  const sortedData: readonly Order[] = [
-    'titleEnglish',
-    'status',
-    'airedStart',
-  ] as const;
+  const [searchParams] = useSearchParams();
 
-  const typeList: readonly AnimeType[] = [
-    AnimeType.Tv,
-    AnimeType.Ova,
-    AnimeType.Movie,
-    AnimeType.Special,
-    AnimeType.Ona,
-    AnimeType.Music,
-  ];
-  const [types, setTypes] = React.useState<string[]>([]);
+  const [params, setParams] = useSearchParams();
+  const dispatch = useAppDispatch();
+  console.log(params);
+  const getDefaultAnimeParams = useRef<AnimeParams>({
+          ordering: searchParams.get('ordering') as Order ?? 'titleEnglish',
+          search: searchParams.get('search') ?? '',
+          types: searchParams.getAll('types') as AnimeType[] ?? [] as AnimeType[],
+  });
+
+  // const getDefaultAnimeParams = (() => ({
+  //         ordering: searchParams.get('ordering') as Order ?? 'titleEnglish',
+  //         search: searchParams.get('search') ?? '',
+  //         types: searchParams.getAll('types') as AnimeType[] ?? [] as AnimeType[],
+  // }));
+
+  // const [params, setParams] = useSearchParams();
+  const [types, setTypes] = useState<string[]>(getDefaultAnimeParams.current.types);
   const handleChangeType = (event: SelectChangeEvent<typeof types>) => {
     const {
       target: { value },
@@ -38,14 +55,31 @@ const AnimeListManagementComponent: FC = () => {
     setTypes(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const [sort, setSort] = React.useState('');
-  const handleChangeSort = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSort(event.target.value);
+  const [ordering, setOrdering] = useState(getDefaultAnimeParams.current.ordering);
+  const handleChangeSort = (event: ChangeEvent<HTMLInputElement>) => {
+    setOrdering(event.target.value as Order);
   };
-  const [search, setSearch] = React.useState('');
-  const handleChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const [search, setSearch] = useState(getDefaultAnimeParams.current.search);
+  const handleChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
+
+  useEffect(() => {
+    setParams({
+      ordering,
+      search,
+      types,
+    });
+    const queryParams: AnimeQueryParams = {
+      sort: {
+        order: ordering as Order,
+      },
+      search,
+      types: types as AnimeType[],
+    };
+    dispatch(fetchAnimeList(queryParams));
+  }, [types, ordering, search]);
+
   return (
     <Grid
       container
@@ -70,7 +104,7 @@ const AnimeListManagementComponent: FC = () => {
         id="outlined-select-currency"
         select
         label="Sorting"
-        value={sort}
+        value={ordering}
         onChange={handleChangeSort}
       >
         {sortedData.map(order => (

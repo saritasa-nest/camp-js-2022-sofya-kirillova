@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchAnimeList } from './dispatchers';
+import { fetchAnimeList, fetchNextAnimeList } from './dispatchers';
 import { initialState, animeAdapter, State } from './state';
 
 export const animeListSlice = createSlice({
@@ -12,13 +12,20 @@ export const animeListSlice = createSlice({
       state.isLoading = true;
     })
     .addCase(fetchAnimeList.fulfilled, (state, action) => {
-      animeAdapter.addMany(state as State, action.payload.results);
-      state.countAnime = action.payload.count;
+      animeAdapter.setAll(state as State, action.payload);
       state.isLoading = false;
     })
     .addCase(fetchAnimeList.rejected, (state, action) => {
       if (action.error.message) {
         state.error = action.error.message;
+      }
+      state.isLoading = false;
+    })
+    .addCase(fetchNextAnimeList.fulfilled, (state, action) => {
+      if (action.payload === null) {
+        animeAdapter.addMany(state as State, []);
+      } else {
+        animeAdapter.addMany(state as State, action.payload);
       }
       state.isLoading = false;
     }),

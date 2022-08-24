@@ -8,9 +8,6 @@ export const animeAdapter = createEntityAdapter<AnimeCommon>({
 /** Anime list state. */
 export interface AnimeState {
 
-  /** Number of anime. */
-  readonly countAnime: number;
-
   /** Error. */
   readonly error?: string;
 
@@ -20,7 +17,6 @@ export interface AnimeState {
 
 export const initialState = animeAdapter.getInitialState<AnimeState>({
   isLoading: false,
-  countAnime: 0,
 });
 
 export type State = typeof initialState;

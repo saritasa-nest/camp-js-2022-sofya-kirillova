@@ -8,7 +8,7 @@ export namespace AnimeSortMapper {
    * @param item Anime Sort class.
    */
   export function toDto(item: AnimeSort): AnimeSortDto {
-    const sort = item.direction + toDtoMap[item.order] as AnimeSortDto;
+    const sort = (item.direction ? item.direction + toDtoMap[item.order] : toDtoMap[item.order]) as AnimeSortDto;
     return sort;
   }
 

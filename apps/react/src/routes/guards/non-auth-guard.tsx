@@ -2,7 +2,7 @@ import { fetchUser } from '@js-camp/react/store/auth/dispatchers';
 import { selectUser, selectUserLoading } from '@js-camp/react/store/auth/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { FC, useEffect } from 'react';
-import { Navigate, Outlet, useSearchParams } from 'react-router-dom';
+import { Navigate, Outlet, To } from 'react-router-dom';
 
 import { Loading } from '../../components/Loading';
 
@@ -14,14 +14,18 @@ export const NonAuthGuard: FC = () => {
   }, []);
 
   const user = useAppSelector(selectUser);
-  const [search] = useSearchParams();
-  if (isLoading === true) {
-    return <Loading />;
-  }
   if (user !== null) {
-    const redirect = search.get('anime') ?? '';
+    const redirect: To = {
+      pathname: 'anime',
+      search: new URLSearchParams({
+        next: location.pathname,
+      }).toString(),
+    };
     return <Navigate to={redirect} replace />;
   }
 
+  if (isLoading === true) {
+    return <Loading />;
+  }
   return <Outlet />;
 };
