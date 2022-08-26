@@ -1,5 +1,5 @@
 /** Sort settings. */
-export interface AnimeSort {
+export interface AnimeSort<Order> {
 
   /** Ordering direction. */
   readonly direction: Direction;
@@ -9,7 +9,7 @@ export interface AnimeSort {
 }
 
 /** Available values for sorting. */
-export type Order = 'titleEnglish' | 'airedStart' | 'status';
+export type AnimeOrder = 'titleEnglish' | 'airedStart' | 'status';
 
 /** Ordering direction. */
 export enum Direction {

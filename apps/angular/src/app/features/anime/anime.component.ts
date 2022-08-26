@@ -7,7 +7,7 @@ import { Sort, SortDirection } from '@angular/material/sort';
 
 import { PageEvent } from '@angular/material/paginator';
 
-import { Direction, Order } from '@js-camp/core/models/animeSort';
+import { Direction, AnimeOrder } from '@js-camp/core/models/animeSort';
 
 import { MatSelectChange } from '@angular/material/select';
 
@@ -47,7 +47,7 @@ interface AnimeParams {
   readonly sort: {
 
     /** Field by sort. */
-    readonly ordering: Order;
+    readonly ordering: AnimeOrder;
 
     /** Ordering direction. */
     readonly direction: SortDirection;
@@ -85,7 +85,7 @@ export class AnimeComponent {
   public readonly displayedColumns = ['image', 'title', 'type', 'status', 'airingStart'] as const;
 
   /** Anime sort displayed. */
-  public readonly sortedData: readonly Order[] = ['titleEnglish', 'status', 'airedStart'];
+  public readonly sortedData: readonly AnimeOrder[] = ['titleEnglish', 'status', 'airedStart'];
 
   /** Data for a table with anime. */
   public readonly anime$: Observable<readonly Anime[]>;
@@ -195,7 +195,7 @@ export class AnimeComponent {
         pageSize: Number(snapshot.get(AnimeParamName.PageSize)) ?? 25,
       },
       sort: {
-        ordering: snapshot.get(AnimeParamName.Ordering) as Order ?? 'titleEnglish',
+        ordering: snapshot.get(AnimeParamName.Ordering) as AnimeOrder ?? 'titleEnglish',
         direction: snapshot.get(AnimeParamName.SortingDirection) as SortDirection ?? Direction.Ascending,
       },
       search: snapshot.get(AnimeParamName.Search) ?? '',
