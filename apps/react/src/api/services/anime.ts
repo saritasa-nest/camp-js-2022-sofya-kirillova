@@ -22,16 +22,16 @@ export namespace AnimeService {
    * @param params Anime params.
    */
   export async function fetchAnimeList(params?: AnimeQueryParams): Promise<AnimeCommon[]> {
-    const url = new URLSearchParams();
+    const urlParams = new URLSearchParams();
     if (params) {
       const types = params.types.length > 0 ?
         params.types.map(type => AnimeCommonMapper.toDtoMapType[type]).join(',') :
         '';
-      url.append('search', String(params.search));
-      url.append('type__in', String(types));
-      url.append('ordering', String(AnimeSortMapper.toDto(params.sort)));
+      urlParams.append('search', String(params.search));
+      urlParams.append('type__in', String(types));
+      urlParams.append('ordering', String(AnimeSortMapper.toDto(params.sort)));
     }
-    const { data } = await http.get<PaginationDto<AnimeCommonDto>>(`${animeUrl}?${url}`);
+    const { data } = await http.get<PaginationDto<AnimeCommonDto>>(`${animeUrl}?${urlParams}`);
     setAnimeListNextUrl(data.next);
     return data.results.map(anime => AnimeCommonMapper.fromDto(anime));
   }

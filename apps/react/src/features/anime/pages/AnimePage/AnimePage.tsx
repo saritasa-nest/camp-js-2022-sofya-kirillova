@@ -27,7 +27,7 @@ const AnimePageComponent: FC = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid className={styles['dashboard-Anime-films']} item xs={4} sx={{ maxHeight: '100vh' }}>
+      <Grid className={styles['dashboard-anime-films']} item xs={4}>
         <List className={styles['anime-list']}
           id='scrollableDiv'
         >

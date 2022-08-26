@@ -26,19 +26,22 @@ const sortedData: readonly Order[] = [
 ] as const;
 
 const typeList: readonly AnimeType[] = Object.values(AnimeType);
+const DEFAULT_ORDER: Order = 'titleEnglish';
+const DEFAULT_SEARCH = '';
+const DEFAULT_TYPES: AnimeType[] = [];
 
 /** Anime list management page component. */
 const AnimeListManagementComponent: FC = () => {
   const [params, setParams] = useSearchParams();
   const dispatch = useAppDispatch();
-  const getDefaultAnimeParams = useRef<AnimeParams>({
-    ordering: (params.get('ordering') as Order) ?? 'titleEnglish',
-    search: params.get('search') ?? '',
-    types: (params.getAll('types') as AnimeType[]) ?? ([] as AnimeType[]),
+  const initialAnimeParams = useRef<AnimeParams>({
+    ordering: (params.get('ordering') as Order) ?? DEFAULT_ORDER,
+    search: params.get('search') ?? DEFAULT_SEARCH,
+    types: (params.getAll('types') as AnimeType[]) ?? DEFAULT_TYPES,
   });
 
   const [types, setTypes] = useState<string[]>(
-    getDefaultAnimeParams.current.types,
+    initialAnimeParams.current.types,
   );
   const handleChangeType = (event: SelectChangeEvent<typeof types>) => {
     const {
@@ -47,13 +50,13 @@ const AnimeListManagementComponent: FC = () => {
     setTypes(typeof value === 'string' ? value.split(',') : value);
   };
 
-  const [ordering, setOrdering] = useState(
-    getDefaultAnimeParams.current.ordering,
+  const [ordering, setOrdering] = useState<Order>(
+    initialAnimeParams.current.ordering,
   );
   const handleChangeSort = (event: ChangeEvent<HTMLInputElement>) => {
     setOrdering(event.target.value as Order);
   };
-  const [search, setSearch] = useState(getDefaultAnimeParams.current.search);
+  const [search, setSearch] = useState(initialAnimeParams.current.search);
   const handleChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
@@ -66,7 +69,7 @@ const AnimeListManagementComponent: FC = () => {
     });
     const queryParams: AnimeQueryParams = {
       sort: {
-        order: ordering as Order,
+        order: ordering,
       },
       search,
       types: types as AnimeType[],
