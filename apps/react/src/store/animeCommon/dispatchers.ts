@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { AnimeService } from '../../api/services/anime';
 
-import { AnimeQueryParams } from './../../model/AnimeParams';
+import { AnimeQueryParams } from '../../model/AnimeParams';
 
 export const fetchAnimeList = createAsyncThunk(
   'animeList/fetchAnimeList',
@@ -10,12 +10,6 @@ export const fetchAnimeList = createAsyncThunk(
 );
 
 export const fetchNextAnimeList = createAsyncThunk(
-  'animeList/fetchNextAnimeList',
+  'anime/fetchNextAnimeList',
   () => AnimeService.fetchNextAnimeList(),
-);
-
-/** Preset for task 4. */
-export const fetchAnimeById = createAsyncThunk(
-  'anime/fetchAnime',
-  (id: number) => AnimeService.fetchAnimeById(id),
 );

@@ -5,7 +5,7 @@ import { GenreMapper } from '@js-camp/core/mappers/genre.mapper';
 
 import { http } from '..';
 
-const url = 'anime/genres/';
+const genreUrl = 'anime/genres/';
 
 export namespace GenresService {
 
@@ -14,4 +14,14 @@ export namespace GenresService {
     const { data } = await http.get<PaginationDto<GenreDto>>(url);
     return data.results.map(dto => GenreMapper.fromDto(dto));
   }
+
+  /**
+   * Obtains information about a genre by provided id.
+   * @param id Genre id.
+   */
+  export async function fetchGenreById(id: number): Promise<Genre> {
+    const { data } = await http.get<GenreDto>(`${genreUrl}${id}/`);
+    return GenreMapper.fromDto(data);
+  }
+
 }

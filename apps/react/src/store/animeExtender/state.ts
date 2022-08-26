@@ -1,11 +1,12 @@
-import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { createEntityAdapter } from '@reduxjs/toolkit';
 
-export const animeAdapter = createEntityAdapter<AnimeCommon>({
+import { AnimeExtension } from '../../model/Anime';
+
+export const animeExtensionAdapter = createEntityAdapter<AnimeExtension>({
   selectId: anime => anime.id,
 });
 
-/** Anime list state. */
+/** Anime extension list state. */
 export interface AnimeState {
 
   /** Error. */
@@ -15,7 +16,7 @@ export interface AnimeState {
   readonly isLoading: boolean;
 }
 
-export const initialState = animeAdapter.getInitialState<AnimeState>({
+export const initialState = animeExtensionAdapter.getInitialState<AnimeState>({
   isLoading: false,
 });
 

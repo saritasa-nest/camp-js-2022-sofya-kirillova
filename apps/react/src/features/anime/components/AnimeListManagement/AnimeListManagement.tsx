@@ -14,7 +14,7 @@ import { ChangeEvent, FC, memo, useEffect, useRef, useState } from 'react';
 import { Order } from '@js-camp/core/models/animeSort';
 import { AnimeType } from '@js-camp/core/models/animeCommon';
 import { useSearchParams } from 'react-router-dom';
-import { fetchAnimeList } from '@js-camp/react/store/anime/dispatchers';
+import { fetchAnimeList } from '@js-camp/react/store/animeCommon/dispatchers';
 import { useAppDispatch } from '@js-camp/react/store/store';
 
 import { AnimeQueryParams, AnimeParams } from '../../../../model/AnimeParams';
@@ -60,6 +60,7 @@ const AnimeListManagementComponent: FC = () => {
 
   useEffect(() => {
     setParams({
+      ...Object.fromEntries(params),
       ordering,
       search,
       types,

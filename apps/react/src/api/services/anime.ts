@@ -54,7 +54,7 @@ export namespace AnimeService {
    * @param id Anime id.
    */
   export async function fetchAnimeById(id: number): Promise<AnimeFull> {
-    const { data } = await http.get<AnimeFullDto>(`${animeListNextUrl}${id}/`);
+    const { data } = await http.get<AnimeFullDto>(`${animeUrl}${id}/`);
     return AnimeFullMapper.fromDto(data);
   }
 
