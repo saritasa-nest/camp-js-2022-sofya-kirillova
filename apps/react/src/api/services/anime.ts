@@ -8,22 +8,20 @@ import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { AnimeFullMapper } from '@js-camp/core/mappers/animeFull.mapper';
 import { AnimeFullDto } from '@js-camp/core/dtos/animeFull.dto';
 import { AnimeFull } from '@js-camp/core/models/animeFull';
-import { selectAnimeNextUrl } from '@js-camp/react/store/anime/selectors';
 
 import { http } from '..';
-import { useAppSelector } from '../../store';
-import { CONFIG } from '../config';
 
 const url = 'anime/anime/';
 
 export namespace AnimeService {
+  let animeListNextUrl: string | null = null;
 
   /** Fetches a list of anime. */
   export async function fetchAnimeList(): Promise<Pagination<AnimeCommon>> {
-    const nextUrl = useAppSelector(selectAnimeNextUrl).replace(CONFIG.apiUrl, '');
     const { data } = await http.get<PaginationDto<AnimeCommonDto>>(
-      nextUrl === null ? nextUrl : `${url}?ordering=id`,
+      animeListNextUrl !== null ? animeListNextUrl : `${url}`,
     );
+    setAnimeListNextUrl(data.next);
     return PaginationMapper.fromDto(data, AnimeCommonMapper.fromDto);
   }
 
@@ -35,5 +33,13 @@ export namespace AnimeService {
   export async function fetchAnimeById(id: number): Promise<AnimeFull> {
     const { data } = await http.get<AnimeFullDto>(`${url}${id}/`);
     return AnimeFullMapper.fromDto(data);
+  }
+
+  /**
+   * Sets next URL.
+   * @param nextUrl Url of the Following Anime List.
+   */
+  function setAnimeListNextUrl(nextUrl: string | null) {
+    animeListNextUrl = nextUrl ?? null;
   }
 }

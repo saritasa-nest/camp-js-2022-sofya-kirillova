@@ -5,7 +5,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthService } from '../../api/services/authService';
 
 export const fetchUser = createAsyncThunk(
-  'auth/fetch',
+  'auth/fetchUser',
   () => AuthService.getCurrentUser(),
 );
 

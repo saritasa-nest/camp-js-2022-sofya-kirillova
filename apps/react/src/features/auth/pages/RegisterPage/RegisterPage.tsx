@@ -2,15 +2,15 @@ import { memo, FC, useEffect } from 'react';
 import { Field, Form, FormikProvider, useFormik } from 'formik';
 import { Button, Grid, Typography, Link } from '@mui/material';
 import { TextField } from 'formik-mui';
+import { useNavigate } from 'react-router-dom';
 import { register } from '@js-camp/react/store/auth/dispatchers';
 import {
   selectErrorRegister,
   selectsRegisterSubmitted,
 } from '@js-camp/react/store/auth/selectors';
-import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
-import { useNavigate } from 'react-router-dom';
 import { ErrorRegistration } from '@js-camp/core/models/errorRegistration';
 import { Registration } from '@js-camp/core/models/register';
+import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 
 import {
   initValues,

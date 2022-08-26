@@ -1,4 +1,4 @@
-import { Anime } from '@js-camp/core/models/anime';
+import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { Grid } from '@mui/material';
 import { memo, FC } from 'react';
 
@@ -7,7 +7,7 @@ import styles from './AnimeShort.module.css';
 interface Props {
 
   /** Anime. */
-  readonly anime: Anime;
+  readonly anime: AnimeCommon;
 }
 
 /** Anime short description page component. */

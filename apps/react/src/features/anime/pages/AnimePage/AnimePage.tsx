@@ -1,4 +1,3 @@
-import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { fetchAnimeList } from '@js-camp/react/store/anime/dispatchers';
 import { selectAnimeList } from '@js-camp/react/store/anime/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
@@ -36,7 +35,7 @@ const AnimePageComponent: FC = () => {
             hasMore={true}
             loader={<Loading />}
           >
-            {animeList.map((anime: AnimeCommon) => (
+            {animeList.map(anime => (
               <AnimeShortPage key={anime.id} anime={anime} />
             ))}
           </InfiniteScroll>

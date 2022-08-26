@@ -5,10 +5,7 @@ import { RootState } from '../store';
 import { animeAdapter } from './state';
 
 /** Selects all anime from store. */
-export const selectAnimeList = createSelector(
-  (state: RootState) => animeAdapter.getSelectors().selectAll(state.animeList),
-  anime => anime,
-);
+export const { selectAll: selectAnimeList } = animeAdapter.getSelectors<RootState>(state => state.animeList);
 
 /** Selects all anime loading state. */
 export const selectAnimeListLoading = createSelector(
