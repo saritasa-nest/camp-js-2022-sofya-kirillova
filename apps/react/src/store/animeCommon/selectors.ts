@@ -1,7 +1,6 @@
-import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { createSelector } from '@reduxjs/toolkit';
 
-import { RootState, useAppSelector } from '../store';
+import { RootState } from '../store';
 
 import { animeAdapter } from './state';
 
@@ -9,9 +8,10 @@ const { selectAll, selectById } = animeAdapter.getSelectors();
 
 /** Selects all anime from store. */
 export const selectAnimeList = createSelector(
-  (state: RootState) =>
-    ({ ids: state.animeCommonList.listIds, list: selectAll(state.animeCommonList) }),
-  ({ ids, list }) => list.filter(item => ids.includes(item.id)),
+  (state: RootState, ids: number[]) =>
+    ({ list: selectAll(state.animeCommonList), ids }),
+  ({ list, ids }) => list.filter(item => ids.includes(item.id)),
+
 );
 
 /** Selects all anime loading state. */

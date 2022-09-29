@@ -1,12 +1,14 @@
 import { AnimeCommon } from '@js-camp/core/models/animeCommon';
 import { fetchNextAnimeList } from '@js-camp/react/store/animeCommon/dispatchers';
-import { selectAnimeIdList, selectAnimeListHasNext } from '@js-camp/react/store/animeCommon/selectors';
+import {
+  selectAnimeIdList,
+  selectAnimeList,
+  selectAnimeListHasNext,
+} from '@js-camp/react/store/animeCommon/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Grid, List } from '@mui/material';
 import { FC, memo, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-import { selectAnimeById } from '@js-camp/react/store/animeExtender/selectors';
 
 import { Loading } from '../../../../components/Loading';
 import { AnimeDetailsPage } from '../../components/AnimeDetails';
@@ -20,8 +22,11 @@ const SCROLL_THRESHOLD = '500px';
 /** Anime page component. */
 const AnimePageComponent: FC = () => {
   const dispatch = useAppDispatch();
+
   const animeIdList = useAppSelector(selectAnimeIdList);
-  const animeList = animeIdList.map(id => useAppSelector(state => selectAnimeById(state, id)));
+
+  const animeList = useAppSelector(state => selectAnimeList(state, animeIdList));
+
   const animeListHasNext = useAppSelector(selectAnimeListHasNext);
 
   const getMoreAnime = useCallback(() => {
