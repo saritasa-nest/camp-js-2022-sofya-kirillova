@@ -1,4 +1,3 @@
-import { State } from './../anime/state';
 import { createEntityAdapter } from '@reduxjs/toolkit';
 import { Studio } from '@js-camp/core/models/studio';
 
