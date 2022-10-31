@@ -11,7 +11,7 @@ import { FC, memo, useCallback } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import { Loading } from '../../../../components/Loading';
-import { AnimeDetailsPage } from '../../components/AnimeDetails';
+import { AnimeDetailsBoxPage } from '../../components/AnimeDetailsBox';
 import { AnimeShortPage } from '../../components/AnimeShort/AnimeShort';
 import { AnimeListManagementPage } from '../../components/AnimeListManagement';
 
@@ -24,9 +24,7 @@ const AnimePageComponent: FC = () => {
   const dispatch = useAppDispatch();
 
   const animeIdList = useAppSelector(selectAnimeIdList);
-
   const animeList = useAppSelector(state => selectAnimeList(state, animeIdList));
-
   const animeListHasNext = useAppSelector(selectAnimeListHasNext);
 
   const getMoreAnime = useCallback(() => {
@@ -54,7 +52,7 @@ const AnimePageComponent: FC = () => {
           </InfiniteScroll>
         </List>
       </Grid><Grid item xs={8}>
-        <AnimeDetailsPage />
+        <AnimeDetailsBoxPage />
       </Grid>
     </Grid>
   );
