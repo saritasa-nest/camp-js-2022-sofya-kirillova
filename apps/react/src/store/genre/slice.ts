@@ -1,18 +1,23 @@
+import { Genre } from '@js-camp/core/models/genre';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchGenres } from './dispatchers';
-import { initialState } from './state';
+import { genresAdapter, initialState, State } from './state';
 
 export const genresSlice = createSlice({
   name: 'genres',
   initialState,
-  reducers: {},
+  reducers: {
+    addGenres(state, action: { payload: Genre[];}) {
+      genresAdapter.addMany(state as State, action.payload);
+    },
+  },
   extraReducers: builder => builder
     .addCase(fetchGenres.pending, state => {
       state.isLoading = true;
     })
     .addCase(fetchGenres.fulfilled, (state, action) => {
-      state.genres = action.payload;
+      genresAdapter.addMany(state as State, action.payload);
       state.isLoading = false;
     })
     .addCase(fetchGenres.rejected, (state, action) => {
@@ -22,3 +27,5 @@ export const genresSlice = createSlice({
       state.isLoading = false;
     }),
 });
+
+export const { addGenres } = genresSlice.actions;

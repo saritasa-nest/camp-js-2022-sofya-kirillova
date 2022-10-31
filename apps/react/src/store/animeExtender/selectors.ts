@@ -17,3 +17,15 @@ export const selectAnimeById = createSelector(
   selectAnimeExtensionById,
   (animeCommon, animeExtension) => ({ ...animeCommon, ...animeExtension }) as AnimeFull,
 );
+
+/** Selects genre by id from store. */
+export const selectGenreListIds = createSelector(
+  (state: RootState, id: number) => animeExtensionAdapter.getSelectors().selectById(state.animeExtensionList, id),
+  anime => anime?.genres,
+);
+
+/** Selects studio by id from store. */
+export const selectStudioListId = createSelector(
+  (state: RootState, id: number) => animeExtensionAdapter.getSelectors().selectById(state.animeExtensionList, id),
+  anime => anime?.studios,
+);

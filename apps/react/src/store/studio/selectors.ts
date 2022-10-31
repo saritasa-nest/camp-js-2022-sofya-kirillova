@@ -17,5 +17,4 @@ export const selectStudioList = createSelector(
   (state: RootState, ids: number[]) =>
     ({ list: selectAll(state.studios), ids }),
   ({ list, ids }) => list.filter(item => ids.includes(item.id)),
-
 );

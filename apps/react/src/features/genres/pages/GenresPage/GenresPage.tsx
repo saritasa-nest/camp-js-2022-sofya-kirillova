@@ -1,6 +1,6 @@
 import { memo, useEffect, FC } from 'react';
 import { fetchGenres } from '@js-camp/react/store/genre/dispatchers';
-import { selectGenres, selectAreGenresLoading } from '@js-camp/react/store/genre/selectors';
+import { selectGenreList, selectAreGenresLoading } from '@js-camp/react/store/genre/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store';
 
 import { GenreCard } from '../../components/GenreCard';
@@ -8,7 +8,7 @@ import { GenreCard } from '../../components/GenreCard';
 /** Genres page component. */
 const GenresPageComponent: FC = () => {
   const dispatch = useAppDispatch();
-  const genres = useAppSelector(selectGenres);
+  const genres = useAppSelector(selectGenreList);
   const isLoading = useAppSelector(selectAreGenresLoading);
 
   useEffect(() => {

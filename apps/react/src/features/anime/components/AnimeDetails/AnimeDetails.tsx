@@ -1,11 +1,14 @@
 import { formatDate } from '@js-camp/core/utils/formatDate';
 import { fetchAnimeById } from '@js-camp/react/store/animeExtender/dispatchers';
-import { selectAnimeById } from '@js-camp/react/store/animeExtender/selectors';
+import { selectAnimeById, selectGenreListIds, selectStudioListId } from '@js-camp/react/store/animeExtender/selectors';
 import { useAppDispatch, useAppSelector } from '@js-camp/react/store/store';
 import { Box, Grid } from '@mui/material';
 import { memo, FC, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { isEmpty } from 'lodash';
+
+import { selectGenreList } from '@js-camp/react/store/genre/selectors';
+import { selectStudioList } from '@js-camp/react/store/studio/selectors';
 
 import styles from './AnimeDetails.module.css';
 
@@ -16,6 +19,13 @@ const AnimeDetailsPageComponent: FC = () => {
   const dispatch = useAppDispatch();
   const [id, setId] = useState(INITIAL_ID);
   const anime = useAppSelector(state => selectAnimeById(state, id));
+  const studioListIds = useAppSelector(state => selectStudioListId(state, id)) ?? [];
+  const genreListIds = useAppSelector(state => selectGenreListIds(state, id)) ?? [];
+
+  // const qef = [...anime.studios];
+  const studioList = useAppSelector(state => selectStudioList(state, [...studioListIds]));
+
+  const genreList = useAppSelector(state => selectGenreList(state, [...genreListIds]));
   const [searchParams] = useSearchParams();
   useEffect(() => {
     const idParam = Number(searchParams.get('id'));
@@ -61,12 +71,17 @@ const AnimeDetailsPageComponent: FC = () => {
               <span>{anime.status}</span>
             </Grid>
             <Grid className={styles['anime__detail']}>
-              <span className={styles['anime__title-details']}>Studios</span>
-              {/* <span>{anime.studiosData}</span> */}
+
+              {studioList.length > 0 ? <>
+                <span className={styles['anime__title-details']}>Studios</span>
+                <span>{studioList.map(studio => studio.name).join(', ')}</span>
+              </> : <></>}
             </Grid>
             <Grid className={styles['anime__detail']}>
-              <span className={styles['anime__title-details']}>Genres</span>
-              {/* <span>{anime.genresData}</span> */}
+              {genreList.length > 0 ? <>
+                <span className={styles['anime__title-details']}>Genres</span>
+                <span>{genreList.map(genre => genre.name).join(', ')}</span>
+              </> : <></>}
             </Grid>
           </Grid>
           {anime.synopsis !== undefined ?

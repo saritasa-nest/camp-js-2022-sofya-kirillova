@@ -1,3 +1,4 @@
+import { Studio } from '@js-camp/core/models/studio';
 import { createSlice } from '@reduxjs/toolkit';
 
 import { fetchStudioById } from './dispatchers';
@@ -6,7 +7,11 @@ import { initialState, State, studioAdapter } from './state';
 export const studiosSlice = createSlice({
   name: 'studios',
   initialState,
-  reducers: {},
+  reducers: {
+    addStudios(state, action: { payload: Studio[];}) {
+      studioAdapter.addMany(state as State, action.payload);
+    },
+  },
   extraReducers: builder => builder
     .addCase(fetchStudioById.pending, state => {
       state.isLoading = true;
@@ -22,3 +27,5 @@ export const studiosSlice = createSlice({
       state.isLoading = false;
     }),
 });
+
+export const { addStudios } = studiosSlice.actions;

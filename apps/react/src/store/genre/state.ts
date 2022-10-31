@@ -1,10 +1,12 @@
+import { createEntityAdapter } from '@reduxjs/toolkit';
 import { Genre } from '@js-camp/core/models/genre';
+
+export const genresAdapter = createEntityAdapter<Genre>({
+  selectId: genre => genre.id,
+});
 
 /** Genres state. */
 export interface GenresState {
-
-  /** Genres list. */
-  readonly genres: Genre[];
 
   /** Error. */
   readonly error?: string;
@@ -13,7 +15,8 @@ export interface GenresState {
   readonly isLoading: boolean;
 }
 
-export const initialState: GenresState = {
+export const initialState = genresAdapter.getInitialState<GenresState>({
   isLoading: false,
-  genres: [],
-};
+});
+
+export type State = typeof initialState;
