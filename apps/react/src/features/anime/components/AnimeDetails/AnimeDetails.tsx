@@ -18,15 +18,15 @@ const INITIAL_ID = 0;
 const AnimeDetailsPageComponent: FC = () => {
   const dispatch = useAppDispatch();
   const [id, setId] = useState(INITIAL_ID);
+
   const anime = useAppSelector(state => selectAnimeById(state, id));
   const studioListIds = useAppSelector(state => selectStudioListId(state, id)) ?? [];
   const genreListIds = useAppSelector(state => selectGenreListIds(state, id)) ?? [];
-
-  // const qef = [...anime.studios];
   const studioList = useAppSelector(state => selectStudioList(state, [...studioListIds]));
-
   const genreList = useAppSelector(state => selectGenreList(state, [...genreListIds]));
+
   const [searchParams] = useSearchParams();
+
   useEffect(() => {
     const idParam = Number(searchParams.get('id'));
     if (idParam !== INITIAL_ID && idParam !== id) {
